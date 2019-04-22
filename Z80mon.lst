@@ -1,4 +1,4 @@
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 1 - 2019/04/22 18時31分14秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 1 - 2019/04/22 19時20分48秒
 
 
        1/       0 :                     ;-----------------------------------------------------------------------
@@ -61,7 +61,7 @@
       58/    4081 :                     
       59/    4081 :                     
       60/       0 :                     		ORG	0000h
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 2 - 2019/04/22 18時31分14秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 2 - 2019/04/22 19時20分48秒
 
 
       61/       0 :                     ;------------------------------------------------------------------------------
@@ -124,7 +124,7 @@
      118/      6C : FE 30               	CP	BUFFUL
      119/      6E : DA 75 00            	JP	C,RTS0
      120/      71 : 3E 17               	LD	A,RTSHIG
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 3 - 2019/04/22 18時31分14秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 3 - 2019/04/22 19時20分48秒
 
 
      121/      73 : D3 01               	OUT	(UARTRC),A
@@ -187,7 +187,7 @@
      178/      B9 : D7                      RST 10h
      179/      BA : FE 61                   CP 'a'
      180/      BC : F8                      RET M
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 4 - 2019/04/22 18時31分14秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 4 - 2019/04/22 19時20分48秒
 
 
      181/      BD : FE 7B                   CP 'z'+1
@@ -250,7 +250,7 @@
      238/     107 : 7A                  	LD A,D
      239/     108 : BC                  	CP H
      240/     109 : 20 04               	JR NZ,_BS_RTN2
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 5 - 2019/04/22 18時31分14秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 5 - 2019/04/22 19時20分48秒
 
 
      241/     10B : 7B                  	LD A,E
@@ -313,7 +313,7 @@
      298/     13A :                     ;------------------------------------------------------------------------------
      299/     13A :                     ; Hex2桁出力
      300/     13A :                     ;------------------------------------------------------------------------------
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 6 - 2019/04/22 18時31分14秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 6 - 2019/04/22 19時20分48秒
 
 
      301/     13A :                     HEX2OUT:
@@ -376,7 +376,7 @@
      358/     187 : DD 21 85 03             LD IX,CMD_TBL
      359/     18B : CD B9 00            	CALL GETC
      360/     18E : CF                      RST 08H
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 7 - 2019/04/22 18時31分14秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 7 - 2019/04/22 19時20分48秒
 
 
      361/     18F :                     ;
@@ -439,7 +439,7 @@
      418/     1D0 : 7D                  	LD A,L
      419/     1D1 : CD 3A 01            	CALL HEX2OUT
      420/     1D4 : F1                  	POP AF
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 8 - 2019/04/22 18時31分14秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 8 - 2019/04/22 19時20分48秒
 
 
      421/     1D5 : C9                  	RET
@@ -502,7 +502,7 @@
      478/     21F : CB 27               	SLA A
      479/     221 : CB 27               	SLA A
      480/     223 : CB 27               	SLA A
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 9 - 2019/04/22 18時31分14秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 9 - 2019/04/22 19時20分48秒
 
 
      481/     225 : 47                  	LD B,A
@@ -565,7 +565,7 @@
      538/     26A : DD E1               	POP IX
      539/     26C :                     ; 終了アドレス取得
      540/     26C : 2A 5D 40            	LD HL,(ARGV_2)
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 10 - 2019/04/22 18時31分14秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 10 - 2019/04/22 19時20分48秒
 
 
      541/     26F : CD 41 02            	CALL HEX4BIN
@@ -628,7 +628,7 @@
      598/     2BD :                     _ASC16_DOT:
      599/     2BD : 3E 2E               	LD A,'.'
      600/     2BF :                     _ASC16_PRINT:
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 11 - 2019/04/22 18時31分14秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 11 - 2019/04/22 19時20分48秒
 
 
      601/     2BF : CF                  	RST 08h	
@@ -691,7 +691,7 @@
      658/     2F4 :                     ; メモリー変更コマンド
      659/     2F4 :                     ;================================================================================
      660/     2F4 :                     MEM_CHANGE:
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 12 - 2019/04/22 18時31分14秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 12 - 2019/04/22 19時20分48秒
 
 
      661/     2F4 : CD 36 01                CALL SPC_PRINT
@@ -754,7 +754,7 @@
      718/     360 : DD E1               	POP IX
      719/     362 : 18 AE               	JR _MEM_CHANGE_LOOP
      720/     364 :                     ;
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 13 - 2019/04/22 18時31分14秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 13 - 2019/04/22 19時20分48秒
 
 
      721/     364 :                     _MEM_CHANGE_EXIT:
@@ -817,7 +817,7 @@
                     4D 4F 4E 49 54 4F 
                     52 20 76 30 2E 31 
                     20 2A 2A 0D 00 
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 14 - 2019/04/22 18時31分14秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 14 - 2019/04/22 19時20分48秒
 
 
      772/     3D6 : 08 20 08 00         BSTXT	DB BS,SPC,BS,0
@@ -857,7 +857,7 @@
                     0D 00 
      781/     48F : 0D 3F 0D 00         HATENA_MSG DB CR,"?",CR,0
      782/     493 :                     
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 15 - 2019/04/22 18時31分14秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 15 - 2019/04/22 19時20分48秒
 
 
   symbol table (* = unused):
@@ -913,14 +913,14 @@
  SPC_PRINT :                    136 C |  STACK :                       4081 - |
  STRIN :                         C3 C |  STRPR :                        120 C |
  STR_LEN :                      2E7 C |  TAB :                            9 - |
-*TIME :                          18\-26\-10\-1231\-27\-12\-1214\-25\-89\-11 - |
+*TIME :                          19\-26\-10\-1220\-27\-12\-1248\-25\-89\-11 - |
 *TRUE :                           1 - |  UARTRC :                         1 - |
  UARTRD :                         0 - |  VERMSG :                       398 C |
  VERNAME :                                        KUNI-NET Z80 MONITOR v0.1 - |
 *VERSION :                     142F - |  VERSION_OUT :                  1BC C |
  _ABORT_DUMP :                  2A1 C |  _ASC16_DOT :                   2BD C |
  _ASC16_LOOP :                  2B2 C |  _ASC16_PRINT :                 2BF C |
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 16 - 2019/04/22 18時31分14秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 16 - 2019/04/22 19時20分48秒
 
 
  _ATOBIN :                      22E C |  _ATOBIN1 :                     23E C |
@@ -942,7 +942,7 @@
     141 symbols
      39 unused symbols
 
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 17 - 2019/04/22 18時31分14秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 17 - 2019/04/22 19時20分48秒
 
 
   codepages:
@@ -951,7 +951,7 @@
 STANDARD (0 changed characters)
 
 
-0.02 seconds assembly time
+0.09 seconds assembly time
 
     782 lines source file
       2 passes

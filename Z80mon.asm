@@ -205,6 +205,8 @@ _STRIN_LOOP:
     JR Z,_BS_RTN
 	CP DEL
     JR Z,_BS_RTN
+	CP ESC
+	JR Z,_ESC_RTN
 ;
 ; バッファENDにきた?
 	LD B,A
@@ -227,15 +229,20 @@ _WARN_BEEP:
 	RST 08h
     JR _STRIN_LOOP
 ;
+_ESC_RTN:
+	CCF
+	RET
+;
 _BS_RTN:
 	LD DE,INBUF
 	LD A,D
 	CP H
-	JR NZ,_CHAR_SET
+	JR NZ,_BS_RTN2
 	LD A,E
 	CP L
 	JR Z,_WARN_BEEP
 ;
+_BS_RTN2:
     PUSH HL
     LD HL,BSTXT
     CALL STRPR
@@ -369,7 +376,8 @@ _NEXT_CMD:
 ;;
 _ERROR_EXIT
 	CALL CRLF_PRINT
-	LD A,'?'
+	LD HL,HATENA_MSG
+	CALL STRPR
 	CALL CRLF_PRINT
 _MAIN_LOOP_END:
     call    CRLF_PRINT
@@ -588,15 +596,23 @@ _ASC16_PRINT:
 	DEC C
 	RET Z
 	JR _ASC16_LOOP
+
 ;--------------------------------------------------------------------------------
-; 16バイト分 HEXダンプ出力
+; アドレス部分出力
 ;--------------------------------------------------------------------------------
-DUMP16:
+ADDR_OUT:
 	CALL HEX4OUT
 	CALL SPC_PRINT
 	LD A,':'
 	RST 08h
 	CALL SPC_PRINT
+	RET
+
+;--------------------------------------------------------------------------------
+; 16バイト分 HEXダンプ出力
+;--------------------------------------------------------------------------------
+DUMP16:
+	CALL ADDR_OUT
 	LD C,10h
 _DUMP16_LOOP:
 	CALL DUMP_AT
@@ -613,6 +629,92 @@ DUMP_AT:
 	LD A,(HL)
 	CALL HEX2OUT
 	RET
+
+;--------------------------------------------------------------------------------
+; strlen
+;--------------------------------------------------------------------------------
+STR_LEN:
+	LD C,0
+_STR_LEN_LOOP:
+	LD A,(HL)
+	CP NULL
+	JR Z,_STR_LEN_EXIT
+	INC HL
+	INC C
+	JR _STR_LEN_LOOP
+;
+_STR_LEN_EXIT:
+	LD A,C
+	RET
+
+;
+;--------------------------------------------------------------------------------
+; メモリー変更コマンド
+;--------------------------------------------------------------------------------
+MEM_CHANGE:
+    CALL SPC_PRINT
+;
+    CALL STRIN
+	CALL PARSER
+;
+; 入力パラメータ数チェック
+	LD A,(ARGC)
+	CP 1
+	JR NZ,_PARAM_ERR
+;
+; 開始アドレス取得
+	LD HL,(ARGV_1)
+	CALL HEX4BIN
+	JR C,_PARAM_ERR
+	PUSH HL
+	POP IX
+;
+	CALL CRLF_PRINT
+_MEM_CHANGE_LOOP:
+	PUSH IX
+	POP HL
+	CALL ADDR_OUT
+	LD A,(IX+0)
+	CALL HEX2OUT
+	LD A,'-'
+	CALL CPRINT
+	PUSH IX
+;
+    CALL STRIN
+	JP C,_MEM_CHANGE_EXIT
+	CALL PARSER
+; 入力パラメータ数/レングスチェック
+	LD A,(ARGC)
+	CP 0
+	JR Z,_NEXT_ADDR
+	CP 1
+	JR NZ,_HATENA_OUT
+	LD HL,(ARGV_1)
+	CALL STR_LEN
+	CP 2
+	JR NZ,_HATENA_OUT
+	LD HL,(ARGV_1)
+	CALL HEX2BIN
+	JR C,_HATENA_OUT
+	POP IX
+	LD (IX+0),A
+	INC IX
+	JR _MEM_CHANGE_LOOP
+;
+_NEXT_ADDR:
+	POP IX
+	INC IX
+	JR _MEM_CHANGE_LOOP
+;
+_HATENA_OUT:
+	LD HL,HATENA_MSG
+	CALL STRPR
+	POP IX
+	JR _MEM_CHANGE_LOOP
+;
+_MEM_CHANGE_EXIT:
+	CALL CRLF_PRINT
+	JP _MAIN_LOOP ;ESCキーでメイン処理へ
 ;
 ;--------------------------------------------------------------------------------
 ; コマンドテーブル
@@ -626,6 +728,8 @@ CMD_TBL:
     DW VERSION_OUT
     DB 'D'
     DW MEM_DUMP
+    DB 'M'
+    DW MEM_CHANGE
 ; TABLE END
     DB 00h
 ;
@@ -637,8 +741,10 @@ VERMSG  DB VERNAME,CR,0
 OPENMSG DB CR,CR,"** ",VERNAME," **",CR,0
 BSTXT	DB BS,SPC,BS,0
 HELP_MSG DB "- - - COMMAND HELP - - -",CR
+         DB "M XXXX ",TAB,TAB,"MEMORY EDIT",CR
          DB "D XXXX XXXX ",TAB,"MEMORY DUMP",CR
          DB "H ",TAB,TAB,"HELP MESSGAE",CR
          DB "V ",TAB,TAB,"VERSION INFOMATION",CR,0
 PARAM_ERRMSG DB BEEP,"** PARAMETER ERR",CR,0
 ABORT_MSG DB BEEP,"** MEM DUMP ABORTED END",CR,0
+HATENA_MSG DB CR,"?",CR,0

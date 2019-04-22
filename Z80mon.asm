@@ -654,9 +654,9 @@ _STR_LEN_EXIT:
 	LD A,C
 	RET
 ;
-;--------------------------------------------------------------------------------
+;================================================================================
 ; メモリー変更コマンド
-;--------------------------------------------------------------------------------
+;================================================================================
 MEM_CHANGE:
     CALL SPC_PRINT
 ;
@@ -719,8 +719,30 @@ _HATENA_OUT:
 	JR _MEM_CHANGE_LOOP
 ;
 _MEM_CHANGE_EXIT:
+	POP IX
 	CALL CRLF_PRINT
 	RET ;ESCキーでメイン処理へ
+
+;
+;================================================================================
+; プログラム実行(G)コマンド
+;================================================================================
+PGM_GO:
+    CALL SPC_PRINT
+;
+    CALL STRIN
+	CALL PARSER
+;
+; 入力パラメータ数チェック
+	LD A,(ARGC)
+	CP 1
+	JP NZ,_PARAM_ERR
+;
+; 実行アドレス取得
+	LD HL,(ARGV_1)
+	CALL HEX4BIN
+	JP C,_PARAM_ERR
+	JP (HL)
 ;
 ;--------------------------------------------------------------------------------
 ; コマンドテーブル
@@ -736,6 +758,8 @@ CMD_TBL:
     DW MEM_DUMP
     DB 'M'
     DW MEM_CHANGE
+    DB 'G'
+    DW PGM_GO
 ; TABLE END
     DB 00h
 ;
@@ -749,6 +773,7 @@ BSTXT	DB BS,SPC,BS,0
 HELP_MSG DB "- - - COMMAND HELP - - -",CR
          DB "M XXXX ",TAB,TAB,"MEMORY EDIT",CR
          DB "D XXXX XXXX ",TAB,"MEMORY DUMP",CR
+         DB "G XXXX",TAB,TAB,"PROGRAM EXECUTE",CR
          DB "H ",TAB,TAB,"HELP MESSGAE",CR
          DB "V ",TAB,TAB,"VERSION INFOMATION",CR,0
 PARAM_ERRMSG DB BEEP,"** PARAMETER ERR",CR,0

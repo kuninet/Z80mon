@@ -379,6 +379,7 @@ _NEXT_CMD:
 	JR _CMD_LOOP
 ;;
 _ERROR_EXIT
+	POP AF
 	CALL CRLF_PRINT
 	LD HL,HATENA_MSG
 	CALL STRPR
@@ -641,6 +642,8 @@ DUMP_AT:
 ; strlen
 ;--------------------------------------------------------------------------------
 STR_LEN:
+	PUSH HL
+	PUSH BC
 	LD C,0
 _STR_LEN_LOOP:
 	LD A,(HL)
@@ -652,6 +655,8 @@ _STR_LEN_LOOP:
 ;
 _STR_LEN_EXIT:
 	LD A,C
+	POP BC
+	POP HL
 	RET
 ;
 ;================================================================================
@@ -736,13 +741,89 @@ PGM_GO:
 ; 入力パラメータ数チェック
 	LD A,(ARGC)
 	CP 1
-	JP NZ,_PARAM_ERR
 ;
 ; 実行アドレス取得
+;
+	LD HL,(ARGV_1)
+	CALL STR_LEN
+	CP 4
+	JP NZ,_PARAM_ERR
+;
 	LD HL,(ARGV_1)
 	CALL HEX4BIN
 	JP C,_PARAM_ERR
 	JP (HL)
+;
+;
+;================================================================================
+; I/O入力コマンド
+;================================================================================
+IO_IN:
+    CALL SPC_PRINT
+;
+    CALL STRIN
+	CALL PARSER
+;
+; 入力パラメータ数チェック
+	LD A,(ARGC)
+	CP 1
+	JP NZ,_PARAM_ERR
+;
+; I/Oアドレス取得
+	LD HL,(ARGV_1)
+	CALL STR_LEN
+	CP 2
+	JP NZ,_PARAM_ERR
+;
+	LD HL,(ARGV_1)
+	CALL HEX2BIN
+	JP C,_PARAM_ERR
+	LD C,A
+	IN A,(C)
+;
+	CALL HEX2OUT
+	CALL CRLF_PRINT
+	RET
+;
+;================================================================================
+; I/O出力コマンド
+;================================================================================
+IO_OUT:
+    CALL SPC_PRINT
+;
+    CALL STRIN
+	CALL PARSER
+;
+; 入力パラメータ数チェック
+	LD A,(ARGC)
+	CP 2
+	JP NZ,_PARAM_ERR
+;
+; I/Oアドレス取得
+	LD HL,(ARGV_1)
+	CALL STR_LEN
+	CP 2
+	JP NZ,_PARAM_ERR
+;
+	LD HL,(ARGV_1)
+	CALL HEX2BIN
+	JP C,_PARAM_ERR
+	LD C,A
+;
+; 出力データ取得
+	LD HL,(ARGV_2)
+	CALL STR_LEN
+	CP 2
+	JP NZ,_PARAM_ERR
+;
+	LD HL,(ARGV_2)
+	CALL HEX2BIN
+	JP C,_PARAM_ERR
+;
+	OUT (C),A
+;
+	CALL CRLF_PRINT
+	RET
 ;
 ;--------------------------------------------------------------------------------
 ; コマンドテーブル
@@ -760,13 +841,17 @@ CMD_TBL:
     DW MEM_CHANGE
     DB 'G'
     DW PGM_GO
+    DB 'I'
+    DW IO_IN
+    DB 'O'
+    DW IO_OUT
 ; TABLE END
     DB 00h
 ;
 ;--------------------------------------------------------------------------------
 ; メッセージなど
 ;--------------------------------------------------------------------------------
-VERNAME EQU "KUNI-NET Z80 MONITOR v0.1"
+VERNAME EQU "KUNI-NET Z80 MONITOR v0.3"
 VERMSG  DB VERNAME,CR,0
 OPENMSG DB CR,CR,"** ",VERNAME," **",CR,0
 BSTXT	DB BS,SPC,BS,0
@@ -774,6 +859,8 @@ HELP_MSG DB "- - - COMMAND HELP - - -",CR
          DB "M XXXX ",TAB,TAB,"MEMORY EDIT",CR
          DB "D XXXX XXXX ",TAB,"MEMORY DUMP",CR
          DB "G XXXX",TAB,TAB,"PROGRAM EXECUTE",CR
+         DB "I XX",TAB,TAB,"I/O INPUT",CR
+         DB "O XX XX",TAB,TAB,"I/O OUTPUT",CR
          DB "H ",TAB,TAB,"HELP MESSGAE",CR
          DB "V ",TAB,TAB,"VERSION INFOMATION",CR,0
 PARAM_ERRMSG DB BEEP,"** PARAMETER ERR",CR,0

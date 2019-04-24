@@ -41,7 +41,7 @@ SERRDP	DS	2
 SERCNT	DS	1
 BASFLG	DS	1
 ;
-INBUF   DS  20
+INBUF   DS  60
 INMAX   EQU  $-INBUF
 INEND   DS  1
 ;
@@ -472,9 +472,10 @@ _PARSE_ERR:
 ; HEX 2桁キャラクタ → Aレジスタ
 ;--------------------------------------------------------------------------------
 HEX2BIN:
+	PUSH BC
 	LD A,(HL)
 	CALL _ATOBIN
-	RET C
+	JR C,_HEX2BIN_EXIT
 	SLA A
 	SLA A
 	SLA A
@@ -483,8 +484,10 @@ HEX2BIN:
 	INC HL
 	LD A,(HL)
 	CALL _ATOBIN
-	RET C
+	JR C,_HEX2BIN_EXIT
 	ADD A,B
+_HEX2BIN_EXIT:
+	POP BC
 	RET
 ;
 _ATOBIN:
@@ -824,6 +827,69 @@ IO_OUT:
 ;
 	CALL CRLF_PRINT
 	RET
+;================================================================================
+; インテルHEXロードコマンド
+;================================================================================
+LOAD:
+	CALL CRLF_PRINT
+;
+_LOAD_START:
+	RST 10h
+	CP ESC
+	JR Z,_LOAD_EXIT
+	CP ':'
+	JR NZ,_LOAD_START
+	RST 08h
+;
+; LENGTH GET
+	LD B,0
+    CALL STRIN
+;
+	LD HL,INBUF
+	CALL HEX2BIN
+	LD C,A
+	LD B,A
+;
+; ADDR GET
+	LD HL,INBUF+2
+	CALL HEX4BIN
+	PUSH HL
+	POP IX
+	LD A,B
+	ADD A,H
+	ADD A,L
+	LD B,A
+;
+; GET RECORD TYPE
+	LD HL,INBUF+6
+	CALL HEX2BIN
+	OR A
+	JR NZ,_LOAD_EXIT
+;
+_MEM_LOAD_START:
+	LD HL,INBUF+8
+_MEM_LOAD:
+	CALL HEX2BIN
+	LD (IX+0),A
+	ADD A,B
+	LD B,A
+	INC HL
+	INC IX
+	DEC C
+	JR NZ,_MEM_LOAD
+;
+	CALL HEX2BIN
+	ADD A,B
+	OR A
+	JR NZ,_CHECKSUM_ERROR
+	JR _LOAD_START
+;
+_CHECKSUM_ERROR:
+	LD HL,CHECKSUM_ERRMSG
+	JP _PRINT_END
+;
+_LOAD_EXIT:
+	RET
 ;
 ;--------------------------------------------------------------------------------
 ; コマンドテーブル
@@ -845,13 +911,15 @@ CMD_TBL:
     DW IO_IN
     DB 'O'
     DW IO_OUT
+    DB 'L'
+    DW LOAD
 ; TABLE END
     DB 00h
 ;
 ;--------------------------------------------------------------------------------
 ; メッセージなど
 ;--------------------------------------------------------------------------------
-VERNAME EQU "KUNI-NET Z80 MONITOR v0.3"
+VERNAME EQU "KUNI-NET Z80 MONITOR v0.5"
 VERMSG  DB VERNAME,CR,0
 OPENMSG DB CR,CR,"** ",VERNAME," **",CR,0
 BSTXT	DB BS,SPC,BS,0
@@ -861,8 +929,10 @@ HELP_MSG DB "- - - COMMAND HELP - - -",CR
          DB "G XXXX",TAB,TAB,"PROGRAM EXECUTE",CR
          DB "I XX",TAB,TAB,"I/O INPUT",CR
          DB "O XX XX",TAB,TAB,"I/O OUTPUT",CR
+         DB "L ",TAB,TAB,"INTEL HEX LOAD",CR
          DB "H ",TAB,TAB,"HELP MESSGAE",CR
          DB "V ",TAB,TAB,"VERSION INFOMATION",CR,0
 PARAM_ERRMSG DB BEEP,"** PARAMETER ERR",CR,0
 ABORT_MSG DB BEEP,"** MEM DUMP ABORTED END",CR,0
+CHECKSUM_ERRMSG DB BEEP,"** CHECKSUM ERROR",CR,0
 HATENA_MSG DB CR,"?",CR,0

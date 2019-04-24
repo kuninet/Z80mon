@@ -1,4 +1,4 @@
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 1 - 2019/04/23 22時12分22秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 1 - 2019/04/24 21時44分12秒
 
 
        1/       0 :                     ;-----------------------------------------------------------------------
@@ -44,24 +44,24 @@
       41/    4043 :                     SERCNT	DS	1
       42/    4044 :                     BASFLG	DS	1
       43/    4045 :                     ;
-      44/    4045 :                     INBUF   DS  20
-      45/    4059 : =14H                INMAX   EQU  $-INBUF
-      46/    4059 :                     INEND   DS  1
-      47/    405A :                     ;
-      48/    405A :                     ARGC	DS	1
-      49/    405B :                     ARGV_1	DS	2
-      50/    405D :                     ARGV_2	DS	2
-      51/    405F :                     ARGV_3	DS	2
-      52/    4061 : =3H                 ARG_MAX	EQU ($-ARGV_1)/2
-      53/    4061 : =7H                 ARG_AREA_LEN EQU $-ARGC
-      54/    4061 :                     ;
-      55/    4061 :                         	DS	32
-      56/    4081 : =4081H              STACK   	EQU    $
-      57/    4081 :                     
-      58/    4081 :                     
-      59/    4081 :                     
+      44/    4045 :                     INBUF   DS  60
+      45/    4081 : =3CH                INMAX   EQU  $-INBUF
+      46/    4081 :                     INEND   DS  1
+      47/    4082 :                     ;
+      48/    4082 :                     ARGC	DS	1
+      49/    4083 :                     ARGV_1	DS	2
+      50/    4085 :                     ARGV_2	DS	2
+      51/    4087 :                     ARGV_3	DS	2
+      52/    4089 : =3H                 ARG_MAX	EQU ($-ARGV_1)/2
+      53/    4089 : =7H                 ARG_AREA_LEN EQU $-ARGC
+      54/    4089 :                     ;
+      55/    4089 :                         	DS	32
+      56/    40A9 : =40A9H              STACK   	EQU    $
+      57/    40A9 :                     
+      58/    40A9 :                     
+      59/    40A9 :                     
       60/       0 :                     		ORG	0000h
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 2 - 2019/04/23 22時12分22秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 2 - 2019/04/24 21時44分12秒
 
 
       61/       0 :                     ;------------------------------------------------------------------------------
@@ -124,7 +124,7 @@
      118/      6C : FE 30               	CP	BUFFUL
      119/      6E : DA 75 00            	JP	C,RTS0
      120/      71 : 3E 17               	LD	A,RTSHIG
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 3 - 2019/04/23 22時12分22秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 3 - 2019/04/24 21時44分12秒
 
 
      121/      73 : D3 01               	OUT	(UARTRC),A
@@ -187,7 +187,7 @@
      178/      B9 : D7                      RST 10h
      179/      BA : FE 61                   CP 'a'
      180/      BC : F8                      RET M
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 4 - 2019/04/23 22時12分22秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 4 - 2019/04/24 21時44分12秒
 
 
      181/      BD : FE 7B                   CP 'z'+1
@@ -204,7 +204,7 @@
      192/      C5 : 32 45 40                LD (INBUF),A
      193/      C8 : 21 45 40                LD HL,INBUF
      194/      CB : 11 46 40                LD DE,INBUF+1
-     195/      CE : 01 14 00                LD BC,INMAX
+     195/      CE : 01 3C 00                LD BC,INMAX
      196/      D1 : ED B0                   LDIR
      197/      D3 :                     ;
      198/      D3 : 21 45 40                LD HL,INBUF
@@ -222,7 +222,7 @@
      210/      E9 :                     ;
      211/      E9 :                     ; バッファENDにきた?
      212/      E9 : 47                  	LD B,A
-     213/      EA : 11 59 40            	LD DE,INEND
+     213/      EA : 11 81 40            	LD DE,INEND
      214/      ED : 7A                  	LD A,D
      215/      EE : BC                  	CP H
      216/      EF : 20 05               	JR NZ,_CHAR_SET
@@ -250,7 +250,7 @@
      238/     107 : 7A                  	LD A,D
      239/     108 : BC                  	CP H
      240/     109 : 20 04               	JR NZ,_BS_RTN2
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 5 - 2019/04/23 22時12分22秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 5 - 2019/04/24 21時44分12秒
 
 
      241/     10B : 7B                  	LD A,E
@@ -259,7 +259,7 @@
      244/     10F :                     ;
      245/     10F :                     _BS_RTN2:
      246/     10F : E5                      PUSH HL
-     247/     110 : 21 58 04                LD HL,BSTXT
+     247/     110 : 21 B0 04                LD HL,BSTXT
      248/     113 : CD 20 01                CALL STRPR
      249/     116 : E1                      POP HL
      250/     117 : 2B                      DEC HL
@@ -313,7 +313,7 @@
      298/     13A :                     ;------------------------------------------------------------------------------
      299/     13A :                     ; Hex2桁出力
      300/     13A :                     ;------------------------------------------------------------------------------
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 6 - 2019/04/23 22時12分22秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 6 - 2019/04/24 21時44分12秒
 
 
      301/     13A :                     HEX2OUT:
@@ -344,7 +344,7 @@
      326/     157 :                     ; 初期化
      327/     157 :                     ;------------------------------------------------------------------------------
      328/     157 :                     INIT:		
-     329/     157 : 31 81 40                LD  SP,STACK
+     329/     157 : 31 A9 40                LD  SP,STACK
      330/     15A : 21 00 40            	LD	HL,SERBUF
      331/     15D : 22 3F 40            	LD	(SERINP),HL
      332/     160 : 22 41 40            	LD	(SERRDP),HL
@@ -365,7 +365,7 @@
      347/     17A :                     ; メイン
      348/     17A :                     ;--------------------------------------------------------------------------------
      349/     17A :                     MAIN:
-     350/     17A : 21 35 04                LD HL,OPENMSG
+     350/     17A : 21 8D 04                LD HL,OPENMSG
      351/     17D : CD 20 01                CALL STRPR
      352/     180 :                     _MAIN_LOOP:
      353/     180 : 21 80 01            	LD HL,_MAIN_LOOP
@@ -373,10 +373,10 @@
      355/     184 :                     ;
      356/     184 : 3E 3E                   LD A,'>'
      357/     186 : CF                      RST 08h
-     358/     187 : DD 21 01 04             LD IX,CMD_TBL
+     358/     187 : DD 21 56 04             LD IX,CMD_TBL
      359/     18B : CD B9 00            	CALL GETC
      360/     18E : CF                      RST 08H
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 7 - 2019/04/23 22時12分22秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 7 - 2019/04/24 21時44分12秒
 
 
      361/     18F :                     ;
@@ -402,7 +402,7 @@
      381/     1AA :                     _ERROR_EXIT
      382/     1AA : F1                  	POP AF
      383/     1AB : CD 2F 01            	CALL CRLF_PRINT
-     384/     1AE : 21 35 05            	LD HL,HATENA_MSG
+     384/     1AE : 21 B4 05            	LD HL,HATENA_MSG
      385/     1B1 : CD 20 01            	CALL STRPR
      386/     1B4 : CD 2F 01            	CALL CRLF_PRINT
      387/     1B7 : C9                  	RET
@@ -411,14 +411,14 @@
      390/     1B8 :                     ; ヘルプ出力
      391/     1B8 :                     ;================================================================================
      392/     1B8 :                     HELP_OUT:
-     393/     1B8 : 21 5C 04                LD HL,HELP_MSG
+     393/     1B8 : 21 B4 04                LD HL,HELP_MSG
      394/     1BB : 18 05               	JR _PRINT_END
      395/     1BD :                     ;
      396/     1BD :                     ;================================================================================
      397/     1BD :                     ; バージョン出力
      398/     1BD :                     ;================================================================================
      399/     1BD :                     VERSION_OUT:
-     400/     1BD : 21 1A 04                LD HL,VERMSG
+     400/     1BD : 21 72 04                LD HL,VERMSG
      401/     1C0 : 18 00               	JR _PRINT_END
      402/     1C2 :                     ;
      403/     1C2 :                     ;--------------------------------------------------------------------------------
@@ -439,7 +439,7 @@
      418/     1CE : CD 3A 01            	CALL HEX2OUT
      419/     1D1 : 7D                  	LD A,L
      420/     1D2 : CD 3A 01            	CALL HEX2OUT
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 8 - 2019/04/23 22時12分22秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 8 - 2019/04/24 21時44分12秒
 
 
      421/     1D5 : F1                  	POP AF
@@ -450,16 +450,16 @@
      426/     1D7 :                     ;--------------------------------------------------------------------------------
      427/     1D7 :                     PARSER:
      428/     1D7 :                     ; 編集エリア初期化
-     429/     1D7 : 21 5A 40            	LD HL,ARGC
+     429/     1D7 : 21 82 40            	LD HL,ARGC
      430/     1DA : 3E 00               	LD A,0
      431/     1DC : 77                  	LD (HL),A
-     432/     1DD : 11 5B 40            	LD DE,ARGC+1
+     432/     1DD : 11 83 40            	LD DE,ARGC+1
      433/     1E0 : 01 06 00            	LD BC,ARG_AREA_LEN-1
      434/     1E3 : ED B0               	LDIR
      435/     1E5 :                     ; 入力パラメーター パース開始
      436/     1E5 : 4F                  	LD C,A
      437/     1E6 : 21 44 40            	LD HL,INBUF-1
-     438/     1E9 : DD 21 5B 40         	LD IX,ARGV_1
+     438/     1E9 : DD 21 83 40         	LD IX,ARGV_1
      439/     1ED :                     ;
      440/     1ED :                     _PARSE_LOOP:
      441/     1ED : 23                  	INC HL
@@ -472,7 +472,7 @@
      448/     1F7 : 79                  	LD A,C
      449/     1F8 : FE 04               	CP ARG_MAX+1
      450/     1FA : 30 1B               	JR NC,_PARSE_ERR
-     451/     1FC : 32 5A 40            	LD (ARGC),A
+     451/     1FC : 32 82 40            	LD (ARGC),A
      452/     1FF : DD 75 00            	LD (IX+0),L
      453/     202 : DD 74 01            	LD (IX+1),H
      454/     205 : DD 23               	INC IX
@@ -496,511 +496,591 @@
      472/     219 :                     ; HEX 2桁キャラクタ → Aレジスタ
      473/     219 :                     ;--------------------------------------------------------------------------------
      474/     219 :                     HEX2BIN:
-     475/     219 : 7E                  	LD A,(HL)
-     476/     21A : CD 2F 02            	CALL _ATOBIN
-     477/     21D : D8                  	RET C
-     478/     21E : CB 27               	SLA A
+     475/     219 : C5                  	PUSH BC
+     476/     21A : 7E                  	LD A,(HL)
+     477/     21B : CD 33 02            	CALL _ATOBIN
+     478/     21E : 38 11               	JR C,_HEX2BIN_EXIT
      479/     220 : CB 27               	SLA A
      480/     222 : CB 27               	SLA A
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 9 - 2019/04/23 22時12分22秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 9 - 2019/04/24 21時44分12秒
 
 
      481/     224 : CB 27               	SLA A
-     482/     226 : 47                  	LD B,A
-     483/     227 : 23                  	INC HL
-     484/     228 : 7E                  	LD A,(HL)
-     485/     229 : CD 2F 02            	CALL _ATOBIN
-     486/     22C : D8                  	RET C
-     487/     22D : 80                  	ADD A,B
-     488/     22E : C9                  	RET
-     489/     22F :                     ;
-     490/     22F :                     _ATOBIN:
-     491/     22F : FE 30               	CP '0'
-     492/     231 : D8                  	RET C
-     493/     232 : FE 3A               	CP '9'+1
-     494/     234 : 38 09               	JR C,_ATOBIN1
-     495/     236 : FE 41               	CP 'A'
-     496/     238 : D8                  	RET C
-     497/     239 : FE 47               	CP 'F'+1
-     498/     23B : 3F                  	CCF
+     482/     226 : CB 27               	SLA A
+     483/     228 : 47                  	LD B,A
+     484/     229 : 23                  	INC HL
+     485/     22A : 7E                  	LD A,(HL)
+     486/     22B : CD 33 02            	CALL _ATOBIN
+     487/     22E : 38 01               	JR C,_HEX2BIN_EXIT
+     488/     230 : 80                  	ADD A,B
+     489/     231 :                     _HEX2BIN_EXIT:
+     490/     231 : C1                  	POP BC
+     491/     232 : C9                  	RET
+     492/     233 :                     ;
+     493/     233 :                     _ATOBIN:
+     494/     233 : FE 30               	CP '0'
+     495/     235 : D8                  	RET C
+     496/     236 : FE 3A               	CP '9'+1
+     497/     238 : 38 09               	JR C,_ATOBIN1
+     498/     23A : FE 41               	CP 'A'
      499/     23C : D8                  	RET C
-     500/     23D : C6 09               	ADD A,09H
-     501/     23F :                     _ATOBIN1:
-     502/     23F : E6 0F               	AND 0Fh
-     503/     241 : C9                  	RET
-     504/     242 :                     ;
-     505/     242 :                     
-     506/     242 :                     ;--------------------------------------------------------------------------------
-     507/     242 :                     ; 4バイト16進数文字列→バイナリ(HL)へ
-     508/     242 :                     ;--------------------------------------------------------------------------------
-     509/     242 :                     HEX4BIN:
-     510/     242 : CD 19 02            	CALL HEX2BIN
-     511/     245 : D8                  	RET C
-     512/     246 : 57                  	LD D,A
-     513/     247 : 23                  	INC HL
-     514/     248 : CD 19 02            	CALL HEX2BIN
-     515/     24B : D8                  	RET C
-     516/     24C : 5F                  	LD E,A
-     517/     24D : D5                  	PUSH DE
-     518/     24E : E1                  	POP HL
-     519/     24F : C9                  	RET
-     520/     250 :                     ;
-     521/     250 :                     ;================================================================================
-     522/     250 :                     ; メモリーダンプ
-     523/     250 :                     ;================================================================================
-     524/     250 :                     MEM_DUMP:
-     525/     250 : CD 36 01                CALL SPC_PRINT
-     526/     253 :                     ;
-     527/     253 : CD C3 00                CALL STRIN
-     528/     256 : CD D7 01            	CALL PARSER
-     529/     259 : 38 41               	JR C,_PARAM_ERR
-     530/     25B :                     ; 入力パラメータ数チェック
-     531/     25B : 3A 5A 40            	LD A,(ARGC)
-     532/     25E : FE 02               	CP 2
-     533/     260 : 20 3A               	JR NZ,_PARAM_ERR
-     534/     262 :                     ; 開始アドレス取得
-     535/     262 : 2A 5B 40            	LD HL,(ARGV_1)
-     536/     265 : CD 42 02            	CALL HEX4BIN
-     537/     268 : 38 32               	JR C,_PARAM_ERR
-     538/     26A : E5                  	PUSH HL
-     539/     26B : DD E1               	POP IX
-     540/     26D :                     ; 終了アドレス取得
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 10 - 2019/04/23 22時12分22秒
+     500/     23D : FE 47               	CP 'F'+1
+     501/     23F : 3F                  	CCF
+     502/     240 : D8                  	RET C
+     503/     241 : C6 09               	ADD A,09H
+     504/     243 :                     _ATOBIN1:
+     505/     243 : E6 0F               	AND 0Fh
+     506/     245 : C9                  	RET
+     507/     246 :                     ;
+     508/     246 :                     
+     509/     246 :                     ;--------------------------------------------------------------------------------
+     510/     246 :                     ; 4バイト16進数文字列→バイナリ(HL)へ
+     511/     246 :                     ;--------------------------------------------------------------------------------
+     512/     246 :                     HEX4BIN:
+     513/     246 : CD 19 02            	CALL HEX2BIN
+     514/     249 : D8                  	RET C
+     515/     24A : 57                  	LD D,A
+     516/     24B : 23                  	INC HL
+     517/     24C : CD 19 02            	CALL HEX2BIN
+     518/     24F : D8                  	RET C
+     519/     250 : 5F                  	LD E,A
+     520/     251 : D5                  	PUSH DE
+     521/     252 : E1                  	POP HL
+     522/     253 : C9                  	RET
+     523/     254 :                     ;
+     524/     254 :                     ;================================================================================
+     525/     254 :                     ; メモリーダンプ
+     526/     254 :                     ;================================================================================
+     527/     254 :                     MEM_DUMP:
+     528/     254 : CD 36 01                CALL SPC_PRINT
+     529/     257 :                     ;
+     530/     257 : CD C3 00                CALL STRIN
+     531/     25A : CD D7 01            	CALL PARSER
+     532/     25D : 38 41               	JR C,_PARAM_ERR
+     533/     25F :                     ; 入力パラメータ数チェック
+     534/     25F : 3A 82 40            	LD A,(ARGC)
+     535/     262 : FE 02               	CP 2
+     536/     264 : 20 3A               	JR NZ,_PARAM_ERR
+     537/     266 :                     ; 開始アドレス取得
+     538/     266 : 2A 83 40            	LD HL,(ARGV_1)
+     539/     269 : CD 46 02            	CALL HEX4BIN
+     540/     26C : 38 32               	JR C,_PARAM_ERR
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 10 - 2019/04/24 21時44分12秒
 
 
-     541/     26D : 2A 5D 40            	LD HL,(ARGV_2)
-     542/     270 : CD 42 02            	CALL HEX4BIN
-     543/     273 : 38 27               	JR C,_PARAM_ERR
-     544/     275 : E5                  	PUSH HL
-     545/     276 : D1                  	POP DE
-     546/     277 : DD E5               	PUSH IX
-     547/     279 : E1                  	POP HL
-     548/     27A :                     ; ダンプ実施
-     549/     27A :                     _DUMP_LOOP:
-     550/     27A : DF                  	RST 18h
-     551/     27B : 28 05               	JR Z,_DUMP_GO
-     552/     27D : D7                  	RST 10h
-     553/     27E : FE 1B               	CP ESC
-     554/     280 : 28 20               	JR Z,_ABORT_DUMP
-     555/     282 :                     _DUMP_GO:
-     556/     282 : E5                  	PUSH HL
-     557/     283 : CD D3 02            	CALL DUMP16
-     558/     286 : E1                  	POP HL
-     559/     287 : CD A8 02            	CALL ASC16
-     560/     28A : CD 2F 01            	CALL CRLF_PRINT
-     561/     28D :                     ; 終了判定
-     562/     28D : 7A                  	LD A,D
-     563/     28E : BC                  	CP H
-     564/     28F : F8                  	RET M   ; メインループへ
-     565/     290 : 7B                  	LD A,E
-     566/     291 : BD                  	CP L
-     567/     292 : FA 97 02            	JP M,_DUMP_END_CHECK
-     568/     295 : 18 E3               	JR _DUMP_LOOP
-     569/     297 :                     ;
-     570/     297 :                     _DUMP_END_CHECK:
-     571/     297 : 7A                  	LD A,D
-     572/     298 : BC                  	CP H
-     573/     299 : 20 DF               	JR NZ,_DUMP_LOOP
-     574/     29B : C9                  	RET
-     575/     29C :                     ;
-     576/     29C :                     _PARAM_ERR:
-     577/     29C : 21 08 05            	LD HL,PARAM_ERRMSG
-     578/     29F : C3 C2 01            	JP _PRINT_END
-     579/     2A2 :                     ;
-     580/     2A2 :                     _ABORT_DUMP:
-     581/     2A2 : 21 1B 05            	LD HL,ABORT_MSG
-     582/     2A5 : C3 C2 01            	JP _PRINT_END
-     583/     2A8 :                     ;--------------------------------------------------------------------------------
-     584/     2A8 :                     ; 16バイト分 ASCII出力
-     585/     2A8 :                     ;--------------------------------------------------------------------------------
-     586/     2A8 :                     ASC16:
-     587/     2A8 : CD 36 01            	CALL SPC_PRINT
-     588/     2AB : 3E 3A               	LD A,':'
-     589/     2AD : CF                  	RST 08h
-     590/     2AE : CD 36 01            	CALL SPC_PRINT
-     591/     2B1 : 0E 10               	LD C,10h
-     592/     2B3 :                     ;
-     593/     2B3 :                     _ASC16_LOOP:
-     594/     2B3 : 7E                  	LD A,(HL)
-     595/     2B4 : FE 20               	CP ' '
-     596/     2B6 : FA BE 02            	JP M,_ASC16_DOT
-     597/     2B9 : FE 7F               	CP 7Fh
-     598/     2BB : FA C0 02            	JP M,_ASC16_PRINT
-     599/     2BE :                     _ASC16_DOT:
-     600/     2BE : 3E 2E               	LD A,'.'
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 11 - 2019/04/23 22時12分22秒
+     541/     26E : E5                  	PUSH HL
+     542/     26F : DD E1               	POP IX
+     543/     271 :                     ; 終了アドレス取得
+     544/     271 : 2A 85 40            	LD HL,(ARGV_2)
+     545/     274 : CD 46 02            	CALL HEX4BIN
+     546/     277 : 38 27               	JR C,_PARAM_ERR
+     547/     279 : E5                  	PUSH HL
+     548/     27A : D1                  	POP DE
+     549/     27B : DD E5               	PUSH IX
+     550/     27D : E1                  	POP HL
+     551/     27E :                     ; ダンプ実施
+     552/     27E :                     _DUMP_LOOP:
+     553/     27E : DF                  	RST 18h
+     554/     27F : 28 05               	JR Z,_DUMP_GO
+     555/     281 : D7                  	RST 10h
+     556/     282 : FE 1B               	CP ESC
+     557/     284 : 28 20               	JR Z,_ABORT_DUMP
+     558/     286 :                     _DUMP_GO:
+     559/     286 : E5                  	PUSH HL
+     560/     287 : CD D7 02            	CALL DUMP16
+     561/     28A : E1                  	POP HL
+     562/     28B : CD AC 02            	CALL ASC16
+     563/     28E : CD 2F 01            	CALL CRLF_PRINT
+     564/     291 :                     ; 終了判定
+     565/     291 : 7A                  	LD A,D
+     566/     292 : BC                  	CP H
+     567/     293 : F8                  	RET M   ; メインループへ
+     568/     294 : 7B                  	LD A,E
+     569/     295 : BD                  	CP L
+     570/     296 : FA 9B 02            	JP M,_DUMP_END_CHECK
+     571/     299 : 18 E3               	JR _DUMP_LOOP
+     572/     29B :                     ;
+     573/     29B :                     _DUMP_END_CHECK:
+     574/     29B : 7A                  	LD A,D
+     575/     29C : BC                  	CP H
+     576/     29D : 20 DF               	JR NZ,_DUMP_LOOP
+     577/     29F : C9                  	RET
+     578/     2A0 :                     ;
+     579/     2A0 :                     _PARAM_ERR:
+     580/     2A0 : 21 73 05            	LD HL,PARAM_ERRMSG
+     581/     2A3 : C3 C2 01            	JP _PRINT_END
+     582/     2A6 :                     ;
+     583/     2A6 :                     _ABORT_DUMP:
+     584/     2A6 : 21 86 05            	LD HL,ABORT_MSG
+     585/     2A9 : C3 C2 01            	JP _PRINT_END
+     586/     2AC :                     ;--------------------------------------------------------------------------------
+     587/     2AC :                     ; 16バイト分 ASCII出力
+     588/     2AC :                     ;--------------------------------------------------------------------------------
+     589/     2AC :                     ASC16:
+     590/     2AC : CD 36 01            	CALL SPC_PRINT
+     591/     2AF : 3E 3A               	LD A,':'
+     592/     2B1 : CF                  	RST 08h
+     593/     2B2 : CD 36 01            	CALL SPC_PRINT
+     594/     2B5 : 0E 10               	LD C,10h
+     595/     2B7 :                     ;
+     596/     2B7 :                     _ASC16_LOOP:
+     597/     2B7 : 7E                  	LD A,(HL)
+     598/     2B8 : FE 20               	CP ' '
+     599/     2BA : FA C2 02            	JP M,_ASC16_DOT
+     600/     2BD : FE 7F               	CP 7Fh
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 11 - 2019/04/24 21時44分12秒
 
 
-     601/     2C0 :                     _ASC16_PRINT:
-     602/     2C0 : CF                  	RST 08h	
-     603/     2C1 : 23                  	INC HL
-     604/     2C2 : 0D                  	DEC C
-     605/     2C3 : C8                  	RET Z
-     606/     2C4 : 18 ED               	JR _ASC16_LOOP
-     607/     2C6 :                     
-     608/     2C6 :                     ;--------------------------------------------------------------------------------
-     609/     2C6 :                     ; アドレス部分出力
-     610/     2C6 :                     ;--------------------------------------------------------------------------------
-     611/     2C6 :                     ADDR_OUT:
-     612/     2C6 : CD CC 01            	CALL HEX4OUT
-     613/     2C9 : CD 36 01            	CALL SPC_PRINT
-     614/     2CC : 3E 3A               	LD A,':'
-     615/     2CE : CF                  	RST 08h
-     616/     2CF : CD 36 01            	CALL SPC_PRINT
-     617/     2D2 : C9                  	RET
-     618/     2D3 :                     
-     619/     2D3 :                     ;--------------------------------------------------------------------------------
-     620/     2D3 :                     ; 16バイト分 HEXダンプ出力
-     621/     2D3 :                     ;--------------------------------------------------------------------------------
-     622/     2D3 :                     DUMP16:
-     623/     2D3 : CD C6 02            	CALL ADDR_OUT
-     624/     2D6 : 0E 10               	LD C,10h
-     625/     2D8 :                     _DUMP16_LOOP:
-     626/     2D8 : CD E3 02            	CALL DUMP_AT
-     627/     2DB : CD 36 01            	CALL SPC_PRINT
-     628/     2DE : 23                  	INC HL
-     629/     2DF : 0D                  	DEC C
-     630/     2E0 : C8                  	RET Z
-     631/     2E1 : 18 F5               	JR _DUMP16_LOOP
-     632/     2E3 :                     
-     633/     2E3 :                     ;--------------------------------------------------------------------------------
-     634/     2E3 :                     ; 1バイト分 HEXダンプ出力
-     635/     2E3 :                     ;--------------------------------------------------------------------------------
-     636/     2E3 :                     DUMP_AT:
-     637/     2E3 : 7E                  	LD A,(HL)
-     638/     2E4 : CD 3A 01            	CALL HEX2OUT
-     639/     2E7 : C9                  	RET
-     640/     2E8 :                     
-     641/     2E8 :                     ;--------------------------------------------------------------------------------
-     642/     2E8 :                     ; strlen
-     643/     2E8 :                     ;--------------------------------------------------------------------------------
-     644/     2E8 :                     STR_LEN:
-     645/     2E8 : E5                  	PUSH HL
-     646/     2E9 : C5                  	PUSH BC
-     647/     2EA : 0E 00               	LD C,0
-     648/     2EC :                     _STR_LEN_LOOP:
-     649/     2EC : 7E                  	LD A,(HL)
-     650/     2ED : FE 00               	CP NULL
-     651/     2EF : 28 04               	JR Z,_STR_LEN_EXIT
-     652/     2F1 : 23                  	INC HL
-     653/     2F2 : 0C                  	INC C
-     654/     2F3 : 18 F7               	JR _STR_LEN_LOOP
-     655/     2F5 :                     ;
-     656/     2F5 :                     _STR_LEN_EXIT:
-     657/     2F5 : 79                  	LD A,C
-     658/     2F6 : C1                  	POP BC
-     659/     2F7 : E1                  	POP HL
-     660/     2F8 : C9                  	RET
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 12 - 2019/04/23 22時12分22秒
+     601/     2BF : FA C4 02            	JP M,_ASC16_PRINT
+     602/     2C2 :                     _ASC16_DOT:
+     603/     2C2 : 3E 2E               	LD A,'.'
+     604/     2C4 :                     _ASC16_PRINT:
+     605/     2C4 : CF                  	RST 08h	
+     606/     2C5 : 23                  	INC HL
+     607/     2C6 : 0D                  	DEC C
+     608/     2C7 : C8                  	RET Z
+     609/     2C8 : 18 ED               	JR _ASC16_LOOP
+     610/     2CA :                     
+     611/     2CA :                     ;--------------------------------------------------------------------------------
+     612/     2CA :                     ; アドレス部分出力
+     613/     2CA :                     ;--------------------------------------------------------------------------------
+     614/     2CA :                     ADDR_OUT:
+     615/     2CA : CD CC 01            	CALL HEX4OUT
+     616/     2CD : CD 36 01            	CALL SPC_PRINT
+     617/     2D0 : 3E 3A               	LD A,':'
+     618/     2D2 : CF                  	RST 08h
+     619/     2D3 : CD 36 01            	CALL SPC_PRINT
+     620/     2D6 : C9                  	RET
+     621/     2D7 :                     
+     622/     2D7 :                     ;--------------------------------------------------------------------------------
+     623/     2D7 :                     ; 16バイト分 HEXダンプ出力
+     624/     2D7 :                     ;--------------------------------------------------------------------------------
+     625/     2D7 :                     DUMP16:
+     626/     2D7 : CD CA 02            	CALL ADDR_OUT
+     627/     2DA : 0E 10               	LD C,10h
+     628/     2DC :                     _DUMP16_LOOP:
+     629/     2DC : CD E7 02            	CALL DUMP_AT
+     630/     2DF : CD 36 01            	CALL SPC_PRINT
+     631/     2E2 : 23                  	INC HL
+     632/     2E3 : 0D                  	DEC C
+     633/     2E4 : C8                  	RET Z
+     634/     2E5 : 18 F5               	JR _DUMP16_LOOP
+     635/     2E7 :                     
+     636/     2E7 :                     ;--------------------------------------------------------------------------------
+     637/     2E7 :                     ; 1バイト分 HEXダンプ出力
+     638/     2E7 :                     ;--------------------------------------------------------------------------------
+     639/     2E7 :                     DUMP_AT:
+     640/     2E7 : 7E                  	LD A,(HL)
+     641/     2E8 : CD 3A 01            	CALL HEX2OUT
+     642/     2EB : C9                  	RET
+     643/     2EC :                     
+     644/     2EC :                     ;--------------------------------------------------------------------------------
+     645/     2EC :                     ; strlen
+     646/     2EC :                     ;--------------------------------------------------------------------------------
+     647/     2EC :                     STR_LEN:
+     648/     2EC : E5                  	PUSH HL
+     649/     2ED : C5                  	PUSH BC
+     650/     2EE : 0E 00               	LD C,0
+     651/     2F0 :                     _STR_LEN_LOOP:
+     652/     2F0 : 7E                  	LD A,(HL)
+     653/     2F1 : FE 00               	CP NULL
+     654/     2F3 : 28 04               	JR Z,_STR_LEN_EXIT
+     655/     2F5 : 23                  	INC HL
+     656/     2F6 : 0C                  	INC C
+     657/     2F7 : 18 F7               	JR _STR_LEN_LOOP
+     658/     2F9 :                     ;
+     659/     2F9 :                     _STR_LEN_EXIT:
+     660/     2F9 : 79                  	LD A,C
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 12 - 2019/04/24 21時44分12秒
 
 
-     661/     2F9 :                     ;
-     662/     2F9 :                     ;================================================================================
-     663/     2F9 :                     ; メモリー変更コマンド
-     664/     2F9 :                     ;================================================================================
-     665/     2F9 :                     MEM_CHANGE:
-     666/     2F9 : CD 36 01                CALL SPC_PRINT
-     667/     2FC :                     ;
-     668/     2FC : CD C3 00                CALL STRIN
-     669/     2FF : CD D7 01            	CALL PARSER
-     670/     302 :                     ;
-     671/     302 :                     ; 入力パラメータ数チェック
-     672/     302 : 3A 5A 40            	LD A,(ARGC)
-     673/     305 : FE 01               	CP 1
-     674/     307 : 20 93               	JR NZ,_PARAM_ERR
-     675/     309 :                     ;
-     676/     309 :                     ; 開始アドレス取得
-     677/     309 : 2A 5B 40            	LD HL,(ARGV_1)
-     678/     30C : CD 42 02            	CALL HEX4BIN
-     679/     30F : 38 8B               	JR C,_PARAM_ERR
-     680/     311 : E5                  	PUSH HL
-     681/     312 : DD E1               	POP IX
-     682/     314 :                     ;
-     683/     314 : CD 2F 01            	CALL CRLF_PRINT
-     684/     317 :                     _MEM_CHANGE_LOOP:
-     685/     317 : DD E5               	PUSH IX
-     686/     319 : E1                  	POP HL
-     687/     31A : CD C6 02            	CALL ADDR_OUT
-     688/     31D : DD 7E 00            	LD A,(IX+0)
-     689/     320 : CD 3A 01            	CALL HEX2OUT
-     690/     323 : 3E 2D               	LD A,'-'
-     691/     325 : CD 29 01            	CALL CPRINT
-     692/     328 : DD E5               	PUSH IX
-     693/     32A :                     ;
-     694/     32A : CD C3 00                CALL STRIN
-     695/     32D : DA 69 03            	JP C,_MEM_CHANGE_EXIT
-     696/     330 : CD D7 01            	CALL PARSER
-     697/     333 :                     ; 入力パラメータ数/レングスチェック
-     698/     333 : 3A 5A 40            	LD A,(ARGC)
-     699/     336 : FE 00               	CP 0
-     700/     338 : 28 1F               	JR Z,_NEXT_ADDR
-     701/     33A : FE 01               	CP 1
-     702/     33C : 20 21               	JR NZ,_HATENA_OUT
-     703/     33E : 2A 5B 40            	LD HL,(ARGV_1)
-     704/     341 : CD E8 02            	CALL STR_LEN
-     705/     344 : FE 02               	CP 2
-     706/     346 : 20 17               	JR NZ,_HATENA_OUT
-     707/     348 : 2A 5B 40            	LD HL,(ARGV_1)
-     708/     34B : CD 19 02            	CALL HEX2BIN
-     709/     34E : 38 0F               	JR C,_HATENA_OUT
-     710/     350 : DD E1               	POP IX
-     711/     352 : DD 77 00            	LD (IX+0),A
-     712/     355 : DD 23               	INC IX
-     713/     357 : 18 BE               	JR _MEM_CHANGE_LOOP
-     714/     359 :                     ;
-     715/     359 :                     _NEXT_ADDR:
-     716/     359 : DD E1               	POP IX
-     717/     35B : DD 23               	INC IX
-     718/     35D : 18 B8               	JR _MEM_CHANGE_LOOP
-     719/     35F :                     ;
-     720/     35F :                     _HATENA_OUT:
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 13 - 2019/04/23 22時12分22秒
+     661/     2FA : C1                  	POP BC
+     662/     2FB : E1                  	POP HL
+     663/     2FC : C9                  	RET
+     664/     2FD :                     ;
+     665/     2FD :                     ;================================================================================
+     666/     2FD :                     ; メモリー変更コマンド
+     667/     2FD :                     ;================================================================================
+     668/     2FD :                     MEM_CHANGE:
+     669/     2FD : CD 36 01                CALL SPC_PRINT
+     670/     300 :                     ;
+     671/     300 : CD C3 00                CALL STRIN
+     672/     303 : CD D7 01            	CALL PARSER
+     673/     306 :                     ;
+     674/     306 :                     ; 入力パラメータ数チェック
+     675/     306 : 3A 82 40            	LD A,(ARGC)
+     676/     309 : FE 01               	CP 1
+     677/     30B : 20 93               	JR NZ,_PARAM_ERR
+     678/     30D :                     ;
+     679/     30D :                     ; 開始アドレス取得
+     680/     30D : 2A 83 40            	LD HL,(ARGV_1)
+     681/     310 : CD 46 02            	CALL HEX4BIN
+     682/     313 : 38 8B               	JR C,_PARAM_ERR
+     683/     315 : E5                  	PUSH HL
+     684/     316 : DD E1               	POP IX
+     685/     318 :                     ;
+     686/     318 : CD 2F 01            	CALL CRLF_PRINT
+     687/     31B :                     _MEM_CHANGE_LOOP:
+     688/     31B : DD E5               	PUSH IX
+     689/     31D : E1                  	POP HL
+     690/     31E : CD CA 02            	CALL ADDR_OUT
+     691/     321 : DD 7E 00            	LD A,(IX+0)
+     692/     324 : CD 3A 01            	CALL HEX2OUT
+     693/     327 : 3E 2D               	LD A,'-'
+     694/     329 : CD 29 01            	CALL CPRINT
+     695/     32C : DD E5               	PUSH IX
+     696/     32E :                     ;
+     697/     32E : CD C3 00                CALL STRIN
+     698/     331 : DA 6D 03            	JP C,_MEM_CHANGE_EXIT
+     699/     334 : CD D7 01            	CALL PARSER
+     700/     337 :                     ; 入力パラメータ数/レングスチェック
+     701/     337 : 3A 82 40            	LD A,(ARGC)
+     702/     33A : FE 00               	CP 0
+     703/     33C : 28 1F               	JR Z,_NEXT_ADDR
+     704/     33E : FE 01               	CP 1
+     705/     340 : 20 21               	JR NZ,_HATENA_OUT
+     706/     342 : 2A 83 40            	LD HL,(ARGV_1)
+     707/     345 : CD EC 02            	CALL STR_LEN
+     708/     348 : FE 02               	CP 2
+     709/     34A : 20 17               	JR NZ,_HATENA_OUT
+     710/     34C : 2A 83 40            	LD HL,(ARGV_1)
+     711/     34F : CD 19 02            	CALL HEX2BIN
+     712/     352 : 38 0F               	JR C,_HATENA_OUT
+     713/     354 : DD E1               	POP IX
+     714/     356 : DD 77 00            	LD (IX+0),A
+     715/     359 : DD 23               	INC IX
+     716/     35B : 18 BE               	JR _MEM_CHANGE_LOOP
+     717/     35D :                     ;
+     718/     35D :                     _NEXT_ADDR:
+     719/     35D : DD E1               	POP IX
+     720/     35F : DD 23               	INC IX
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 13 - 2019/04/24 21時44分12秒
 
 
-     721/     35F : 21 35 05            	LD HL,HATENA_MSG
-     722/     362 : CD 20 01            	CALL STRPR
-     723/     365 : DD E1               	POP IX
-     724/     367 : 18 AE               	JR _MEM_CHANGE_LOOP
-     725/     369 :                     ;
-     726/     369 :                     _MEM_CHANGE_EXIT:
-     727/     369 : DD E1               	POP IX
-     728/     36B : CD 2F 01            	CALL CRLF_PRINT
-     729/     36E : C9                  	RET ;ESCキーでメイン処理へ
-     730/     36F :                     
-     731/     36F :                     ;
-     732/     36F :                     ;================================================================================
-     733/     36F :                     ; プログラム実行(G)コマンド
-     734/     36F :                     ;================================================================================
-     735/     36F :                     PGM_GO:
-     736/     36F : CD 36 01                CALL SPC_PRINT
-     737/     372 :                     ;
-     738/     372 : CD C3 00                CALL STRIN
-     739/     375 : CD D7 01            	CALL PARSER
-     740/     378 :                     ;
-     741/     378 :                     ; 入力パラメータ数チェック
-     742/     378 : 3A 5A 40            	LD A,(ARGC)
-     743/     37B : FE 01               	CP 1
-     744/     37D :                     ;
-     745/     37D :                     ; 実行アドレス取得
-     746/     37D :                     ;
-     747/     37D : 2A 5B 40            	LD HL,(ARGV_1)
-     748/     380 : CD E8 02            	CALL STR_LEN
-     749/     383 : FE 04               	CP 4
-     750/     385 : C2 9C 02            	JP NZ,_PARAM_ERR
-     751/     388 :                     ;
-     752/     388 : 2A 5B 40            	LD HL,(ARGV_1)
-     753/     38B : CD 42 02            	CALL HEX4BIN
-     754/     38E : DA 9C 02            	JP C,_PARAM_ERR
-     755/     391 : E9                  	JP (HL)
-     756/     392 :                     ;
-     757/     392 :                     ;
-     758/     392 :                     ;================================================================================
-     759/     392 :                     ; I/O入力コマンド
-     760/     392 :                     ;================================================================================
-     761/     392 :                     IO_IN:
-     762/     392 : CD 36 01                CALL SPC_PRINT
-     763/     395 :                     ;
-     764/     395 : CD C3 00                CALL STRIN
-     765/     398 : CD D7 01            	CALL PARSER
-     766/     39B :                     ;
-     767/     39B :                     ; 入力パラメータ数チェック
-     768/     39B : 3A 5A 40            	LD A,(ARGC)
-     769/     39E : FE 01               	CP 1
-     770/     3A0 : C2 9C 02            	JP NZ,_PARAM_ERR
-     771/     3A3 :                     ;
-     772/     3A3 :                     ; I/Oアドレス取得
-     773/     3A3 : 2A 5B 40            	LD HL,(ARGV_1)
-     774/     3A6 : CD E8 02            	CALL STR_LEN
-     775/     3A9 : FE 02               	CP 2
-     776/     3AB : C2 9C 02            	JP NZ,_PARAM_ERR
-     777/     3AE :                     ;
-     778/     3AE : 2A 5B 40            	LD HL,(ARGV_1)
-     779/     3B1 : CD 19 02            	CALL HEX2BIN
-     780/     3B4 : DA 9C 02            	JP C,_PARAM_ERR
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 14 - 2019/04/23 22時12分22秒
+     721/     361 : 18 B8               	JR _MEM_CHANGE_LOOP
+     722/     363 :                     ;
+     723/     363 :                     _HATENA_OUT:
+     724/     363 : 21 B4 05            	LD HL,HATENA_MSG
+     725/     366 : CD 20 01            	CALL STRPR
+     726/     369 : DD E1               	POP IX
+     727/     36B : 18 AE               	JR _MEM_CHANGE_LOOP
+     728/     36D :                     ;
+     729/     36D :                     _MEM_CHANGE_EXIT:
+     730/     36D : DD E1               	POP IX
+     731/     36F : CD 2F 01            	CALL CRLF_PRINT
+     732/     372 : C9                  	RET ;ESCキーでメイン処理へ
+     733/     373 :                     
+     734/     373 :                     ;
+     735/     373 :                     ;================================================================================
+     736/     373 :                     ; プログラム実行(G)コマンド
+     737/     373 :                     ;================================================================================
+     738/     373 :                     PGM_GO:
+     739/     373 : CD 36 01                CALL SPC_PRINT
+     740/     376 :                     ;
+     741/     376 : CD C3 00                CALL STRIN
+     742/     379 : CD D7 01            	CALL PARSER
+     743/     37C :                     ;
+     744/     37C :                     ; 入力パラメータ数チェック
+     745/     37C : 3A 82 40            	LD A,(ARGC)
+     746/     37F : FE 01               	CP 1
+     747/     381 :                     ;
+     748/     381 :                     ; 実行アドレス取得
+     749/     381 :                     ;
+     750/     381 : 2A 83 40            	LD HL,(ARGV_1)
+     751/     384 : CD EC 02            	CALL STR_LEN
+     752/     387 : FE 04               	CP 4
+     753/     389 : C2 A0 02            	JP NZ,_PARAM_ERR
+     754/     38C :                     ;
+     755/     38C : 2A 83 40            	LD HL,(ARGV_1)
+     756/     38F : CD 46 02            	CALL HEX4BIN
+     757/     392 : DA A0 02            	JP C,_PARAM_ERR
+     758/     395 : E9                  	JP (HL)
+     759/     396 :                     ;
+     760/     396 :                     ;
+     761/     396 :                     ;================================================================================
+     762/     396 :                     ; I/O入力コマンド
+     763/     396 :                     ;================================================================================
+     764/     396 :                     IO_IN:
+     765/     396 : CD 36 01                CALL SPC_PRINT
+     766/     399 :                     ;
+     767/     399 : CD C3 00                CALL STRIN
+     768/     39C : CD D7 01            	CALL PARSER
+     769/     39F :                     ;
+     770/     39F :                     ; 入力パラメータ数チェック
+     771/     39F : 3A 82 40            	LD A,(ARGC)
+     772/     3A2 : FE 01               	CP 1
+     773/     3A4 : C2 A0 02            	JP NZ,_PARAM_ERR
+     774/     3A7 :                     ;
+     775/     3A7 :                     ; I/Oアドレス取得
+     776/     3A7 : 2A 83 40            	LD HL,(ARGV_1)
+     777/     3AA : CD EC 02            	CALL STR_LEN
+     778/     3AD : FE 02               	CP 2
+     779/     3AF : C2 A0 02            	JP NZ,_PARAM_ERR
+     780/     3B2 :                     ;
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 14 - 2019/04/24 21時44分12秒
 
 
-     781/     3B7 : 4F                  	LD C,A
-     782/     3B8 : ED 78               	IN A,(C)
-     783/     3BA :                     ;
-     784/     3BA : CD 3A 01            	CALL HEX2OUT
-     785/     3BD : CD 2F 01            	CALL CRLF_PRINT
-     786/     3C0 : C9                  	RET
-     787/     3C1 :                     ;
-     788/     3C1 :                     ;================================================================================
-     789/     3C1 :                     ; I/O出力コマンド
-     790/     3C1 :                     ;================================================================================
-     791/     3C1 :                     IO_OUT:
-     792/     3C1 : CD 36 01                CALL SPC_PRINT
-     793/     3C4 :                     ;
-     794/     3C4 : CD C3 00                CALL STRIN
-     795/     3C7 : CD D7 01            	CALL PARSER
-     796/     3CA :                     ;
-     797/     3CA :                     ; 入力パラメータ数チェック
-     798/     3CA : 3A 5A 40            	LD A,(ARGC)
-     799/     3CD : FE 02               	CP 2
-     800/     3CF : C2 9C 02            	JP NZ,_PARAM_ERR
-     801/     3D2 :                     ;
-     802/     3D2 :                     ; I/Oアドレス取得
-     803/     3D2 : 2A 5B 40            	LD HL,(ARGV_1)
-     804/     3D5 : CD E8 02            	CALL STR_LEN
-     805/     3D8 : FE 02               	CP 2
-     806/     3DA : C2 9C 02            	JP NZ,_PARAM_ERR
-     807/     3DD :                     ;
-     808/     3DD : 2A 5B 40            	LD HL,(ARGV_1)
-     809/     3E0 : CD 19 02            	CALL HEX2BIN
-     810/     3E3 : DA 9C 02            	JP C,_PARAM_ERR
-     811/     3E6 : 4F                  	LD C,A
-     812/     3E7 :                     ;
-     813/     3E7 :                     ; 出力データ取得
-     814/     3E7 : 2A 5D 40            	LD HL,(ARGV_2)
-     815/     3EA : CD E8 02            	CALL STR_LEN
-     816/     3ED : FE 02               	CP 2
-     817/     3EF : C2 9C 02            	JP NZ,_PARAM_ERR
-     818/     3F2 :                     ;
-     819/     3F2 : 2A 5D 40            	LD HL,(ARGV_2)
-     820/     3F5 : CD 19 02            	CALL HEX2BIN
-     821/     3F8 : DA 9C 02            	JP C,_PARAM_ERR
-     822/     3FB :                     ;
-     823/     3FB : ED 79               	OUT (C),A
-     824/     3FD :                     ;
-     825/     3FD : CD 2F 01            	CALL CRLF_PRINT
-     826/     400 : C9                  	RET
+     781/     3B2 : 2A 83 40            	LD HL,(ARGV_1)
+     782/     3B5 : CD 19 02            	CALL HEX2BIN
+     783/     3B8 : DA A0 02            	JP C,_PARAM_ERR
+     784/     3BB : 4F                  	LD C,A
+     785/     3BC : ED 78               	IN A,(C)
+     786/     3BE :                     ;
+     787/     3BE : CD 3A 01            	CALL HEX2OUT
+     788/     3C1 : CD 2F 01            	CALL CRLF_PRINT
+     789/     3C4 : C9                  	RET
+     790/     3C5 :                     ;
+     791/     3C5 :                     ;================================================================================
+     792/     3C5 :                     ; I/O出力コマンド
+     793/     3C5 :                     ;================================================================================
+     794/     3C5 :                     IO_OUT:
+     795/     3C5 : CD 36 01                CALL SPC_PRINT
+     796/     3C8 :                     ;
+     797/     3C8 : CD C3 00                CALL STRIN
+     798/     3CB : CD D7 01            	CALL PARSER
+     799/     3CE :                     ;
+     800/     3CE :                     ; 入力パラメータ数チェック
+     801/     3CE : 3A 82 40            	LD A,(ARGC)
+     802/     3D1 : FE 02               	CP 2
+     803/     3D3 : C2 A0 02            	JP NZ,_PARAM_ERR
+     804/     3D6 :                     ;
+     805/     3D6 :                     ; I/Oアドレス取得
+     806/     3D6 : 2A 83 40            	LD HL,(ARGV_1)
+     807/     3D9 : CD EC 02            	CALL STR_LEN
+     808/     3DC : FE 02               	CP 2
+     809/     3DE : C2 A0 02            	JP NZ,_PARAM_ERR
+     810/     3E1 :                     ;
+     811/     3E1 : 2A 83 40            	LD HL,(ARGV_1)
+     812/     3E4 : CD 19 02            	CALL HEX2BIN
+     813/     3E7 : DA A0 02            	JP C,_PARAM_ERR
+     814/     3EA : 4F                  	LD C,A
+     815/     3EB :                     ;
+     816/     3EB :                     ; 出力データ取得
+     817/     3EB : 2A 85 40            	LD HL,(ARGV_2)
+     818/     3EE : CD EC 02            	CALL STR_LEN
+     819/     3F1 : FE 02               	CP 2
+     820/     3F3 : C2 A0 02            	JP NZ,_PARAM_ERR
+     821/     3F6 :                     ;
+     822/     3F6 : 2A 85 40            	LD HL,(ARGV_2)
+     823/     3F9 : CD 19 02            	CALL HEX2BIN
+     824/     3FC : DA A0 02            	JP C,_PARAM_ERR
+     825/     3FF :                     ;
+     826/     3FF : ED 79               	OUT (C),A
      827/     401 :                     ;
-     828/     401 :                     ;--------------------------------------------------------------------------------
-     829/     401 :                     ; コマンドテーブル
-     830/     401 :                     ;--------------------------------------------------------------------------------
-     831/     401 :                     CMD_TBL:
-     832/     401 : 48                      DB 'H'
-     833/     402 : B8 01                   DW HELP_OUT
-     834/     404 : 3F                      DB '?'
-     835/     405 : B8 01                   DW HELP_OUT
-     836/     407 : 56                      DB 'V'
-     837/     408 : BD 01                   DW VERSION_OUT
-     838/     40A : 44                      DB 'D'
-     839/     40B : 50 02                   DW MEM_DUMP
-     840/     40D : 4D                      DB 'M'
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 15 - 2019/04/23 22時12分22秒
+     828/     401 : CD 2F 01            	CALL CRLF_PRINT
+     829/     404 : C9                  	RET
+     830/     405 :                     ;================================================================================
+     831/     405 :                     ; インテルHEXロードコマンド
+     832/     405 :                     ;================================================================================
+     833/     405 :                     LOAD:
+     834/     405 : CD 2F 01            	CALL CRLF_PRINT
+     835/     408 :                     ;
+     836/     408 :                     _LOAD_START:
+     837/     408 : D7                  	RST 10h
+     838/     409 : FE 1B               	CP ESC
+     839/     40B : 28 48               	JR Z,_LOAD_EXIT
+     840/     40D : FE 3A               	CP ':'
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 15 - 2019/04/24 21時44分12秒
 
 
-     841/     40E : F9 02                   DW MEM_CHANGE
-     842/     410 : 47                      DB 'G'
-     843/     411 : 6F 03                   DW PGM_GO
-     844/     413 : 49                      DB 'I'
-     845/     414 : 92 03                   DW IO_IN
-     846/     416 : 4F                      DB 'O'
-     847/     417 : C1 03                   DW IO_OUT
-     848/     419 :                     ; TABLE END
-     849/     419 : 00                      DB 00h
-     850/     41A :                     ;
-     851/     41A :                     ;--------------------------------------------------------------------------------
-     852/     41A :                     ; メッセージなど
-     853/     41A :                     ;--------------------------------------------------------------------------------
-     854/     41A : =KUNI-NET Z8..      VERNAME EQU "KUNI-NET Z80 MONITOR v0.3"
-     855/     41A : 4B 55 4E 49 2D 4E   VERMSG  DB VERNAME,CR,0
+     841/     40F : 20 F7               	JR NZ,_LOAD_START
+     842/     411 : CF                  	RST 08h
+     843/     412 :                     ;
+     844/     412 :                     ; LENGTH GET
+     845/     412 : 06 00               	LD B,0
+     846/     414 : CD C3 00                CALL STRIN
+     847/     417 :                     ;
+     848/     417 : 21 45 40            	LD HL,INBUF
+     849/     41A : CD 19 02            	CALL HEX2BIN
+     850/     41D : 4F                  	LD C,A
+     851/     41E : 47                  	LD B,A
+     852/     41F :                     ;
+     853/     41F :                     ; ADDR GET
+     854/     41F : 21 47 40            	LD HL,INBUF+2
+     855/     422 : CD 46 02            	CALL HEX4BIN
+     856/     425 : E5                  	PUSH HL
+     857/     426 : DD E1               	POP IX
+     858/     428 : 78                  	LD A,B
+     859/     429 : 84                  	ADD A,H
+     860/     42A : 85                  	ADD A,L
+     861/     42B : 47                  	LD B,A
+     862/     42C :                     ;
+     863/     42C :                     ; GET RECORD TYPE
+     864/     42C : 21 4B 40            	LD HL,INBUF+6
+     865/     42F : CD 19 02            	CALL HEX2BIN
+     866/     432 : B7                  	OR A
+     867/     433 : 20 20               	JR NZ,_LOAD_EXIT
+     868/     435 :                     ;
+     869/     435 :                     _MEM_LOAD_START:
+     870/     435 : 21 4D 40            	LD HL,INBUF+8
+     871/     438 :                     _MEM_LOAD:
+     872/     438 : CD 19 02            	CALL HEX2BIN
+     873/     43B : DD 77 00            	LD (IX+0),A
+     874/     43E : 80                  	ADD A,B
+     875/     43F : 47                  	LD B,A
+     876/     440 : 23                  	INC HL
+     877/     441 : DD 23               	INC IX
+     878/     443 : 0D                  	DEC C
+     879/     444 : 20 F2               	JR NZ,_MEM_LOAD
+     880/     446 :                     ;
+     881/     446 : CD 19 02            	CALL HEX2BIN
+     882/     449 : 80                  	ADD A,B
+     883/     44A : B7                  	OR A
+     884/     44B : 20 02               	JR NZ,_CHECKSUM_ERROR
+     885/     44D : 18 B9               	JR _LOAD_START
+     886/     44F :                     ;
+     887/     44F :                     _CHECKSUM_ERROR:
+     888/     44F : 21 A0 05            	LD HL,CHECKSUM_ERRMSG
+     889/     452 : C3 C2 01            	JP _PRINT_END
+     890/     455 :                     ;
+     891/     455 :                     _LOAD_EXIT:
+     892/     455 : C9                  	RET
+     893/     456 :                     ;
+     894/     456 :                     ;--------------------------------------------------------------------------------
+     895/     456 :                     ; コマンドテーブル
+     896/     456 :                     ;--------------------------------------------------------------------------------
+     897/     456 :                     CMD_TBL:
+     898/     456 : 48                      DB 'H'
+     899/     457 : B8 01                   DW HELP_OUT
+     900/     459 : 3F                      DB '?'
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 16 - 2019/04/24 21時44分12秒
+
+
+     901/     45A : B8 01                   DW HELP_OUT
+     902/     45C : 56                      DB 'V'
+     903/     45D : BD 01                   DW VERSION_OUT
+     904/     45F : 44                      DB 'D'
+     905/     460 : 54 02                   DW MEM_DUMP
+     906/     462 : 4D                      DB 'M'
+     907/     463 : FD 02                   DW MEM_CHANGE
+     908/     465 : 47                      DB 'G'
+     909/     466 : 73 03                   DW PGM_GO
+     910/     468 : 49                      DB 'I'
+     911/     469 : 96 03                   DW IO_IN
+     912/     46B : 4F                      DB 'O'
+     913/     46C : C5 03                   DW IO_OUT
+     914/     46E : 4C                      DB 'L'
+     915/     46F : 05 04                   DW LOAD
+     916/     471 :                     ; TABLE END
+     917/     471 : 00                      DB 00h
+     918/     472 :                     ;
+     919/     472 :                     ;--------------------------------------------------------------------------------
+     920/     472 :                     ; メッセージなど
+     921/     472 :                     ;--------------------------------------------------------------------------------
+     922/     472 : =KUNI-NET Z8..      VERNAME EQU "KUNI-NET Z80 MONITOR v0.5"
+     923/     472 : 4B 55 4E 49 2D 4E   VERMSG  DB VERNAME,CR,0
                     45 54 20 5A 38 30 
                     20 4D 4F 4E 49 54 
                     4F 52 20 76 30 2E 
-                    33 0D 00 
-     856/     435 : 0D 0D 2A 2A 20 4B   OPENMSG DB CR,CR,"** ",VERNAME," **",CR,0
+                    35 0D 00 
+     924/     48D : 0D 0D 2A 2A 20 4B   OPENMSG DB CR,CR,"** ",VERNAME," **",CR,0
                     55 4E 49 2D 4E 45 
                     54 20 5A 38 30 20 
                     4D 4F 4E 49 54 4F 
-                    52 20 76 30 2E 33 
+                    52 20 76 30 2E 35 
                     20 2A 2A 0D 00 
-     857/     458 : 08 20 08 00         BSTXT	DB BS,SPC,BS,0
-     858/     45C : 2D 20 2D 20 2D 20   HELP_MSG DB "- - - COMMAND HELP - - -",CR
+     925/     4B0 : 08 20 08 00         BSTXT	DB BS,SPC,BS,0
+     926/     4B4 : 2D 20 2D 20 2D 20   HELP_MSG DB "- - - COMMAND HELP - - -",CR
                     43 4F 4D 4D 41 4E 
                     44 20 48 45 4C 50 
                     20 2D 20 2D 20 2D 
                     0D 
-     859/     475 : 4D 20 58 58 58 58            DB "M XXXX ",TAB,TAB,"MEMORY EDIT",CR
+     927/     4CD : 4D 20 58 58 58 58            DB "M XXXX ",TAB,TAB,"MEMORY EDIT",CR
                     20 09 09 4D 45 4D 
                     4F 52 59 20 45 44 
                     49 54 0D 
-     860/     48A : 44 20 58 58 58 58            DB "D XXXX XXXX ",TAB,"MEMORY DUMP",CR
+     928/     4E2 : 44 20 58 58 58 58            DB "D XXXX XXXX ",TAB,"MEMORY DUMP",CR
                     20 58 58 58 58 20 
                     09 4D 45 4D 4F 52 
                     59 20 44 55 4D 50 
                     0D 
-     861/     4A3 : 47 20 58 58 58 58            DB "G XXXX",TAB,TAB,"PROGRAM EXECUTE",CR
+     929/     4FB : 47 20 58 58 58 58            DB "G XXXX",TAB,TAB,"PROGRAM EXECUTE",CR
                     09 09 50 52 4F 47 
                     52 41 4D 20 45 58 
                     45 43 55 54 45 0D 
-     862/     4BB : 49 20 58 58 09 09            DB "I XX",TAB,TAB,"I/O INPUT",CR
+     930/     513 : 49 20 58 58 09 09            DB "I XX",TAB,TAB,"I/O INPUT",CR
                     49 2F 4F 20 49 4E 
                     50 55 54 0D 
-     863/     4CB : 4F 20 58 58 20 58            DB "O XX XX",TAB,TAB,"I/O OUTPUT",CR
+     931/     523 : 4F 20 58 58 20 58            DB "O XX XX",TAB,TAB,"I/O OUTPUT",CR
                     58 09 09 49 2F 4F 
                     20 4F 55 54 50 55 
                     54 0D 
-     864/     4DF : 48 20 09 09 48 45            DB "H ",TAB,TAB,"HELP MESSGAE",CR
+     932/     537 : 4C 20 09 09 49 4E            DB "L ",TAB,TAB,"INTEL HEX LOAD",CR
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 17 - 2019/04/24 21時44分12秒
+
+
+                    54 45 4C 20 48 45 
+                    58 20 4C 4F 41 44 
+                    0D 
+     933/     54A : 48 20 09 09 48 45            DB "H ",TAB,TAB,"HELP MESSGAE",CR
                     4C 50 20 4D 45 53 
                     53 47 41 45 0D 
-     865/     4F0 : 56 20 09 09 56 45            DB "V ",TAB,TAB,"VERSION INFOMATION",CR,0
+     934/     55B : 56 20 09 09 56 45            DB "V ",TAB,TAB,"VERSION INFOMATION",CR,0
                     52 53 49 4F 4E 20 
                     49 4E 46 4F 4D 41 
                     54 49 4F 4E 0D 00 
-     866/     508 : 07 2A 2A 20 50 41   PARAM_ERRMSG DB BEEP,"** PARAMETER ERR",CR,0
+     935/     573 : 07 2A 2A 20 50 41   PARAM_ERRMSG DB BEEP,"** PARAMETER ERR",CR,0
                     52 41 4D 45 54 45 
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 16 - 2019/04/23 22時12分22秒
-
-
                     52 20 45 52 52 0D 
                     00 
-     867/     51B : 07 2A 2A 20 4D 45   ABORT_MSG DB BEEP,"** MEM DUMP ABORTED END",CR,0
+     936/     586 : 07 2A 2A 20 4D 45   ABORT_MSG DB BEEP,"** MEM DUMP ABORTED END",CR,0
                     4D 20 44 55 4D 50 
                     20 41 42 4F 52 54 
                     45 44 20 45 4E 44 
                     0D 00 
-     868/     535 : 0D 3F 0D 00         HATENA_MSG DB CR,"?",CR,0
-     869/     539 :                     
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 17 - 2019/04/23 22時12分22秒
+     937/     5A0 : 07 2A 2A 20 43 48   CHECKSUM_ERRMSG DB BEEP,"** CHECKSUM ERROR",CR,0
+                    45 43 4B 53 55 4D 
+                    20 45 52 52 4F 52 
+                    0D 00 
+     938/     5B4 : 0D 3F 0D 00         HATENA_MSG DB CR,"?",CR,0
+     939/     5B8 :                     
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 18 - 2019/04/24 21時44分12秒
 
 
   symbol table (* = unused):
   ------------------------
 
- ABORT_MSG :                    51B C |  ADDR_OUT :                     2C6 C |
-*ARCHITECTURE :    x86_64-apple-osx - |  ARGC :                        405A C |
- ARGV_1 :                      405B C |  ARGV_2 :                      405D C |
-*ARGV_3 :                      405F C |  ARG_AREA_LEN :                   7 - |
- ARG_MAX :                        3 - |  ASC16 :                        2A8 C |
+ ABORT_MSG :                    586 C |  ADDR_OUT :                     2CA C |
+*ARCHITECTURE :    x86_64-apple-osx - |  ARGC :                        4082 C |
+ ARGV_1 :                      4083 C |  ARGV_2 :                      4085 C |
+*ARGV_3 :                      4087 C |  ARG_AREA_LEN :                   7 - |
+ ARG_MAX :                        3 - |  ASC16 :                        2AC C |
 *BASFLG :                      4044 C |  BEEP :                           7 - |
 *BIGENDIAN :                      0 - | *BRANCHEXT :                      0 - |
- BS :                             8 - |  BSTXT :                        458 C |
+ BS :                             8 - |  BSTXT :                        4B0 C |
  BUFEMP :                         5 - |  BUFFUL :                        30 - |
  BUFSIZ :                        3F - | *CASESENSITIVE :                  0 - |
- CIN :                           79 C |  CKINCHAR :                      B3 C |
-*CLS :                            C - |  CMD_TBL :                      401 C |
-*CONSTPI :        3.141592653589793 - |  COUT :                          A7 C |
- COUT1 :                         A8 C |  CPRINT :                       129 C |
- CR :                             D - |  CRLF_PRINT :                   12F C |
-*CTRLC :                          3 - | *DATE :                  2019/04/23 - |
- DEL :                           7F - |  DUMP16 :                       2D3 C |
- DUMP_AT :                      2E3 C |  ESC :                           1B - |
-*FALSE :                          0 - | *FULLPMMU :                       1 - |
- GETC :                          B9 C | *HAS64 :                          1 - |
-*HASDSP :                         0 - | *HASFPU :                         0 - |
-*HASPMMU :                        0 - |  HATENA_MSG :                   535 C |
- HELP_MSG :                     45C C |  HELP_OUT :                     1B8 C |
- HEX2BIN :                      219 C |  HEX2OUT :                      13A C |
- HEX4BIN :                      242 C |  HEX4OUT :                      1CC C |
- INBUF :                       4045 C |  INEND :                       4059 C |
-*INEXTMODE :                      0 - |  INIT :                         157 C |
-*INLWORDMODE :                    0 - |  INMAX :                         14 - |
-*INMAXMODE :                      0 - | *INSRCMODE :                      0 - |
-*INSUPMODE :                      0 - |  IO_IN :                        392 C |
- IO_OUT :                       3C1 C | *LF :                             A - |
-*LISTON :                         1 - | *MACEXP :                         7 - |
-*MAIN :                         17A C |  MEM_CHANGE :                   2F9 C |
- MEM_DUMP :                     250 C | *MOMCPU :                        80 - |
+ CHECKSUM_ERRMSG :              5A0 C |  CIN :                           79 C |
+ CKINCHAR :                      B3 C | *CLS :                            C - |
+ CMD_TBL :                      456 C | *CONSTPI :        3.141592653589793 - |
+ COUT :                          A7 C |  COUT1 :                         A8 C |
+ CPRINT :                       129 C |  CR :                             D - |
+ CRLF_PRINT :                   12F C | *CTRLC :                          3 - |
+*DATE :                  2019/04/24 - |  DEL :                           7F - |
+ DUMP16 :                       2D7 C |  DUMP_AT :                      2E7 C |
+ ESC :                           1B - | *FALSE :                          0 - |
+*FULLPMMU :                       1 - |  GETC :                          B9 C |
+*HAS64 :                          1 - | *HASDSP :                         0 - |
+*HASFPU :                         0 - | *HASPMMU :                        0 - |
+ HATENA_MSG :                   5B4 C |  HELP_MSG :                     4B4 C |
+ HELP_OUT :                     1B8 C |  HEX2BIN :                      219 C |
+ HEX2OUT :                      13A C |  HEX4BIN :                      246 C |
+ HEX4OUT :                      1CC C |  INBUF :                       4045 C |
+ INEND :                       4081 C | *INEXTMODE :                      0 - |
+ INIT :                         157 C | *INLWORDMODE :                    0 - |
+ INMAX :                         3C - | *INMAXMODE :                      0 - |
+*INSRCMODE :                      0 - | *INSUPMODE :                      0 - |
+ IO_IN :                        396 C |  IO_OUT :                       3C5 C |
+*LF :                             A - | *LISTON :                         1 - |
+ LOAD :                         405 C | *MACEXP :                         7 - |
+*MAIN :                         17A C |  MEM_CHANGE :                   2FD C |
+ MEM_DUMP :                     254 C | *MOMCPU :                        80 - |
 *MOMCPUNAME :                   Z80 - | *NESTMAX :                      100 - |
  NOTFUL :                        53 C |  NOTWRP :                        60 C |
  NRWRAP :                        8F C |  NULL :                           0 - |
- OPENMSG :                      435 C | *PACKING :                        0 - |
-*PADDING :                        1 - |  PARAM_ERRMSG :                 508 C |
- PARSER :                       1D7 C |  PGM_GO :                       36F C |
+ OPENMSG :                      48D C | *PACKING :                        0 - |
+*PADDING :                        1 - |  PARAM_ERRMSG :                 573 C |
+ PARSER :                       1D7 C |  PGM_GO :                       373 C |
 *RELAXED :                        0 - | *RST00 :                          0 C |
 *RST08 :                          8 C | *RST10 :                         10 C |
 *RST18 :                         18 C | *RST38 :                         38 C |
@@ -1009,39 +1089,42 @@
  SERBUF :                      4000 C |  SERCNT :                      4043 C |
  SERINP :                      403F C |  SERINT :                        3B C |
  SERRDP :                      4041 C |  SPC :                           20 - |
- SPC_PRINT :                    136 C |  STACK :                       4081 - |
+ SPC_PRINT :                    136 C |  STACK :                       40A9 - |
  STRIN :                         C3 C |  STRPR :                        120 C |
- STR_LEN :                      2E8 C |  TAB :                            9 - |
-*TIME :                          22\-26\-10\-1212\-27\-12\-1222\-25\-89\-11 - |
+ STR_LEN :                      2EC C |  TAB :                            9 - |
+*TIME :                          21\-26\-10\-1244\-27\-12\-1212\-25\-89\-11 - |
 *TRUE :                           1 - |  UARTRC :                         1 - |
- UARTRD :                         0 - |  VERMSG :                       41A C |
- VERNAME :                                        KUNI-NET Z80 MONITOR v0.3 - |
+ UARTRD :                         0 - |  VERMSG :                       472 C |
+ VERNAME :                                        KUNI-NET Z80 MONITOR v0.5 - |
 *VERSION :                     142F - |  VERSION_OUT :                  1BD C |
- _ABORT_DUMP :                  2A2 C |  _ASC16_DOT :                   2BE C |
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 18 - 2019/04/23 22時12分22秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 19 - 2019/04/24 21時44分12秒
 
 
- _ASC16_LOOP :                  2B3 C |  _ASC16_PRINT :                 2C0 C |
- _ATOBIN :                      22F C |  _ATOBIN1 :                     23F C |
+ _ABORT_DUMP :                  2A6 C |  _ASC16_DOT :                   2C2 C |
+ _ASC16_LOOP :                  2B7 C |  _ASC16_PRINT :                 2C4 C |
+ _ATOBIN :                      233 C |  _ATOBIN1 :                     243 C |
  _BS_RTN :                      104 C |  _BS_RTN2 :                     10F C |
- _CHAR_SET :                     F6 C |  _CMD_LOOP :                    18F C |
- _DUMP16_LOOP :                 2D8 C |  _DUMP_END_CHECK :              297 C |
- _DUMP_GO :                     282 C |  _DUMP_LOOP :                   27A C |
- _ERROR_EXIT :                  1AA C |  _ESC_RTN :                     102 C |
- _HATENA_OUT :                  35F C |  _HEX_CNV_PR :                  14F C |
- _MAIN_LOOP :                   180 C |  _MEM_CHANGE_EXIT :             369 C |
- _MEM_CHANGE_LOOP :             317 C |  _NEXT_ADDR :                   359 C |
- _NEXT_CMD :                    1A2 C |  _PARAM_ERR :                   29C C |
+ _CHAR_SET :                     F6 C |  _CHECKSUM_ERROR :              44F C |
+ _CMD_LOOP :                    18F C |  _DUMP16_LOOP :                 2DC C |
+ _DUMP_END_CHECK :              29B C |  _DUMP_GO :                     286 C |
+ _DUMP_LOOP :                   27E C |  _ERROR_EXIT :                  1AA C |
+ _ESC_RTN :                     102 C |  _HATENA_OUT :                  363 C |
+ _HEX2BIN_EXIT :                231 C |  _HEX_CNV_PR :                  14F C |
+ _LOAD_EXIT :                   455 C |  _LOAD_START :                  408 C |
+ _MAIN_LOOP :                   180 C |  _MEM_CHANGE_EXIT :             36D C |
+ _MEM_CHANGE_LOOP :             31B C |  _MEM_LOAD :                    438 C |
+*_MEM_LOAD_START :              435 C |  _NEXT_ADDR :                   35D C |
+ _NEXT_CMD :                    1A2 C |  _PARAM_ERR :                   2A0 C |
  _PARAM_LOOP :                  209 C |  _PARSE_ERR :                   217 C |
  _PARSE_LOOP :                  1ED C |  _PRINT_END :                   1C2 C |
  _STRIN_END :                   11C C |  _STRIN_LOOP :                   D6 C |
- _STR_LEN_EXIT :                2F5 C |  _STR_LEN_LOOP :                2EC C |
+ _STR_LEN_EXIT :                2F9 C |  _STR_LEN_LOOP :                2F0 C |
  _WARN_BEEP :                    FD C |
 
-    143 symbols
-     39 unused symbols
+    151 symbols
+     40 unused symbols
 
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 19 - 2019/04/23 22時12分22秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 20 - 2019/04/24 21時44分12秒
 
 
   codepages:
@@ -1050,9 +1133,9 @@
 STANDARD (0 changed characters)
 
 
-0.01 seconds assembly time
+0.02 seconds assembly time
 
-    869 lines source file
+    939 lines source file
       2 passes
       0 errors
       0 warnings

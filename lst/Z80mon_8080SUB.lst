@@ -1,4 +1,4 @@
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 1 - 2019/04/27 17時50分59秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 1 - 2019/04/27 20時45分54秒
 
 
        1/       0 :                     ;-----------------------------------------------------------------------
@@ -61,7 +61,7 @@
       58/     100 :                     MAIN:
       59/     100 : 21 B1 04                LD HL,OPENMSG
       60/     103 : CD A5 01                CALL STRPR
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 2 - 2019/04/27 17時50分59秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 2 - 2019/04/27 20時45分54秒
 
 
       61/     106 :                     _MAIN_LOOP:
@@ -124,7 +124,7 @@
      118/     14D : 21 44 80                LD HL,INBUF
      119/     150 : 11 45 80                LD DE,INBUF+1
      120/     153 : 01 3C 00                LD BC,INMAX
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 3 - 2019/04/27 17時50分59秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 3 - 2019/04/27 20時45分54秒
 
 
      121/     156 : ED B0                   LDIR
@@ -187,7 +187,7 @@
      178/     1A1 :                     ;
      179/     1A1 :                     _STRIN_END:
      180/     1A1 : CD B4 01                CALL CRLF_PRINT
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 4 - 2019/04/27 17時50分59秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 4 - 2019/04/27 20時45分54秒
 
 
      181/     1A4 : C9                      RET
@@ -250,7 +250,7 @@
      238/     1D3 : C9                  	RET
      239/     1D4 :                     ;
      240/     1D4 :                     _HEX_CNV_PR:	
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 5 - 2019/04/27 17時50分59秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 5 - 2019/04/27 20時45分54秒
 
 
      241/     1D4 : C6 90               	ADD A,90h
@@ -313,7 +313,7 @@
      298/     211 :                     ;
      299/     211 :                     _PARSE_LOOP:
      300/     211 : 23                  	INC HL
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 6 - 2019/04/27 17時50分59秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 6 - 2019/04/27 20時45分54秒
 
 
      301/     212 : 7E                  	LD A,(HL)
@@ -376,7 +376,7 @@
      358/     260 : D8                  	RET C
      359/     261 : FE 47               	CP 'F'+1
      360/     263 : 3F                  	CCF
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 7 - 2019/04/27 17時50分59秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 7 - 2019/04/27 20時45分54秒
 
 
      361/     264 : D8                  	RET C
@@ -439,7 +439,7 @@
      418/     2AA : E5                  	PUSH HL
      419/     2AB : CD FB 02            	CALL DUMP16
      420/     2AE : E1                  	POP HL
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 8 - 2019/04/27 17時50分59秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 8 - 2019/04/27 20時45分54秒
 
 
      421/     2AF : CD D0 02            	CALL ASC16
@@ -502,7 +502,7 @@
      478/     2F7 : CD BB 01            	CALL SPC_PRINT
      479/     2FA : C9                  	RET
      480/     2FB :                     
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 9 - 2019/04/27 17時50分59秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 9 - 2019/04/27 20時45分54秒
 
 
      481/     2FB :                     ;--------------------------------------------------------------------------------
@@ -565,7 +565,7 @@
      538/     331 :                     ; 開始アドレス取得
      539/     331 : 2A 82 80            	LD HL,(ARGV_1)
      540/     334 : CD 6A 02            	CALL HEX4BIN
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 10 - 2019/04/27 17時50分59秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 10 - 2019/04/27 20時45分54秒
 
 
      541/     337 : 38 8B               	JR C,_PARAM_ERR
@@ -628,7 +628,7 @@
      598/     397 : CD BB 01                CALL SPC_PRINT
      599/     39A :                     ;
      600/     39A : CD 48 01                CALL STRIN
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 11 - 2019/04/27 17時50分59秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 11 - 2019/04/27 20時45分54秒
 
 
      601/     39D : CD FB 01            	CALL PARSER
@@ -691,7 +691,7 @@
      658/     3F2 :                     ;
      659/     3F2 :                     ; 入力パラメータ数チェック
      660/     3F2 : 3A 81 80            	LD A,(ARGC)
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 12 - 2019/04/27 17時50分59秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 12 - 2019/04/27 20時45分54秒
 
 
      661/     3F5 : FE 02               	CP 2
@@ -754,7 +754,7 @@
      718/     44D : 84                  	ADD A,H
      719/     44E : 85                  	ADD A,L
      720/     44F : 47                  	LD B,A
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 13 - 2019/04/27 17時50分59秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 13 - 2019/04/27 20時45分54秒
 
 
      721/     450 :                     ;
@@ -817,7 +817,7 @@
      778/     496 :                     ;--------------------------------------------------------------------------------
      779/     496 :                     ; メッセージなど
      780/     496 :                     ;--------------------------------------------------------------------------------
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 14 - 2019/04/27 17時50分59秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 14 - 2019/04/27 20時45分54秒
 
 
      781/     496 : =KUNI-NET Z8..      VERNAME EQU "KUNI-NET Z80 MONITOR v0.5"
@@ -880,7 +880,7 @@
                     0D 00 
      796/     5C4 : 07 2A 2A 20 43 48   CHECKSUM_ERRMSG DB BEEP,"** CHECKSUM ERROR",CR,0
                     45 43 4B 53 55 4D 
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 15 - 2019/04/27 17時50分59秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 15 - 2019/04/27 20時45分54秒
 
 
                     20 45 52 52 4F 52 
@@ -892,8 +892,12 @@
      801/     5DC :                     ;------------------------------------------------------------------------------
      802/     5DC :                     ; デバイス依存ルーチン (deviceディレクトリに配置)
      803/     5DC :                     ;------------------------------------------------------------------------------
-     804/     5DC : =>DEFINED           	IFDEF SBC8080SUB
-     805/     5DC :                     	  include "device/SBC8080SUB.asm"	  
+     804/     5DC : =>UNDEFINED         	IFDEF MC6850
+     805/     5DC :                     	  include "device/KZ80_6850.asm"
+     806/     5DC : [804]               	ENDIF
+     807/     5DC :                     
+     808/     5DC : =>DEFINED           	IFDEF SBC8080SUB
+     809/     5DC :                     	  include "device/SBC8080SUB.asm" 
 (1)    1/     5DC :                     ;
 (1)    2/     5DC :                     ; SBC8080 SUBボード用 モジュール
 (1)    3/     5DC :                     ;
@@ -939,13 +943,13 @@
 (1)   43/     604 : F1                  	POP	AF
 (1)   44/     605 : 77                  	LD	(HL),A
 (1)   45/     606 : 3A 43 80            	LD	A,(SERCNT)
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm(SBC8080SUB.asm) - page 16 - 2019/04/27 20時45分54秒
+
+
 (1)   46/     609 : 3C                  	INC	A
 (1)   47/     60A : 32 43 80            	LD	(SERCNT),A
 (1)   48/     60D : FE 30               	CP	BUFFUL
 (1)   49/     60F : DA 16 06            	JP	C,RTS0
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm(SBC8080SUB.asm) - page 16 - 2019/04/27 17時50分59秒
-
-
 (1)   50/     612 : 3E 17               	LD	A,RTSHIG
 (1)   51/     614 : D3 01               	OUT	(UARTRC),A
 (1)   52/     616 : E1                  RTS0:	POP	HL
@@ -1002,13 +1006,13 @@
 (1)  103/     65A :                     ;------------------------------------------------------------------------------
 (1)  104/     65A :                     ; 初期化
 (1)  105/     65A :                     ;------------------------------------------------------------------------------
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm(SBC8080SUB.asm) - page 17 - 2019/04/27 20時45分54秒
+
+
 (1)  106/     65A :                     INIT:		
 (1)  107/     65A : 31 A8 80                LD  SP,STACK
 (1)  108/     65D : 21 00 80            	LD	HL,SERBUF
 (1)  109/     660 : 22 3F 80            	LD	(SERINP),HL
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm(SBC8080SUB.asm) - page 17 - 2019/04/27 17時50分59秒
-
-
 (1)  110/     663 : 22 41 80            	LD	(SERRDP),HL
 (1)  111/     666 : AF                  	XOR	A
 (1)  112/     667 : 32 43 80            	LD	(SERCNT),A
@@ -1037,30 +1041,32 @@
 (1)  135/    8044 :                     ;
 (1)  136/    8044 : =8044H              DEVICE_RAM_END EQU $
 (1)  137/    8044 :                     
-     806/    8044 : =>FALSE             	ELSEIF 
-     807/    8044 :                     	  include "device/KZ80_8251.asm"
-     808/    8044 : [804]               	ENDIF
-     809/    8044 :                     ;
-     810/    8044 :                     ;------------------------------------------------------------------------------
-     811/    8044 :                     ; RAM バッファ & STACK
-     812/    8044 :                     ;------------------------------------------------------------------------------
-     813/    8044 :                     	ORG DEVICE_RAM_END
-     814/    8044 :                     ;
-     815/    8044 :                     INBUF   DS  60
-     816/    8080 : =3CH                INMAX   EQU  $-INBUF
-     817/    8080 :                     INEND   DS  1
-     818/    8081 :                     ;
-     819/    8081 :                     ARGC	DS	1
-     820/    8082 :                     ARGV_1	DS	2
-     821/    8084 :                     ARGV_2	DS	2
-     822/    8086 :                     ARGV_3	DS	2
-     823/    8088 : =3H                 ARG_MAX	EQU ($-ARGV_1)/2
-     824/    8088 : =7H                 ARG_AREA_LEN EQU $-ARGC
-     825/    8088 :                     ;
-     826/    8088 :                         	DS	32
-     827/    80A8 : =80A8H              STACK   EQU $
-     828/    80A8 :                     
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 18 - 2019/04/27 17時50分59秒
+     810/    8044 : [808]               	ENDIF
+     811/    8044 :                     
+     812/    8044 : =>UNDEFINED         	IFDEF KZ80
+     813/    8044 :                     	  include "device/KZ80_8251.asm"
+     814/    8044 : [812]               	ENDIF
+     815/    8044 :                     ;
+     816/    8044 :                     ;------------------------------------------------------------------------------
+     817/    8044 :                     ; RAM バッファ & STACK
+     818/    8044 :                     ;------------------------------------------------------------------------------
+     819/    8044 :                     	ORG DEVICE_RAM_END
+     820/    8044 :                     ;
+     821/    8044 :                     INBUF   DS  60
+     822/    8080 : =3CH                INMAX   EQU  $-INBUF
+     823/    8080 :                     INEND   DS  1
+     824/    8081 :                     ;
+     825/    8081 :                     ARGC	DS	1
+     826/    8082 :                     ARGV_1	DS	2
+     827/    8084 :                     ARGV_2	DS	2
+     828/    8086 :                     ARGV_3	DS	2
+     829/    8088 : =3H                 ARG_MAX	EQU ($-ARGV_1)/2
+     830/    8088 : =7H                 ARG_AREA_LEN EQU $-ARGC
+     831/    8088 :                     ;
+     832/    8088 :                         	DS	32
+     833/    80A8 : =80A8H              STACK   EQU $
+     834/    80A8 :                     
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 18 - 2019/04/27 20時45分54秒
 
 
   symbol table (* = unused):
@@ -1119,11 +1125,11 @@
  STACK :                       80A8 - |  STRIN :                        148 C |
  STRPR :                        1A5 C |  STR_LEN :                      310 C |
  TAB :                            9 - |
-*TIME :                          17\-26\-10\-1250\-27\-12\-1258\-25\-89\-11 - |
+*TIME :                          20\-26\-10\-1245\-27\-12\-1254\-25\-89\-11 - |
 *TRUE :                           1 - |  UARTRC :                         1 - |
  UARTRD :                         0 - |  VERMSG :                       496 C |
  VERNAME :                                        KUNI-NET Z80 MONITOR v0.5 - |
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 19 - 2019/04/27 17時50分59秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 19 - 2019/04/27 20時45分54秒
 
 
 *VERSION :                     142F - |  VERSION_OUT :                  1E1 C |
@@ -1151,7 +1157,7 @@
     152 symbols
      39 unused symbols
 
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 20 - 2019/04/27 17時50分59秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 20 - 2019/04/27 20時45分54秒
 
 
   codepages:
@@ -1160,9 +1166,9 @@
 STANDARD (0 changed characters)
 
 
-0.02 seconds assembly time
+0.01 seconds assembly time
 
-    965 lines source file
+    971 lines source file
       2 passes
       0 errors
       0 warnings

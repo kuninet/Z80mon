@@ -120,16 +120,16 @@
      114/     148 :                     STRIN:
      115/     148 :                     ; INBUF クリア
      116/     148 : 3E 00                   LD A,00H
-     117/     14A : 32 44 40                LD (INBUF),A
-     118/     14D : 21 44 40                LD HL,INBUF
-     119/     150 : 11 45 40                LD DE,INBUF+1
+     117/     14A : 32 44 80                LD (INBUF),A
+     118/     14D : 21 44 80                LD HL,INBUF
+     119/     150 : 11 45 80                LD DE,INBUF+1
      120/     153 : 01 3C 00                LD BC,INMAX
  AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 3 - 2019/04/27 20時45分54秒
 
 
      121/     156 : ED B0                   LDIR
      122/     158 :                     ;
-     123/     158 : 21 44 40                LD HL,INBUF
+     123/     158 : 21 44 80                LD HL,INBUF
      124/     15B :                     ;
      125/     15B :                     _STRIN_LOOP:
      126/     15B : CD 3E 01                CALL GETC
@@ -144,7 +144,7 @@
      135/     16E :                     ;
      136/     16E :                     ; バッファENDにきた?
      137/     16E : 47                  	LD B,A
-     138/     16F : 11 80 40            	LD DE,INEND
+     138/     16F : 11 80 80            	LD DE,INEND
      139/     172 : 7A                  	LD A,D
      140/     173 : BC                  	CP H
      141/     174 : 20 05               	JR NZ,_CHAR_SET
@@ -168,7 +168,7 @@
      159/     188 : C9                  	RET
      160/     189 :                     ;
      161/     189 :                     _BS_RTN:
-     162/     189 : 11 44 40            	LD DE,INBUF
+     162/     189 : 11 44 80            	LD DE,INBUF
      163/     18C : 7A                  	LD A,D
      164/     18D : BC                  	CP H
      165/     18E : 20 04               	JR NZ,_BS_RTN2
@@ -300,16 +300,16 @@
      285/     1FB :                     ;--------------------------------------------------------------------------------
      286/     1FB :                     PARSER:
      287/     1FB :                     ; 編集エリア初期化
-     288/     1FB : 21 81 40            	LD HL,ARGC
+     288/     1FB : 21 81 80            	LD HL,ARGC
      289/     1FE : 3E 00               	LD A,0
      290/     200 : 77                  	LD (HL),A
-     291/     201 : 11 82 40            	LD DE,ARGC+1
+     291/     201 : 11 82 80            	LD DE,ARGC+1
      292/     204 : 01 06 00            	LD BC,ARG_AREA_LEN-1
      293/     207 : ED B0               	LDIR
      294/     209 :                     ; 入力パラメーター パース開始
      295/     209 : 4F                  	LD C,A
-     296/     20A : 21 43 40            	LD HL,INBUF-1
-     297/     20D : DD 21 82 40         	LD IX,ARGV_1
+     296/     20A : 21 43 80            	LD HL,INBUF-1
+     297/     20D : DD 21 82 80         	LD IX,ARGV_1
      298/     211 :                     ;
      299/     211 :                     _PARSE_LOOP:
      300/     211 : 23                  	INC HL
@@ -325,7 +325,7 @@
      307/     21B : 79                  	LD A,C
      308/     21C : FE 04               	CP ARG_MAX+1
      309/     21E : 30 1B               	JR NC,_PARSE_ERR
-     310/     220 : 32 81 40            	LD (ARGC),A
+     310/     220 : 32 81 80            	LD (ARGC),A
      311/     223 : DD 75 00            	LD (IX+0),L
      312/     226 : DD 74 01            	LD (IX+1),H
      313/     229 : DD 23               	INC IX
@@ -411,17 +411,17 @@
      390/     27E : CD FB 01            	CALL PARSER
      391/     281 : 38 41               	JR C,_PARAM_ERR
      392/     283 :                     ; 入力パラメータ数チェック
-     393/     283 : 3A 81 40            	LD A,(ARGC)
+     393/     283 : 3A 81 80            	LD A,(ARGC)
      394/     286 : FE 02               	CP 2
      395/     288 : 20 3A               	JR NZ,_PARAM_ERR
      396/     28A :                     ; 開始アドレス取得
-     397/     28A : 2A 82 40            	LD HL,(ARGV_1)
+     397/     28A : 2A 82 80            	LD HL,(ARGV_1)
      398/     28D : CD 6A 02            	CALL HEX4BIN
      399/     290 : 38 32               	JR C,_PARAM_ERR
      400/     292 : E5                  	PUSH HL
      401/     293 : DD E1               	POP IX
      402/     295 :                     ; 終了アドレス取得
-     403/     295 : 2A 84 40            	LD HL,(ARGV_2)
+     403/     295 : 2A 84 80            	LD HL,(ARGV_2)
      404/     298 : CD 6A 02            	CALL HEX4BIN
      405/     29B : 38 27               	JR C,_PARAM_ERR
      406/     29D : E5                  	PUSH HL
@@ -558,12 +558,12 @@
      531/     327 : CD FB 01            	CALL PARSER
      532/     32A :                     ;
      533/     32A :                     ; 入力パラメータ数チェック
-     534/     32A : 3A 81 40            	LD A,(ARGC)
+     534/     32A : 3A 81 80            	LD A,(ARGC)
      535/     32D : FE 01               	CP 1
      536/     32F : 20 93               	JR NZ,_PARAM_ERR
      537/     331 :                     ;
      538/     331 :                     ; 開始アドレス取得
-     539/     331 : 2A 82 40            	LD HL,(ARGV_1)
+     539/     331 : 2A 82 80            	LD HL,(ARGV_1)
      540/     334 : CD 6A 02            	CALL HEX4BIN
  AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 10 - 2019/04/27 20時45分54秒
 
@@ -587,16 +587,16 @@
      557/     355 : DA 91 03            	JP C,_MEM_CHANGE_EXIT
      558/     358 : CD FB 01            	CALL PARSER
      559/     35B :                     ; 入力パラメータ数/レングスチェック
-     560/     35B : 3A 81 40            	LD A,(ARGC)
+     560/     35B : 3A 81 80            	LD A,(ARGC)
      561/     35E : FE 00               	CP 0
      562/     360 : 28 1F               	JR Z,_NEXT_ADDR
      563/     362 : FE 01               	CP 1
      564/     364 : 20 21               	JR NZ,_HATENA_OUT
-     565/     366 : 2A 82 40            	LD HL,(ARGV_1)
+     565/     366 : 2A 82 80            	LD HL,(ARGV_1)
      566/     369 : CD 10 03            	CALL STR_LEN
      567/     36C : FE 02               	CP 2
      568/     36E : 20 17               	JR NZ,_HATENA_OUT
-     569/     370 : 2A 82 40            	LD HL,(ARGV_1)
+     569/     370 : 2A 82 80            	LD HL,(ARGV_1)
      570/     373 : CD 3D 02            	CALL HEX2BIN
      571/     376 : 38 0F               	JR C,_HATENA_OUT
      572/     378 : DD E1               	POP IX
@@ -634,17 +634,17 @@
      601/     39D : CD FB 01            	CALL PARSER
      602/     3A0 :                     ;
      603/     3A0 :                     ; 入力パラメータ数チェック
-     604/     3A0 : 3A 81 40            	LD A,(ARGC)
+     604/     3A0 : 3A 81 80            	LD A,(ARGC)
      605/     3A3 : FE 01               	CP 1
      606/     3A5 :                     ;
      607/     3A5 :                     ; 実行アドレス取得
      608/     3A5 :                     ;
-     609/     3A5 : 2A 82 40            	LD HL,(ARGV_1)
+     609/     3A5 : 2A 82 80            	LD HL,(ARGV_1)
      610/     3A8 : CD 10 03            	CALL STR_LEN
      611/     3AB : FE 04               	CP 4
      612/     3AD : C2 C4 02            	JP NZ,_PARAM_ERR
      613/     3B0 :                     ;
-     614/     3B0 : 2A 82 40            	LD HL,(ARGV_1)
+     614/     3B0 : 2A 82 80            	LD HL,(ARGV_1)
      615/     3B3 : CD 6A 02            	CALL HEX4BIN
      616/     3B6 : DA C4 02            	JP C,_PARAM_ERR
      617/     3B9 : E9                  	JP (HL)
@@ -660,17 +660,17 @@
      627/     3C0 : CD FB 01            	CALL PARSER
      628/     3C3 :                     ;
      629/     3C3 :                     ; 入力パラメータ数チェック
-     630/     3C3 : 3A 81 40            	LD A,(ARGC)
+     630/     3C3 : 3A 81 80            	LD A,(ARGC)
      631/     3C6 : FE 01               	CP 1
      632/     3C8 : C2 C4 02            	JP NZ,_PARAM_ERR
      633/     3CB :                     ;
      634/     3CB :                     ; I/Oアドレス取得
-     635/     3CB : 2A 82 40            	LD HL,(ARGV_1)
+     635/     3CB : 2A 82 80            	LD HL,(ARGV_1)
      636/     3CE : CD 10 03            	CALL STR_LEN
      637/     3D1 : FE 02               	CP 2
      638/     3D3 : C2 C4 02            	JP NZ,_PARAM_ERR
      639/     3D6 :                     ;
-     640/     3D6 : 2A 82 40            	LD HL,(ARGV_1)
+     640/     3D6 : 2A 82 80            	LD HL,(ARGV_1)
      641/     3D9 : CD 3D 02            	CALL HEX2BIN
      642/     3DC : DA C4 02            	JP C,_PARAM_ERR
      643/     3DF : 4F                  	LD C,A
@@ -690,7 +690,7 @@
      657/     3EF : CD FB 01            	CALL PARSER
      658/     3F2 :                     ;
      659/     3F2 :                     ; 入力パラメータ数チェック
-     660/     3F2 : 3A 81 40            	LD A,(ARGC)
+     660/     3F2 : 3A 81 80            	LD A,(ARGC)
  AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 12 - 2019/04/27 20時45分54秒
 
 
@@ -698,23 +698,23 @@
      662/     3F7 : C2 C4 02            	JP NZ,_PARAM_ERR
      663/     3FA :                     ;
      664/     3FA :                     ; I/Oアドレス取得
-     665/     3FA : 2A 82 40            	LD HL,(ARGV_1)
+     665/     3FA : 2A 82 80            	LD HL,(ARGV_1)
      666/     3FD : CD 10 03            	CALL STR_LEN
      667/     400 : FE 02               	CP 2
      668/     402 : C2 C4 02            	JP NZ,_PARAM_ERR
      669/     405 :                     ;
-     670/     405 : 2A 82 40            	LD HL,(ARGV_1)
+     670/     405 : 2A 82 80            	LD HL,(ARGV_1)
      671/     408 : CD 3D 02            	CALL HEX2BIN
      672/     40B : DA C4 02            	JP C,_PARAM_ERR
      673/     40E : 4F                  	LD C,A
      674/     40F :                     ;
      675/     40F :                     ; 出力データ取得
-     676/     40F : 2A 84 40            	LD HL,(ARGV_2)
+     676/     40F : 2A 84 80            	LD HL,(ARGV_2)
      677/     412 : CD 10 03            	CALL STR_LEN
      678/     415 : FE 02               	CP 2
      679/     417 : C2 C4 02            	JP NZ,_PARAM_ERR
      680/     41A :                     ;
-     681/     41A : 2A 84 40            	LD HL,(ARGV_2)
+     681/     41A : 2A 84 80            	LD HL,(ARGV_2)
      682/     41D : CD 3D 02            	CALL HEX2BIN
      683/     420 : DA C4 02            	JP C,_PARAM_ERR
      684/     423 :                     ;
@@ -740,13 +740,13 @@
      704/     436 : 06 00               	LD B,0
      705/     438 : CD 48 01                CALL STRIN
      706/     43B :                     ;
-     707/     43B : 21 44 40            	LD HL,INBUF
+     707/     43B : 21 44 80            	LD HL,INBUF
      708/     43E : CD 3D 02            	CALL HEX2BIN
      709/     441 : 4F                  	LD C,A
      710/     442 : 47                  	LD B,A
      711/     443 :                     ;
      712/     443 :                     ; ADDR GET
-     713/     443 : 21 46 40            	LD HL,INBUF+2
+     713/     443 : 21 46 80            	LD HL,INBUF+2
      714/     446 : CD 6A 02            	CALL HEX4BIN
      715/     449 : E5                  	PUSH HL
      716/     44A : DD E1               	POP IX
@@ -759,13 +759,13 @@
 
      721/     450 :                     ;
      722/     450 :                     ; GET RECORD TYPE
-     723/     450 : 21 4A 40            	LD HL,INBUF+6
+     723/     450 : 21 4A 80            	LD HL,INBUF+6
      724/     453 : CD 3D 02            	CALL HEX2BIN
      725/     456 : B7                  	OR A
      726/     457 : 20 20               	JR NZ,_LOAD_EXIT
      727/     459 :                     ;
      728/     459 :                     _MEM_LOAD_START:
-     729/     459 : 21 4C 40            	LD HL,INBUF+8
+     729/     459 : 21 4C 80            	LD HL,INBUF+8
      730/     45C :                     _MEM_LOAD:
      731/     45C : CD 3D 02            	CALL HEX2BIN
      732/     45F : DD 77 00            	LD (IX+0),A
@@ -892,180 +892,170 @@
      801/     5DC :                     ;------------------------------------------------------------------------------
      802/     5DC :                     ; デバイス依存ルーチン (deviceディレクトリに配置)
      803/     5DC :                     ;------------------------------------------------------------------------------
-     804/     5DC : =>UNDEFINED         	IFDEF MC6850
+     804/     5DC : =>DEFINED           	IFDEF MC6850
      805/     5DC :                     	  include "device/KZ80_6850.asm"
-     806/     5DC : [804]               	ENDIF
-     807/     5DC :                     
-     808/     5DC : =>UNDEFINED         	IFDEF SBC8080SUB
-     809/     5DC :                     	  include "device/SBC8080SUB.asm" 
-     810/     5DC : [808]               	ENDIF
-     811/     5DC :                     
-     812/     5DC : =>DEFINED           	IFDEF KZ80
-     813/     5DC :                     	  include "device/KZ80_8251.asm"
 (1)    1/     5DC :                     ;
-(1)    2/     5DC :                     ; KZ80_1MSRAM/IOB用モジュール
-(1)    3/     5DC :                     ;    シリアル　8251x1
-(1)    4/     5DC :                     ;    パラレル  8255x1
-(1)    5/     5DC :                     ;--------------------------------------------------------
-(1)    6/     5DC :                     ; 以下のルーチンはSBC8080データパックのASMソースを参考にさせていただきました。
-(1)    7/     5DC :                     ;  SERINT 	8251シリアル割り込みルーチン
-(1)    8/     5DC :                     ;  CIN		シリアル1文字入力ルーチン
-(1)    9/     5DC :                     ;  COUT		シリアル1文字出力ルーチン
-(1)   10/     5DC :                     ;  CKINCHAR	シリアルバッファチェックルーチン
-(1)   11/     5DC :                     
-(1)   12/     5DC : =0H                 UARTRD	EQU	00H
-(1)   13/     5DC : =1H                 UARTRC	EQU	01H
-(1)   14/     5DC :                     ;
-(1)   15/     5DC : =3FH                BUFSIZ	EQU	3FH
-(1)   16/     5DC : =30H                BUFFUL	EQU	30H
-(1)   17/     5DC : =5H                 BUFEMP	EQU	5
-(1)   18/     5DC :                     ;
-(1)   19/     5DC : =17H                RTSHIG	EQU	00010111B
-(1)   20/     5DC : =37H                RTSLOW	EQU	00110111B
-(1)   21/     5DC :                     
-(1)   22/     5DC :                     ;------------------------------------------------------------------------------
-(1)   23/     5DC :                     ; 8251割り込みルーチン
-(1)   24/     5DC :                     ;------------------------------------------------------------------------------
-(1)   25/     5DC : F5                  SERINT:	PUSH	AF
-(1)   26/     5DD : E5                  	PUSH	HL
-(1)   27/     5DE : DB 01               	IN	A,(UARTRC)
-(1)   28/     5E0 : E6 02               	AND	00000010B
-(1)   29/     5E2 : CA 16 06            	JP	Z,RTS0
-(1)   30/     5E5 : DB 00               	IN	A,(UARTRD)
-(1)   31/     5E7 : F5                  	PUSH	AF
-(1)   32/     5E8 : 3A 43 40            	LD	A,(SERCNT)
-(1)   33/     5EB : FE 3F               	CP	BUFSIZ
-(1)   34/     5ED : C2 F4 05            	JP	NZ,NOTFUL
-(1)   35/     5F0 : F1                  	POP	AF
-(1)   36/     5F1 : C3 16 06            	JP	RTS0
-(1)   37/     5F4 : 2A 3F 40            NOTFUL:	LD	HL,(SERINP)
-(1)   38/     5F7 : 23                  	INC	HL
-(1)   39/     5F8 : 7D                  	LD	A,L
-(1)   40/     5F9 : FE 3F               	CP	SERINP & 0FFH
-(1)   41/     5FB : C2 01 06            	JP	NZ,NOTWRP
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm(KZ80_8251.asm) - page 16 - 2019/04/27 20時45分54秒
+(1)    2/     5DC :                     ; KZ80_SB_MC6850用モジュール
+(1)    3/     5DC :                     ;    シリアル　MC6850
+(1)    4/     5DC :                     ;--------------------------------------------------------
+(1)    5/     5DC :                     
+(1)    6/     5DC : =80H                UARTRC	EQU	80H
+(1)    7/     5DC : =81H                UARTRD	EQU	81H
+(1)    8/     5DC :                     ;
+(1)    9/     5DC : =3FH                BUFSIZ	EQU	3FH
+(1)   10/     5DC : =30H                BUFFUL	EQU	30H
+(1)   11/     5DC : =5H                 BUFEMP	EQU	5
+(1)   12/     5DC :                     ;
+(1)   13/     5DC : =D6H                RTSHIG	EQU	0D6h
+(1)   14/     5DC : =96H                RTSLOW	EQU	096h
+(1)   15/     5DC :                     
+(1)   16/     5DC :                     ;------------------------------------------------------------------------------
+(1)   17/     5DC :                     ; 割り込みルーチン
+(1)   18/     5DC :                     ;------------------------------------------------------------------------------
+(1)   19/     5DC : F5                  SERINT:	PUSH	AF
+(1)   20/     5DD : E5                  	PUSH	HL
+(1)   21/     5DE : DB 80               	IN	A,(UARTRC)
+(1)   22/     5E0 : E6 01               	AND	00000001B
+(1)   23/     5E2 : CA 16 06            	JP	Z,RTS0
+(1)   24/     5E5 : DB 81               	IN	A,(UARTRD)
+(1)   25/     5E7 : F5                  	PUSH	AF
+(1)   26/     5E8 : 3A 43 80            	LD	A,(SERCNT)
+(1)   27/     5EB : FE 3F               	CP	BUFSIZ
+(1)   28/     5ED : C2 F4 05            	JP	NZ,NOTFUL
+(1)   29/     5F0 : F1                  	POP	AF
+(1)   30/     5F1 : C3 16 06            	JP	RTS0
+(1)   31/     5F4 : 2A 3F 80            NOTFUL:	LD	HL,(SERINP)
+(1)   32/     5F7 : 23                  	INC	HL
+(1)   33/     5F8 : 7D                  	LD	A,L
+(1)   34/     5F9 : FE 3F               	CP	SERINP & 0FFH
+(1)   35/     5FB : C2 01 06            	JP	NZ,NOTWRP
+(1)   36/     5FE : 21 00 80            	LD	HL,SERBUF
+(1)   37/     601 : 22 3F 80            NOTWRP:	LD	(SERINP),HL
+(1)   38/     604 : F1                  	POP	AF
+(1)   39/     605 : 77                  	LD	(HL),A
+(1)   40/     606 : 3A 43 80            	LD	A,(SERCNT)
+(1)   41/     609 : 3C                  	INC	A
+(1)   42/     60A : 32 43 80            	LD	(SERCNT),A
+(1)   43/     60D : FE 30               	CP	BUFFUL
+(1)   44/     60F : DA 16 06            	JP	C,RTS0
+(1)   45/     612 : 3E D6               	LD	A,RTSHIG
+(1)   46/     614 : D3 80               	OUT	(UARTRC),A
+(1)   47/     616 : E1                  RTS0:	POP	HL
+(1)   48/     617 : F1                  	POP	AF
+(1)   49/     618 : FB                  	EI
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm(KZ80_6850.asm) - page 16 - 2019/04/27 20時45分54秒
 
 
-(1)   42/     5FE : 21 00 40            	LD	HL,SERBUF
-(1)   43/     601 : 22 3F 40            NOTWRP:	LD	(SERINP),HL
-(1)   44/     604 : F1                  	POP	AF
-(1)   45/     605 : 77                  	LD	(HL),A
-(1)   46/     606 : 3A 43 40            	LD	A,(SERCNT)
-(1)   47/     609 : 3C                  	INC	A
-(1)   48/     60A : 32 43 40            	LD	(SERCNT),A
-(1)   49/     60D : FE 30               	CP	BUFFUL
-(1)   50/     60F : DA 16 06            	JP	C,RTS0
-(1)   51/     612 : 3E 17               	LD	A,RTSHIG
-(1)   52/     614 : D3 01               	OUT	(UARTRC),A
-(1)   53/     616 : E1                  RTS0:	POP	HL
-(1)   54/     617 : F1                  	POP	AF
-(1)   55/     618 : FB                  	EI
-(1)   56/     619 : C9                  	RET
-(1)   57/     61A :                     
-(1)   58/     61A :                     ;------------------------------------------------------------------------------
-(1)   59/     61A :                     ; 1文字入力(バッファから)
-(1)   60/     61A :                     ;------------------------------------------------------------------------------
-(1)   61/     61A :                     CIN:
-(1)   62/     61A : 3A 43 40            	LD	A,(SERCNT)
-(1)   63/     61D : FE 00               	CP	00H
-(1)   64/     61F : CA 1A 06            	JP	Z,CIN
-(1)   65/     622 : E5                  	PUSH	HL
-(1)   66/     623 : 2A 41 40            	LD	HL,(SERRDP)
-(1)   67/     626 : 23                  	INC	HL
-(1)   68/     627 : 7D                  	LD	A,L
-(1)   69/     628 : FE 3F               	CP	SERINP & 0FFH
-(1)   70/     62A : C2 30 06            	JP	NZ,NRWRAP
-(1)   71/     62D : 21 00 40            	LD	HL,SERBUF
-(1)   72/     630 : F3                  NRWRAP:	DI
-(1)   73/     631 : 22 41 40            	LD	(SERRDP),HL
-(1)   74/     634 : 3A 43 40            	LD	A,(SERCNT)
-(1)   75/     637 : 3D                  	DEC	A
-(1)   76/     638 : 32 43 40            	LD	(SERCNT),A
-(1)   77/     63B : FE 05               	CP	BUFEMP
-(1)   78/     63D : D2 44 06            	JP	NC,RTS1
-(1)   79/     640 : 3E 37               	LD	A,RTSLOW
-(1)   80/     642 : D3 01               	OUT	(UARTRC),A
-(1)   81/     644 : 7E                  RTS1:	LD	A,(HL)
-(1)   82/     645 : FB                  	EI
-(1)   83/     646 : E1                  	POP	HL
-(1)   84/     647 : C9                  	RET	
-(1)   85/     648 :                     
-(1)   86/     648 :                     ;------------------------------------------------------------------------------
-(1)   87/     648 :                     ; 1文字出力
-(1)   88/     648 :                     ;------------------------------------------------------------------------------
-(1)   89/     648 : F5                  COUT:		PUSH	AF
-(1)   90/     649 : DB 01               COUT1:	IN	A,(UARTRC)
-(1)   91/     64B : E6 01               	AND	01H     
-(1)   92/     64D : CA 49 06            	JP	Z,COUT1
-(1)   93/     650 : F1                  	POP	AF
-(1)   94/     651 : D3 00               	OUT	(UARTRD),A
-(1)   95/     653 : C9                  	RET
-(1)   96/     654 :                     
-(1)   97/     654 :                     ;------------------------------------------------------------------------------
-(1)   98/     654 :                     ; 入力バッファチェック
-(1)   99/     654 :                     ;------------------------------------------------------------------------------
-(1)  100/     654 : 3A 43 40            CKINCHAR	LD	A,(SERCNT)
-(1)  101/     657 : FE 00               	CP	00H
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm(KZ80_8251.asm) - page 17 - 2019/04/27 20時45分54秒
+(1)   50/     619 : C9                  	RET
+(1)   51/     61A :                     
+(1)   52/     61A :                     ;------------------------------------------------------------------------------
+(1)   53/     61A :                     ; 1文字入力(バッファから)
+(1)   54/     61A :                     ;------------------------------------------------------------------------------
+(1)   55/     61A :                     CIN:
+(1)   56/     61A : 3A 43 80            	LD	A,(SERCNT)
+(1)   57/     61D : FE 00               	CP	00H
+(1)   58/     61F : CA 1A 06            	JP	Z,CIN
+(1)   59/     622 : E5                  	PUSH	HL
+(1)   60/     623 : 2A 41 80            	LD	HL,(SERRDP)
+(1)   61/     626 : 23                  	INC	HL
+(1)   62/     627 : 7D                  	LD	A,L
+(1)   63/     628 : FE 3F               	CP	SERINP & 0FFH
+(1)   64/     62A : C2 30 06            	JP	NZ,NRWRAP
+(1)   65/     62D : 21 00 80            	LD	HL,SERBUF
+(1)   66/     630 : F3                  NRWRAP:	DI
+(1)   67/     631 : 22 41 80            	LD	(SERRDP),HL
+(1)   68/     634 : 3A 43 80            	LD	A,(SERCNT)
+(1)   69/     637 : 3D                  	DEC	A
+(1)   70/     638 : 32 43 80            	LD	(SERCNT),A
+(1)   71/     63B : FE 05               	CP	BUFEMP
+(1)   72/     63D : D2 44 06            	JP	NC,RTS1
+(1)   73/     640 : 3E 96               	LD	A,RTSLOW
+(1)   74/     642 : D3 80               	OUT	(UARTRC),A
+(1)   75/     644 : 7E                  RTS1:	LD	A,(HL)
+(1)   76/     645 : FB                  	EI
+(1)   77/     646 : E1                  	POP	HL
+(1)   78/     647 : C9                  	RET	
+(1)   79/     648 :                     
+(1)   80/     648 :                     ;------------------------------------------------------------------------------
+(1)   81/     648 :                     ; 1文字出力
+(1)   82/     648 :                     ;------------------------------------------------------------------------------
+(1)   83/     648 : F5                  COUT:		PUSH	AF
+(1)   84/     649 : DB 80               COUT1:	IN	A,(UARTRC)
+(1)   85/     64B : E6 02               	AND	02H     
+(1)   86/     64D : CA 49 06            	JP	Z,COUT1
+(1)   87/     650 : F1                  	POP	AF
+(1)   88/     651 : D3 81               	OUT	(UARTRD),A
+(1)   89/     653 : C9                  	RET
+(1)   90/     654 :                     
+(1)   91/     654 :                     ;------------------------------------------------------------------------------
+(1)   92/     654 :                     ; 入力バッファチェック
+(1)   93/     654 :                     ;------------------------------------------------------------------------------
+(1)   94/     654 : 3A 43 80            CKINCHAR	LD	A,(SERCNT)
+(1)   95/     657 : FE 00               	CP	00H
+(1)   96/     659 : C9                  	RET
+(1)   97/     65A :                     
+(1)   98/     65A :                     ;------------------------------------------------------------------------------
+(1)   99/     65A :                     ; 初期化
+(1)  100/     65A :                     ;------------------------------------------------------------------------------
+(1)  101/     65A :                     INIT:		
+(1)  102/     65A : 31 A8 80                LD  SP,STACK
+(1)  103/     65D : 21 00 80            	LD	HL,SERBUF
+(1)  104/     660 : 22 3F 80            	LD	(SERINP),HL
+(1)  105/     663 : 22 41 80            	LD	(SERRDP),HL
+(1)  106/     666 : AF                  	XOR	A
+(1)  107/     667 : 32 43 80            	LD	(SERCNT),A
+(1)  108/     66A :                     ;
+(1)  109/     66A : 3E 96               	LD	A,96h
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm(KZ80_6850.asm) - page 17 - 2019/04/27 20時45分54秒
 
 
-(1)  102/     659 : C9                  	RET
-(1)  103/     65A :                     
-(1)  104/     65A :                     ;------------------------------------------------------------------------------
-(1)  105/     65A :                     ; 初期化
-(1)  106/     65A :                     ;------------------------------------------------------------------------------
-(1)  107/     65A :                     INIT:		
-(1)  108/     65A : 31 A8 40                LD  SP,STACK
-(1)  109/     65D : 21 00 40            	LD	HL,SERBUF
-(1)  110/     660 : 22 3F 40            	LD	(SERINP),HL
-(1)  111/     663 : 22 41 40            	LD	(SERRDP),HL
-(1)  112/     666 : AF                  	XOR	A
-(1)  113/     667 : 32 43 40            	LD	(SERCNT),A
-(1)  114/     66A : D3 01               	OUT	(UARTRC),A
-(1)  115/     66C : D3 01               	OUT	(UARTRC),A
-(1)  116/     66E : D3 01               	OUT	(UARTRC),A
-(1)  117/     670 : 3E 40               	LD	A,01000000B
-(1)  118/     672 : D3 01               	OUT	(UARTRC),A
-(1)  119/     674 : 3E 4E               	LD	A,01001110B
-(1)  120/     676 : D3 01               	OUT	(UARTRC),A
-(1)  121/     678 : 3E 37               	LD	A,RTSLOW
-(1)  122/     67A : D3 01               	OUT	(UARTRC),A
-(1)  123/     67C : FB                  	EI
-(1)  124/     67D :                     ;
-(1)  125/     67D : C3 00 01                JP MAIN
-(1)  126/     680 :                     ;
-(1)  127/     680 :                     ; KZ80-1MSRAM用 RAM 4000h〜
-(1)  128/     680 :                     ;
-(1)  129/    4000 :                         ORG 4000h
-(1)  130/    4000 :                     ;
-(1)  131/    4000 :                     SERBUF	DS	BUFSIZ
-(1)  132/    403F :                     SERINP	DS	2
-(1)  133/    4041 :                     SERRDP	DS	2
-(1)  134/    4043 :                     SERCNT	DS	1
-(1)  135/    4044 :                     ;
-(1)  136/    4044 : =4044H              DEVICE_RAM_END EQU $
-(1)  137/    4044 :                     
-     814/    4044 : [812]               	ENDIF
-     815/    4044 :                     ;
-     816/    4044 :                     ;------------------------------------------------------------------------------
-     817/    4044 :                     ; RAM バッファ & STACK
-     818/    4044 :                     ;------------------------------------------------------------------------------
-     819/    4044 :                     	ORG DEVICE_RAM_END
-     820/    4044 :                     ;
-     821/    4044 :                     INBUF   DS  60
-     822/    4080 : =3CH                INMAX   EQU  $-INBUF
-     823/    4080 :                     INEND   DS  1
-     824/    4081 :                     ;
-     825/    4081 :                     ARGC	DS	1
-     826/    4082 :                     ARGV_1	DS	2
-     827/    4084 :                     ARGV_2	DS	2
-     828/    4086 :                     ARGV_3	DS	2
-     829/    4088 : =3H                 ARG_MAX	EQU ($-ARGV_1)/2
-     830/    4088 : =7H                 ARG_AREA_LEN EQU $-ARGC
-     831/    4088 :                     ;
-     832/    4088 :                         	DS	32
-     833/    40A8 : =40A8H              STACK   EQU $
-     834/    40A8 :                     
+(1)  110/     66C : D3 80               	OUT	(UARTRC),A
+(1)  111/     66E :                     ;
+(1)  112/     66E : ED 56               	IM 1
+(1)  113/     670 : FB                  	EI
+(1)  114/     671 :                     ;
+(1)  115/     671 : C3 00 01                JP MAIN
+(1)  116/     674 :                     ;
+(1)  117/     674 :                     ; RAM 8000h〜
+(1)  118/     674 :                     ;
+(1)  119/    8000 :                         ORG 8000h
+(1)  120/    8000 :                     ;
+(1)  121/    8000 :                     SERBUF	DS	BUFSIZ
+(1)  122/    803F :                     SERINP	DS	2
+(1)  123/    8041 :                     SERRDP	DS	2
+(1)  124/    8043 :                     SERCNT	DS	1
+(1)  125/    8044 :                     ;
+(1)  126/    8044 : =8044H              DEVICE_RAM_END EQU $
+(1)  127/    8044 :                     
+     806/    8044 : [804]               	ENDIF
+     807/    8044 :                     
+     808/    8044 : =>UNDEFINED         	IFDEF SBC8080SUB
+     809/    8044 :                     	  include "device/SBC8080SUB.asm" 
+     810/    8044 : [808]               	ENDIF
+     811/    8044 :                     
+     812/    8044 : =>UNDEFINED         	IFDEF KZ80
+     813/    8044 :                     	  include "device/KZ80_8251.asm"
+     814/    8044 : [812]               	ENDIF
+     815/    8044 :                     ;
+     816/    8044 :                     ;------------------------------------------------------------------------------
+     817/    8044 :                     ; RAM バッファ & STACK
+     818/    8044 :                     ;------------------------------------------------------------------------------
+     819/    8044 :                     	ORG DEVICE_RAM_END
+     820/    8044 :                     ;
+     821/    8044 :                     INBUF   DS  60
+     822/    8080 : =3CH                INMAX   EQU  $-INBUF
+     823/    8080 :                     INEND   DS  1
+     824/    8081 :                     ;
+     825/    8081 :                     ARGC	DS	1
+     826/    8082 :                     ARGV_1	DS	2
+     827/    8084 :                     ARGV_2	DS	2
+     828/    8086 :                     ARGV_3	DS	2
+     829/    8088 : =3H                 ARG_MAX	EQU ($-ARGV_1)/2
+     830/    8088 : =7H                 ARG_AREA_LEN EQU $-ARGC
+     831/    8088 :                     ;
+     832/    8088 :                         	DS	32
+     833/    80A8 : =80A8H              STACK   EQU $
+     834/    80A8 :                     
  AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 18 - 2019/04/27 20時45分54秒
 
 
@@ -1073,9 +1063,9 @@
   ------------------------
 
  ABORT_MSG :                    5AA C |  ADDR_OUT :                     2EE C |
-*ARCHITECTURE :    x86_64-apple-osx - |  ARGC :                        4081 C |
- ARGV_1 :                      4082 C |  ARGV_2 :                      4084 C |
-*ARGV_3 :                      4086 C |  ARG_AREA_LEN :                   7 - |
+*ARCHITECTURE :    x86_64-apple-osx - |  ARGC :                        8081 C |
+ ARGV_1 :                      8082 C |  ARGV_2 :                      8084 C |
+*ARGV_3 :                      8086 C |  ARG_AREA_LEN :                   7 - |
  ARG_MAX :                        3 - |  ASC16 :                        2D0 C |
  BEEP :                           7 - | *BIGENDIAN :                      0 - |
 *BRANCHEXT :                      0 - |  BS :                             8 - |
@@ -1088,7 +1078,7 @@
  COUT1 :                        649 C |  CPRINT :                       1AE C |
  CR :                             D - |  CRLF_PRINT :                   1B4 C |
 *CTRLC :                          3 - | *DATE :                  2019/04/27 - |
- DEL :                           7F - |  DEVICE_RAM_END :              4044 - |
+ DEL :                           7F - |  DEVICE_RAM_END :              8044 - |
  DUMP16 :                       2FB C |  DUMP_AT :                      30B C |
  ESC :                           1B - | *FALSE :                          0 - |
 *FULLPMMU :                       1 - |  GETC :                         13E C |
@@ -1097,15 +1087,15 @@
  HATENA_MSG :                   5D8 C |  HELP_MSG :                     4D8 C |
  HELP_OUT :                     1DC C |  HEX2BIN :                      23D C |
  HEX2OUT :                      1BF C |  HEX4BIN :                      26A C |
- HEX4OUT :                      1F0 C |  INBUF :                       4044 C |
- INEND :                       4080 C | *INEXTMODE :                      0 - |
+ HEX4OUT :                      1F0 C |  INBUF :                       8044 C |
+ INEND :                       8080 C | *INEXTMODE :                      0 - |
  INIT :                         65A C | *INLWORDMODE :                    0 - |
  INMAX :                         3C - | *INMAXMODE :                      0 - |
 *INSRCMODE :                      0 - | *INSUPMODE :                      0 - |
  IO_IN :                        3BA C |  IO_OUT :                       3E9 C |
-*KZ80 :                           1 - | *LF :                             A - |
-*LISTON :                         1 - |  LOAD :                         429 C |
-*MACEXP :                         7 - |  MAIN :                         100 C |
+*LF :                             A - | *LISTON :                         1 - |
+ LOAD :                         429 C | *MACEXP :                         7 - |
+ MAIN :                         100 C | *MC6850 :                         1 - |
  MEM_CHANGE :                   321 C |  MEM_DUMP :                     278 C |
 *MOMCPU :                        80 - | *MOMCPUNAME :                   Z80 - |
 *NESTMAX :                      100 - |  NOTFUL :                       5F4 C |
@@ -1117,17 +1107,17 @@
 *RST00 :                          0 C | *RST08 :                          8 C |
 *RST10 :                         10 C | *RST18 :                         18 C |
 *RST38 :                         38 C |  RTS0 :                         616 C |
- RTS1 :                         644 C |  RTSHIG :                        17 - |
- RTSLOW :                        37 - |  SERBUF :                      4000 C |
- SERCNT :                      4043 C |  SERINP :                      403F C |
- SERINT :                       5DC C |  SERRDP :                      4041 C |
+ RTS1 :                         644 C |  RTSHIG :                        D6 - |
+ RTSLOW :                        96 - |  SERBUF :                      8000 C |
+ SERCNT :                      8043 C |  SERINP :                      803F C |
+ SERINT :                       5DC C |  SERRDP :                      8041 C |
  SPC :                           20 - |  SPC_PRINT :                    1BB C |
- STACK :                       40A8 - |  STRIN :                        148 C |
+ STACK :                       80A8 - |  STRIN :                        148 C |
  STRPR :                        1A5 C |  STR_LEN :                      310 C |
  TAB :                            9 - |
 *TIME :                          20\-26\-10\-1245\-27\-12\-1254\-25\-89\-11 - |
-*TRUE :                           1 - |  UARTRC :                         1 - |
- UARTRD :                         0 - |  VERMSG :                       496 C |
+*TRUE :                           1 - |  UARTRC :                        80 - |
+ UARTRD :                        81 - |  VERMSG :                       496 C |
  VERNAME :                                        KUNI-NET Z80 MONITOR v0.5 - |
  AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 19 - 2019/04/27 20時45分54秒
 
@@ -1166,9 +1156,9 @@
 STANDARD (0 changed characters)
 
 
-0.03 seconds assembly time
+0.02 seconds assembly time
 
-    971 lines source file
+    961 lines source file
       2 passes
       0 errors
       0 warnings

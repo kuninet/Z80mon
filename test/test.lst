@@ -1,4 +1,4 @@
- AS V1.42 Beta [Bld 137] - source file test.asm - page 1 - 2019/04/27 17時50分58秒
+ AS V1.42 Beta [Bld 137] - source file test.asm - page 1 - 2019/04/27 20時45分54秒
 
 
        1/       0 :                     ;
@@ -23,7 +23,7 @@
       20/    500E : 48 45 4C 4C 4F 20   HELLO_MSG DB "HELLO WORLD",13,10,0
                     57 4F 52 4C 44 0D 
                     0A 00 
- AS V1.42 Beta [Bld 137] - source file test.asm - page 2 - 2019/04/27 17時50分58秒
+ AS V1.42 Beta [Bld 137] - source file test.asm - page 2 - 2019/04/27 20時45分54秒
 
 
   symbol table (* = unused):
@@ -43,13 +43,13 @@
 *NESTMAX :                      100 - | *PACKING :                        0 - |
 *PADDING :                        1 - | *RELAXED :                        0 - |
 *START :                       5000 C |  STR_PR :                      5007 C |
-*TIME :                          17\-26\-10\-1250\-27\-12\-1258\-25\-89\-11 - |
+*TIME :                          20\-26\-10\-1245\-27\-12\-1254\-25\-89\-11 - |
 *TRUE :                           1 - | *VERSION :                     142F - |
 
      31 symbols
      29 unused symbols
 
- AS V1.42 Beta [Bld 137] - source file test.asm - page 3 - 2019/04/27 17時50分58秒
+ AS V1.42 Beta [Bld 137] - source file test.asm - page 3 - 2019/04/27 20時45分54秒
 
 
   codepages:

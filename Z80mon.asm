@@ -801,9 +801,15 @@ HATENA_MSG DB CR,"?",CR,0
 ;------------------------------------------------------------------------------
 ; デバイス依存ルーチン (deviceディレクトリに配置)
 ;------------------------------------------------------------------------------
+	IFDEF MC6850
+	  include "device/KZ80_6850.asm"
+	ENDIF
+
 	IFDEF SBC8080SUB
-	  include "device/SBC8080SUB.asm"	  
-	ELSEIF 
+	  include "device/SBC8080SUB.asm" 
+	ENDIF
+
+	IFDEF KZ80
 	  include "device/KZ80_8251.asm"
 	ENDIF
 ;

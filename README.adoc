@@ -37,27 +37,32 @@
 |G XXXX
 |XXXX番地からのプログラムを実行する
 
+|Z XXXX PARAM1 PARAM2
+|XXXX番地からのプログラムをパラメーターつき(PARAM1、PARAM2)で実行する
+
+
 |===
 
 == ROM作成方法
 * アセンブル済みのIntelHEX形式ファイル(obj/Z80mon_KZ80.hex等)やバイナリファイル(obj/Z80mon_KZ80.bin)を使用して、TL866等のEPROMライタでROMを作成して使用してください。
+** インテルHEXはTL866標準ソフトで読み込みできます。バイナリ(bin)ファイルは https://gitlab.com/DavidGriffith/minipro/[minipro Linux用プログラム]などで使えます。
 * モニタープログラムは0000番地からスタートするかたちになっています。 
 
 [cols="1,10a"]
 |===
 |ファイル名|用途
 
-|Z80mon_KZ80.hex/bin
+|Z80mon_KZ80.hex/Z80mon_KZ80.bin
 |* KZ80-CPUB+KZ80-1MSRAM/IOBv1用イメージ
 * シリアルチップはi8251前提です
 * RAM開始番地が$4000からとなっています
 
-|Z80mon_8080SUB.hex/bin
+|Z80mon_8080SUB.hex/Z80mon_8080SUB.bin
 |* KZ80-CPUB+SBC8080SUBボード用イメージ
 * シリアルチップはi8251前提です
 * RAM開始番地が$8000からとなっています
 
-|Z80mon_6850.hex/bin
+|Z80mon_6850.hex/Z80mon_6850.bin
 |* KZ80-SB-MC6850ボード用イメージ
 * シリアルチップはMC6850前提です
 * RAM開始番地が$8000からとなっています

@@ -603,6 +603,9 @@ PGM_GO:
 ; 入力パラメータ数チェック
 	LD A,(ARGC)
 	CP 1
+	JP NZ,_PARAM_ERR
+;
+_PGM_EXEC:
 ;
 ; 実行アドレス取得
 ;
@@ -616,6 +619,23 @@ PGM_GO:
 	JP C,_PARAM_ERR
 	JP (HL)
 ;
+
+;
+;================================================================================
+; プログラム実行(Z)コマンド
+;================================================================================
+;
+PGM_GO_PARAM:
+    CALL SPC_PRINT
+;
+    CALL STRIN
+	CALL PARSER
+;
+; 入力パラメータ数チェック
+	LD A,(ARGC)
+	CP 4
+	JP P,_PARAM_ERR
+	JP _PGM_EXEC
 ;
 ;================================================================================
 ; I/O入力コマンド
@@ -766,6 +786,8 @@ CMD_TBL:
     DW MEM_CHANGE
     DB 'G'
     DW PGM_GO
+    DB 'Z'
+    DW PGM_GO_PARAM
     DB 'I'
     DW IO_IN
     DB 'O'
@@ -786,6 +808,7 @@ HELP_MSG DB "- - - COMMAND HELP - - -",CR
          DB "M XXXX ",TAB,TAB,"MEMORY EDIT",CR
          DB "D XXXX XXXX ",TAB,"MEMORY DUMP",CR
          DB "G XXXX",TAB,TAB,"PROGRAM EXECUTE",CR
+         DB "Z XXXX PARAM1 PARAM2",TAB,"PROGRAM EXECUTE w/PARAM",CR
          DB "I XX",TAB,TAB,"I/O INPUT",CR
          DB "O XX XX",TAB,TAB,"I/O OUTPUT",CR
          DB "L ",TAB,TAB,"INTEL HEX LOAD",CR

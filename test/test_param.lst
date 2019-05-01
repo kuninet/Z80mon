@@ -1,0 +1,84 @@
+ AS V1.42 Beta [Bld 137] - source file test_param.asm - page 1 - 2019/05/01 13時24分00秒
+
+
+       1/       0 :                     ;
+       2/       0 :                     ; Test Program w/PARAM
+       3/       0 :                     ;
+       4/    5000 :                         org 5000h
+       5/    5000 :                     ;
+       6/    5000 : =4082H              PARAM1 EQU 4082h
+       7/    5000 : =4084H              PARAM2 EQU 4084h
+       8/    5000 : =4086H              PARAM3 EQU 4086h
+       9/    5000 :                     
+      10/    5000 :                     START:
+      11/    5000 : 2A 82 40                LD HL,(PARAM1)
+      12/    5003 : CD 1C 50                CALL STR_PR
+      13/    5006 : CD 23 50                CALL CRLF_PR
+      14/    5009 :                     ;
+      15/    5009 : 2A 84 40                LD HL,(PARAM2)
+      16/    500C : CD 1C 50                CALL STR_PR
+      17/    500F : CD 23 50                CALL CRLF_PR
+      18/    5012 :                     ;
+      19/    5012 : 2A 86 40                LD HL,(PARAM3)
+      20/    5015 : CD 1C 50                CALL STR_PR
+      21/    5018 : CD 23 50                CALL CRLF_PR
+      22/    501B : C9                      RET
+      23/    501C :                     ;
+      24/    501C :                     STR_PR:
+      25/    501C : 7E                      LD A,(HL)
+      26/    501D : B7                      OR A
+      27/    501E : C8                      RET Z
+      28/    501F : CF                      RST 08h
+      29/    5020 : 23                      INC HL
+      30/    5021 : 18 F9                   JR STR_PR
+      31/    5023 :                     ;
+      32/    5023 :                     CRLF_PR:
+      33/    5023 : 3E 0D                   LD A,0Dh
+      34/    5025 : CF                      RST 08h
+      35/    5026 : 3E 0A                   LD A,0Ah
+      36/    5028 : CF                      RST 08h
+      37/    5029 : C9                      RET
+      38/    502A :                     ;
+ AS V1.42 Beta [Bld 137] - source file test_param.asm - page 2 - 2019/05/01 13時24分00秒
+
+
+  symbol table (* = unused):
+  ------------------------
+
+*ARCHITECTURE :    x86_64-apple-osx - | *BIGENDIAN :                      0 - |
+*BRANCHEXT :                      0 - | *CASESENSITIVE :                  0 - |
+*CONSTPI :        3.141592653589793 - |  CRLF_PR :                     5023 C |
+*DATE :                  2019/05/01 - | *FALSE :                          0 - |
+*FULLPMMU :                       1 - | *HAS64 :                          1 - |
+*HASDSP :                         0 - | *HASFPU :                         0 - |
+*HASPMMU :                        0 - | *INEXTMODE :                      0 - |
+*INLWORDMODE :                    0 - | *INMAXMODE :                      0 - |
+*INSRCMODE :                      0 - | *INSUPMODE :                      0 - |
+*LISTON :                         1 - | *MACEXP :                         7 - |
+*MOMCPU :                        80 - | *MOMCPUNAME :                   Z80 - |
+*NESTMAX :                      100 - | *PACKING :                        0 - |
+*PADDING :                        1 - |  PARAM1 :                      4082 - |
+ PARAM2 :                      4084 - |  PARAM3 :                      4086 - |
+*RELAXED :                        0 - | *START :                       5000 C |
+ STR_PR :                      501C C |
+*TIME :                          13\-26\-10\-1224\-27\-12\-1200\-25\-89\-11 - |
+*TRUE :                           1 - | *VERSION :                     142F - |
+
+     34 symbols
+     29 unused symbols
+
+ AS V1.42 Beta [Bld 137] - source file test_param.asm - page 3 - 2019/05/01 13時24分00秒
+
+
+  codepages:
+  ----------
+
+STANDARD (0 changed characters)
+
+
+0.00 seconds assembly time
+
+     38 lines source file
+      2 passes
+      0 errors
+      0 warnings

@@ -1,0 +1,279 @@
+ AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 1 - 2019/05/01 18時33分32秒
+
+
+       1/       0 :                     ;
+       2/       0 :                     ; RTC4543SA WRITE Test
+       3/       0 :                     ;
+       4/    5000 :                         org 5000h
+       5/    5000 :                     ;
+       6/    5000 : =4084H              PARAM2 EQU 4084h
+       7/    5000 : =0H                 NULL    EQU 00h
+       8/    5000 :                     ;
+       9/    5000 : =C3H                PPI_CTL EQU 0C3h
+      10/    5000 : =C0H                PPI_A EQU 0C0h
+      11/    5000 : =C2H                PPI_C EQU 0C2h
+      12/    5000 :                     ;
+      13/    5000 : =9H                 CE_ON   EQU 09h
+      14/    5000 : =8H                 CE_OFF  EQU 08h
+      15/    5000 : =BH                 WR_ON   EQU 0bh
+      16/    5000 : =AH                 WR_OFF  EQU 0ah
+      17/    5000 : =DH                 CLK_ON  EQU 0dh
+      18/    5000 : =CH                 CLK_OFF EQU 0ch
+      19/    5000 :                     ;
+      20/    5000 :                     START:
+      21/    5000 : 2A 84 40                LD HL,(PARAM2)
+      22/    5003 : CD 87 50                CALL STRLEN
+      23/    5006 : FE 0D                   CP 13
+      24/    5008 : C2 AC 50                JP NZ,PARAM_ERR_OUT
+      25/    500B :                     ;
+      26/    500B :                     ;    CALL STRCHK
+      27/    500B :                     ;    CALL NC,MAIN    ; 文字種が正しければメイン処理へ
+      28/    500B : CD 0F 50                CALL MAIN    ; 文字種が正しければメイン処理へ
+      29/    500E : C9                      RET
+      30/    500F :                     ;
+      31/    500F :                     ;------------------------------------
+      32/    500F :                     ; 処理メイン
+      33/    500F :                     ;------------------------------------
+      34/    500F :                     MAIN:
+      35/    500F : CD 68 50                CALL INIT8255
+      36/    5012 : CD 54 50                CALL WR_ON_SET
+      37/    5015 : CD 5E 50                CALL CE_ON_SET
+      38/    5018 :                     ;
+      39/    5018 : 2A 84 40                LD HL,(PARAM2)
+      40/    501B : 06 0D                   LD B,13
+      41/    501D : 11 0C 00                LD DE,12
+      42/    5020 : 19                      ADD HL,DE      ; 指定文字列の最後をポイント
+      43/    5021 :                     ;
+      44/    5021 :                     _MAIN_LOOP:
+      45/    5021 : 7E                      LD A,(HL)
+      46/    5022 : D6 30                   SUB A,30h       ; 数字の文字コードをBCDへ
+      47/    5024 :                     ;
+      48/    5024 : 0E 04                   LD C,4          ; 4bit分処理
+      49/    5026 :                     _OUT_LOOP:
+      50/    5026 : CB 0F                   RRC A
+      51/    5028 : DA 30 50                JP C,_ON_OUT
+      52/    502B : F5                      PUSH AF
+      53/    502C : 3E 00                   LD A,00h
+      54/    502E : 18 03                   JR _RTC_OUT
+      55/    5030 :                     _ON_OUT:
+      56/    5030 : F5                      PUSH AF
+      57/    5031 : 3E 01                   LD A,01h
+      58/    5033 :                     _RTC_OUT:
+      59/    5033 : D3 C0                   OUT (PPI_A),A
+      60/    5035 : CD 47 50                CALL CLK1       ; 1Clock
+ AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 2 - 2019/05/01 18時33分32秒
+
+
+      61/    5038 : F1                      POP AF
+      62/    5039 : 0D                      DEC C
+      63/    503A : 20 EA                   JR NZ,_OUT_LOOP
+      64/    503C :                     ;
+      65/    503C : 2B                      DEC HL
+      66/    503D : 05                      DEC B
+      67/    503E : 20 E1                   JR NZ,_MAIN_LOOP
+      68/    5040 :                     ;
+      69/    5040 : CD 63 50                CALL CE_OFF_SET
+      70/    5043 : CD 59 50                CALL WR_OFF_SET
+      71/    5046 :                     ;
+      72/    5046 : C9                      RET
+      73/    5047 :                     ;
+      74/    5047 :                     ;------------------------------------
+      75/    5047 :                     ; 1クロック ON→OFF
+      76/    5047 :                     ;------------------------------------
+      77/    5047 :                     CLK1:
+      78/    5047 : 3E 0D                   LD A,CLK_ON
+      79/    5049 : D3 C3                   OUT (PPI_CTL),A
+      80/    504B : 7F                      LD A,A          ; DUMMY
+      81/    504C : 7F                      LD A,A          ; DUMMY
+      82/    504D : 7F                      LD A,A          ; DUMMY
+      83/    504E : 7F                      LD A,A          ; DUMMY
+      84/    504F : 3E 0C                   LD A,CLK_OFF
+      85/    5051 : D3 C3                   OUT (PPI_CTL),A
+      86/    5053 : C9                      RET
+      87/    5054 :                     
+      88/    5054 :                     ;------------------------------------
+      89/    5054 :                     ; WRピン ON
+      90/    5054 :                     ;------------------------------------
+      91/    5054 :                     WR_ON_SET:
+      92/    5054 : 3E 0B                   LD A,WR_ON
+      93/    5056 : D3 C3                   OUT (PPI_CTL),A
+      94/    5058 : C9                      RET
+      95/    5059 :                     ;------------------------------------
+      96/    5059 :                     ; WRピン OFF
+      97/    5059 :                     ;------------------------------------
+      98/    5059 :                     WR_OFF_SET:
+      99/    5059 : 3E 0A                   LD A,WR_OFF
+     100/    505B : D3 C3                   OUT (PPI_CTL),A
+     101/    505D : C9                      RET
+     102/    505E :                     
+     103/    505E :                     ;------------------------------------
+     104/    505E :                     ; CEピン ON
+     105/    505E :                     ;------------------------------------
+     106/    505E :                     CE_ON_SET:
+     107/    505E : 3E 09                   LD A,CE_ON
+     108/    5060 : D3 C3                   OUT (PPI_CTL),A
+     109/    5062 : C9                      RET
+     110/    5063 :                     ;------------------------------------
+     111/    5063 :                     ; WRピン OFF
+     112/    5063 :                     ;------------------------------------
+     113/    5063 :                     CE_OFF_SET:
+     114/    5063 : 3E 08                   LD A,CE_OFF
+     115/    5065 : D3 C3                   OUT (PPI_CTL),A
+     116/    5067 : C9                      RET
+     117/    5068 :                     
+     118/    5068 :                     ;------------------------------------
+     119/    5068 :                     ; 8255初期化 ポートA OUT、ポートC OUT
+     120/    5068 :                     ;------------------------------------
+ AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 3 - 2019/05/01 18時33分32秒
+
+
+     121/    5068 :                     INIT8255:
+     122/    5068 : 3E 80                   LD A,80h
+     123/    506A : D3 C3                   OUT (PPI_CTL),A
+     124/    506C : 3E 00                   LD A,00h
+     125/    506E : D3 C0                   OUT (PPI_A),A
+     126/    5070 : D3 C2                   OUT (PPI_C),A
+     127/    5072 :                     ;
+     128/    5072 : C9                      RET
+     129/    5073 :                     ;------------------------------------
+     130/    5073 :                     ; 文字種が数字? ERRORだったらキャリーフラグON
+     131/    5073 :                     ;------------------------------------
+     132/    5073 :                     STRCHK:
+     133/    5073 : E5                      PUSH HL
+     134/    5074 :                     ;
+     135/    5074 : 7E                      LD A,(HL)
+     136/    5075 : B7                      OR A        ; 文字列終了($00)チェック
+     137/    5076 : C8                      RET Z
+     138/    5077 :                     ;
+     139/    5077 : FE 30                   CP '0'
+     140/    5079 : FA 81 50                JP M,_STR_CHK_ERR
+     141/    507C : FE 3A                   CP ':'
+     142/    507E : FA 85 50                JP M,_STR_CHK_NORM
+     143/    5081 :                     ;
+     144/    5081 :                     _STR_CHK_ERR:
+     145/    5081 : CD AC 50                CALL PARAM_ERR_OUT
+     146/    5084 : 37                      SCF                     ; キャリーフラグON
+     147/    5085 :                     _STR_CHK_NORM:
+     148/    5085 : E1                      POP HL
+     149/    5086 : C9                      RET
+     150/    5087 :                     ;------------------------------------
+     151/    5087 :                     ; (strlen) 文字列長をAレジスタへ返す
+     152/    5087 :                     ;------------------------------------
+     153/    5087 :                     STRLEN:
+     154/    5087 : E5                  	PUSH HL
+     155/    5088 : C5                  	PUSH BC
+     156/    5089 : 0E 00               	LD C,0
+     157/    508B :                     _STR_LEN_LOOP:
+     158/    508B : 7E                  	LD A,(HL)
+     159/    508C : FE 00               	CP NULL
+     160/    508E : 28 04               	JR Z,_STR_LEN_EXIT
+     161/    5090 : 23                  	INC HL
+     162/    5091 : 0C                  	INC C
+     163/    5092 : 18 F7               	JR _STR_LEN_LOOP
+     164/    5094 :                     ;
+     165/    5094 :                     _STR_LEN_EXIT:
+     166/    5094 : 79                  	LD A,C
+     167/    5095 : C1                  	POP BC
+     168/    5096 : E1                  	POP HL
+     169/    5097 : C9                  	RET
+     170/    5098 :                     ;
+     171/    5098 :                     ;------------------------------------
+     172/    5098 :                     ; 文字列 コンソール出力
+     173/    5098 :                     ;------------------------------------
+     174/    5098 :                     STR_PR:
+     175/    5098 : E5                      PUSH HL
+     176/    5099 : 7E                      LD A,(HL)
+     177/    509A : B7                      OR A
+     178/    509B : 28 04                   JR Z,_STR_PR_EXIT
+     179/    509D : CF                      RST 08h
+     180/    509E : 23                      INC HL
+ AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 4 - 2019/05/01 18時33分32秒
+
+
+     181/    509F : 18 F7                   JR STR_PR
+     182/    50A1 :                     ;
+     183/    50A1 :                     _STR_PR_EXIT:
+     184/    50A1 : E1                      POP HL
+     185/    50A2 : C9                      RET
+     186/    50A3 :                     ;
+     187/    50A3 :                     ;------------------------------------
+     188/    50A3 :                     ; CRLF コンソール出力
+     189/    50A3 :                     ;------------------------------------
+     190/    50A3 :                     CRLF_PR:
+     191/    50A3 : F5                      PUSH AF
+     192/    50A4 : 3E 0D                   LD A,0Dh
+     193/    50A6 : CF                      RST 08h
+     194/    50A7 : 3E 0A                   LD A,0Ah
+     195/    50A9 : CF                      RST 08h
+     196/    50AA : F1                      POP AF
+     197/    50AB : C9                      RET
+     198/    50AC :                     ;
+     199/    50AC :                     ;------------------------------------
+     200/    50AC :                     ; パラメーターエラー出力
+     201/    50AC :                     ;------------------------------------
+     202/    50AC :                     PARAM_ERR_OUT:
+     203/    50AC : 21 B3 50                LD HL,PARAM_ERR_MSG
+     204/    50AF : CD 98 50                CALL STR_PR
+     205/    50B2 : C9                      RET
+     206/    50B3 :                     ;
+     207/    50B3 : 2A 2A 2A 20 50 41   PARAM_ERR_MSG DB "*** PARAMATER ERROR",13,10,0
+                    52 41 4D 41 54 45 
+                    52 20 45 52 52 4F 
+                    52 0D 0A 00 
+ AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 5 - 2019/05/01 18時33分32秒
+
+
+  symbol table (* = unused):
+  ------------------------
+
+*ARCHITECTURE :    x86_64-apple-osx - | *BIGENDIAN :                      0 - |
+*BRANCHEXT :                      0 - | *CASESENSITIVE :                  0 - |
+ CE_OFF :                         8 - |  CE_OFF_SET :                  5063 C |
+ CE_ON :                          9 - |  CE_ON_SET :                   505E C |
+ CLK1 :                        5047 C |  CLK_OFF :                        C - |
+ CLK_ON :                         D - | *CONSTPI :        3.141592653589793 - |
+*CRLF_PR :                     50A3 C | *DATE :                  2019/05/01 - |
+*FALSE :                          0 - | *FULLPMMU :                       1 - |
+*HAS64 :                          1 - | *HASDSP :                         0 - |
+*HASFPU :                         0 - | *HASPMMU :                        0 - |
+*INEXTMODE :                      0 - |  INIT8255 :                    5068 C |
+*INLWORDMODE :                    0 - | *INMAXMODE :                      0 - |
+*INSRCMODE :                      0 - | *INSUPMODE :                      0 - |
+*LISTON :                         1 - | *MACEXP :                         7 - |
+ MAIN :                        500F C | *MOMCPU :                        80 - |
+*MOMCPUNAME :                   Z80 - | *NESTMAX :                      100 - |
+ NULL :                           0 - | *PACKING :                        0 - |
+*PADDING :                        1 - |  PARAM2 :                      4084 - |
+ PARAM_ERR_MSG :               50B3 C |  PARAM_ERR_OUT :               50AC C |
+ PPI_A :                         C0 - |  PPI_C :                         C2 - |
+ PPI_CTL :                       C3 - | *RELAXED :                        0 - |
+*START :                       5000 C | *STRCHK :                      5073 C |
+ STRLEN :                      5087 C |  STR_PR :                      5098 C |
+*TIME :                          18\-26\-10\-1233\-27\-12\-1232\-25\-89\-11 - |
+*TRUE :                           1 - | *VERSION :                     142F - |
+ WR_OFF :                         A - |  WR_OFF_SET :                  5059 C |
+ WR_ON :                          B - |  WR_ON_SET :                   5054 C |
+ _MAIN_LOOP :                  5021 C |  _ON_OUT :                     5030 C |
+ _OUT_LOOP :                   5026 C |  _RTC_OUT :                    5033 C |
+ _STR_CHK_ERR :                5081 C |  _STR_CHK_NORM :               5085 C |
+ _STR_LEN_EXIT :               5094 C |  _STR_LEN_LOOP :               508B C |
+ _STR_PR_EXIT :                50A1 C |
+
+     62 symbols
+     31 unused symbols
+
+ AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 6 - 2019/05/01 18時33分32秒
+
+
+  codepages:
+  ----------
+
+STANDARD (0 changed characters)
+
+
+0.00 seconds assembly time
+
+    207 lines source file
+      2 passes
+      0 errors
+      0 warnings

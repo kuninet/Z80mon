@@ -1,0 +1,321 @@
+ AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 1 - 2019/05/01 18時33分53秒
+
+
+       1/       0 :                     ;
+       2/       0 :                     ; RTC4543SA READ Test
+       3/       0 :                     ;
+       4/    6000 :                         org 6000h
+       5/    6000 :                     ;
+       6/    6000 : =0H                 NULL    EQU 00h
+       7/    6000 :                     ;
+       8/    6000 : =C3H                PPI_CTL EQU 0C3h
+       9/    6000 : =C0H                PPI_A EQU 0C0h
+      10/    6000 : =C2H                PPI_C EQU 0C2h
+      11/    6000 :                     ;
+      12/    6000 : =9H                 CE_ON   EQU 09h
+      13/    6000 : =8H                 CE_OFF  EQU 08h
+      14/    6000 : =BH                 WR_ON   EQU 0bh
+      15/    6000 : =AH                 WR_OFF  EQU 0ah
+      16/    6000 : =DH                 CLK_ON  EQU 0dh
+      17/    6000 : =CH                 CLK_OFF EQU 0ch
+      18/    6000 :                     ;
+      19/    6000 :                     ;------------------------------------
+      20/    6000 :                     ; 処理メイン
+      21/    6000 :                     ;------------------------------------
+      22/    6000 :                     MAIN:
+      23/    6000 : CD CC 60                CALL OUT_CLEAR
+      24/    6003 : CD FC 60                CALL INIT8255
+      25/    6006 : CD ED 60                CALL WR_OFF_SET
+      26/    6009 : CD F2 60                CALL CE_ON_SET
+      27/    600C :                     ;
+      28/    600C : 06 0D                   LD B,13
+      29/    600E : 21 25 61                LD HL,OUT_END-1
+      30/    6011 :                     ;
+      31/    6011 :                     ; 秒 取得 
+      32/    6011 : 0E 04                   LD C,4
+      33/    6013 : CD A9 60                CALL GET_DATA
+      34/    6016 : CD A4 60                CALL SET_RESULT
+      35/    6019 : 0E 03                   LD C,3
+      36/    601B : CD A9 60                CALL GET_DATA
+      37/    601E : CD A4 60                CALL SET_RESULT
+      38/    6021 :                     ; -- FDT受け捨て
+      39/    6021 : 0E 01                   LD C,1
+      40/    6023 : CD A9 60                CALL GET_DATA
+      41/    6026 :                     ;
+      42/    6026 :                     ; 分 取得 
+      43/    6026 : 0E 04                   LD C,4
+      44/    6028 : CD A9 60                CALL GET_DATA
+      45/    602B : CD A4 60                CALL SET_RESULT
+      46/    602E : 0E 03                   LD C,3
+      47/    6030 : CD A9 60                CALL GET_DATA
+      48/    6033 : CD A4 60                CALL SET_RESULT
+      49/    6036 :                     ; -- ユーザービット受け捨て
+      50/    6036 : 0E 01                   LD C,1
+      51/    6038 : CD A9 60                CALL GET_DATA
+      52/    603B :                     ;
+      53/    603B :                     ; 時 取得 
+      54/    603B : 0E 04                   LD C,4
+      55/    603D : CD A9 60                CALL GET_DATA
+      56/    6040 : CD A4 60                CALL SET_RESULT
+      57/    6043 : 0E 02                   LD C,2
+      58/    6045 : CD A9 60                CALL GET_DATA
+      59/    6048 : CD A4 60                CALL SET_RESULT
+      60/    604B :                     ; -- ユーザービット受け捨て
+ AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 2 - 2019/05/01 18時33分53秒
+
+
+      61/    604B : 0E 02                   LD C,2
+      62/    604D : CD A9 60                CALL GET_DATA
+      63/    6050 :                     ;
+      64/    6050 :                     ; 曜日 取得 
+      65/    6050 : 0E 03                   LD C,3
+      66/    6052 : CD A9 60                CALL GET_DATA
+      67/    6055 : CD A4 60                CALL SET_RESULT
+      68/    6058 :                     ; -- ユーザービット受け捨て
+      69/    6058 : 0E 01                   LD C,1
+      70/    605A : CD A9 60                CALL GET_DATA
+      71/    605D :                     ; 日 取得 
+      72/    605D : 0E 04                   LD C,4
+      73/    605F : CD A9 60                CALL GET_DATA
+      74/    6062 : CD A4 60                CALL SET_RESULT
+      75/    6065 : 0E 02                   LD C,2
+      76/    6067 : CD A9 60                CALL GET_DATA
+      77/    606A : CD A4 60                CALL SET_RESULT
+      78/    606D :                     ; -- ユーザービット受け捨て
+      79/    606D : 0E 02                   LD C,2
+      80/    606F : CD A9 60                CALL GET_DATA
+      81/    6072 :                     ;
+      82/    6072 :                     ; 月 取得 
+      83/    6072 : 0E 04                   LD C,4
+      84/    6074 : CD A9 60                CALL GET_DATA
+      85/    6077 : CD A4 60                CALL SET_RESULT
+      86/    607A : 0E 01                   LD C,1
+      87/    607C : CD A9 60                CALL GET_DATA
+      88/    607F : CD A4 60                CALL SET_RESULT
+      89/    6082 :                     ; -- ユーザービット受け捨て
+      90/    6082 : 0E 03                   LD C,3
+      91/    6084 : CD A9 60                CALL GET_DATA
+      92/    6087 :                     ;
+      93/    6087 :                     ; 年 取得 
+      94/    6087 : 0E 04                   LD C,4
+      95/    6089 : CD A9 60                CALL GET_DATA
+      96/    608C : CD A4 60                CALL SET_RESULT
+      97/    608F : 0E 04                   LD C,4
+      98/    6091 : CD A9 60                CALL GET_DATA
+      99/    6094 : CD A4 60                CALL SET_RESULT
+     100/    6097 :                     ;
+     101/    6097 : 21 19 61                LD HL,OUT_MSG
+     102/    609A : CD 05 61                CALL STR_PR
+     103/    609D : CD 10 61                CALL CRLF_PR
+     104/    60A0 :                     ;
+     105/    60A0 : CD F7 60                CALL CE_OFF_SET
+     106/    60A3 :                     ;
+     107/    60A3 : C9                      RET
+     108/    60A4 :                     ;
+     109/    60A4 :                     
+     110/    60A4 :                     ;------------------------------------
+     111/    60A4 :                     ; 結果文字セット
+     112/    60A4 :                     ;------------------------------------
+     113/    60A4 :                     SET_RESULT:
+     114/    60A4 : C6 30                   ADD A,30h   ; 数字文字コードへ
+     115/    60A6 : 77                      LD (HL),A
+     116/    60A7 : 2B                      DEC HL
+     117/    60A8 : C9                      RET
+     118/    60A9 :                     
+     119/    60A9 :                     ;------------------------------------
+     120/    60A9 :                     ; 指定ビット(Cレジスタ)分 読み出し Aレジスタへ
+ AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 3 - 2019/05/01 18時33分53秒
+
+
+     121/    60A9 :                     ;------------------------------------
+     122/    60A9 :                     GET_DATA:
+     123/    60A9 : 51                      LD D,C
+     124/    60AA : 14                      INC D
+     125/    60AB : 06 00                   LD B,0
+     126/    60AD :                     _GET_DATA_LOOP:
+     127/    60AD : CD DB 60                CALL CLK1
+     128/    60B0 :                     ;
+     129/    60B0 : DB C0                   IN A,(PPI_A)
+     130/    60B2 : E6 01                   AND 01h
+     131/    60B4 : C4 BD 60                CALL NZ,_SHIFT_BIT
+     132/    60B7 : 80                      ADD A,B
+     133/    60B8 : 47                      LD B,A
+     134/    60B9 : 0D                      DEC C
+     135/    60BA : C8                      RET Z
+     136/    60BB : 18 F0                   JR _GET_DATA_LOOP
+     137/    60BD :                     
+     138/    60BD :                     _SHIFT_BIT:
+     139/    60BD : C5                      PUSH BC
+     140/    60BE : F5                      PUSH AF
+     141/    60BF : 7A                      LD A,D
+     142/    60C0 : 91                      SUB A,C
+     143/    60C1 : 4F                      LD C,A
+     144/    60C2 : F1                      POP AF
+     145/    60C3 :                     _SHIFT_BIT_LOOP:
+     146/    60C3 : 0D                      DEC C
+     147/    60C4 : 28 04                   JR Z,_SHIFT_BIT_END
+     148/    60C6 : CB 27                   SLA A
+     149/    60C8 : 18 F9                   JR _SHIFT_BIT_LOOP
+     150/    60CA :                     _SHIFT_BIT_END:
+     151/    60CA : C1                      POP BC
+     152/    60CB : C9                      RET
+     153/    60CC :                     
+     154/    60CC :                     ;------------------------------------
+     155/    60CC :                     ; 出力域クリア
+     156/    60CC :                     ;------------------------------------
+     157/    60CC :                     OUT_CLEAR:
+     158/    60CC : 21 19 61                LD HL,OUT_MSG
+     159/    60CF : 11 1A 61                LD DE,OUT_MSG+1
+     160/    60D2 : 01 0D 00                LD BC,OUT_LEN-1
+     161/    60D5 : 3E 00                   LD A,0
+     162/    60D7 : 77                      LD (HL),A
+     163/    60D8 : ED B0                   LDIR
+     164/    60DA : C9                      RET
+     165/    60DB :                     
+     166/    60DB :                     ;------------------------------------
+     167/    60DB :                     ; 1クロック ON→OFF
+     168/    60DB :                     ;------------------------------------
+     169/    60DB :                     CLK1:
+     170/    60DB : 3E 0D                   LD A,CLK_ON
+     171/    60DD : D3 C3                   OUT (PPI_CTL),A
+     172/    60DF : 7F                      LD A,A          ; DUMMY
+     173/    60E0 : 7F                      LD A,A          ; DUMMY
+     174/    60E1 : 7F                      LD A,A          ; DUMMY
+     175/    60E2 : 7F                      LD A,A          ; DUMMY
+     176/    60E3 : 3E 0C                   LD A,CLK_OFF
+     177/    60E5 : D3 C3                   OUT (PPI_CTL),A
+     178/    60E7 : C9                      RET
+     179/    60E8 :                     
+     180/    60E8 :                     ;------------------------------------
+ AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 4 - 2019/05/01 18時33分53秒
+
+
+     181/    60E8 :                     ; WRピン ON
+     182/    60E8 :                     ;------------------------------------
+     183/    60E8 :                     WR_ON_SET:
+     184/    60E8 : 3E 0B                   LD A,WR_ON
+     185/    60EA : D3 C3                   OUT (PPI_CTL),A
+     186/    60EC : C9                      RET
+     187/    60ED :                     ;------------------------------------
+     188/    60ED :                     ; WRピン OFF
+     189/    60ED :                     ;------------------------------------
+     190/    60ED :                     WR_OFF_SET:
+     191/    60ED : 3E 0A                   LD A,WR_OFF
+     192/    60EF : D3 C3                   OUT (PPI_CTL),A
+     193/    60F1 : C9                      RET
+     194/    60F2 :                     
+     195/    60F2 :                     ;------------------------------------
+     196/    60F2 :                     ; CEピン ON
+     197/    60F2 :                     ;------------------------------------
+     198/    60F2 :                     CE_ON_SET:
+     199/    60F2 : 3E 09                   LD A,CE_ON
+     200/    60F4 : D3 C3                   OUT (PPI_CTL),A
+     201/    60F6 : C9                      RET
+     202/    60F7 :                     ;------------------------------------
+     203/    60F7 :                     ; WRピン OFF
+     204/    60F7 :                     ;------------------------------------
+     205/    60F7 :                     CE_OFF_SET:
+     206/    60F7 : 3E 08                   LD A,CE_OFF
+     207/    60F9 : D3 C3                   OUT (PPI_CTL),A
+     208/    60FB : C9                      RET
+     209/    60FC :                     
+     210/    60FC :                     ;------------------------------------
+     211/    60FC :                     ; 8255初期化 ポートA IN、ポートC OUT
+     212/    60FC :                     ;------------------------------------
+     213/    60FC :                     INIT8255:
+     214/    60FC : 3E 90                   LD A,90h
+     215/    60FE : D3 C3                   OUT (PPI_CTL),A
+     216/    6100 : 3E 00                   LD A,00h
+     217/    6102 : D3 C2                   OUT (PPI_C),A
+     218/    6104 :                     ;
+     219/    6104 : C9                      RET
+     220/    6105 :                     ;------------------------------------
+     221/    6105 :                     ; 文字列 コンソール出力
+     222/    6105 :                     ;------------------------------------
+     223/    6105 :                     STR_PR:
+     224/    6105 : E5                      PUSH HL
+     225/    6106 :                     _STR_PR_LOOP:
+     226/    6106 : 7E                      LD A,(HL)
+     227/    6107 : B7                      OR A
+     228/    6108 : 28 04                   JR Z,_STR_PR_EXIT
+     229/    610A : CF                      RST 08h
+     230/    610B : 23                      INC HL
+     231/    610C : 18 F8                   JR _STR_PR_LOOP
+     232/    610E :                     ;
+     233/    610E :                     _STR_PR_EXIT:
+     234/    610E : E1                      POP HL
+     235/    610F : C9                      RET
+     236/    6110 :                     ;
+     237/    6110 :                     ;------------------------------------
+     238/    6110 :                     ; CRLF コンソール出力
+     239/    6110 :                     ;------------------------------------
+     240/    6110 :                     CRLF_PR:
+ AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 5 - 2019/05/01 18時33分53秒
+
+
+     241/    6110 : F5                      PUSH AF
+     242/    6111 : 3E 0D                   LD A,0Dh
+     243/    6113 : CF                      RST 08h
+     244/    6114 : 3E 0A                   LD A,0Ah
+     245/    6116 : CF                      RST 08h
+     246/    6117 : F1                      POP AF
+     247/    6118 : C9                      RET
+     248/    6119 :                     ;
+     249/    6119 :                     OUT_MSG DS 13
+     250/    6126 :                     OUT_END DS 1
+     251/    6127 : =EH                 OUT_LEN EQU $-OUT_MSG
+ AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 6 - 2019/05/01 18時33分53秒
+
+
+  symbol table (* = unused):
+  ------------------------
+
+*ARCHITECTURE :    x86_64-apple-osx - | *BIGENDIAN :                      0 - |
+*BRANCHEXT :                      0 - | *CASESENSITIVE :                  0 - |
+ CE_OFF :                         8 - |  CE_OFF_SET :                  60F7 C |
+ CE_ON :                          9 - |  CE_ON_SET :                   60F2 C |
+ CLK1 :                        60DB C |  CLK_OFF :                        C - |
+ CLK_ON :                         D - | *CONSTPI :        3.141592653589793 - |
+ CRLF_PR :                     6110 C | *DATE :                  2019/05/01 - |
+*FALSE :                          0 - | *FULLPMMU :                       1 - |
+ GET_DATA :                    60A9 C | *HAS64 :                          1 - |
+*HASDSP :                         0 - | *HASFPU :                         0 - |
+*HASPMMU :                        0 - | *INEXTMODE :                      0 - |
+ INIT8255 :                    60FC C | *INLWORDMODE :                    0 - |
+*INMAXMODE :                      0 - | *INSRCMODE :                      0 - |
+*INSUPMODE :                      0 - | *LISTON :                         1 - |
+*MACEXP :                         7 - | *MAIN :                        6000 C |
+*MOMCPU :                        80 - | *MOMCPUNAME :                   Z80 - |
+*NESTMAX :                      100 - | *NULL :                           0 - |
+ OUT_CLEAR :                   60CC C |  OUT_END :                     6126 C |
+ OUT_LEN :                        E - |  OUT_MSG :                     6119 C |
+*PACKING :                        0 - | *PADDING :                        1 - |
+ PPI_A :                         C0 - |  PPI_C :                         C2 - |
+ PPI_CTL :                       C3 - | *RELAXED :                        0 - |
+ SET_RESULT :                  60A4 C |  STR_PR :                      6105 C |
+*TIME :                          18\-26\-10\-1233\-27\-12\-1253\-25\-89\-11 - |
+*TRUE :                           1 - | *VERSION :                     142F - |
+ WR_OFF :                         A - |  WR_OFF_SET :                  60ED C |
+ WR_ON :                          B - | *WR_ON_SET :                   60E8 C |
+ _GET_DATA_LOOP :              60AD C |  _SHIFT_BIT :                  60BD C |
+ _SHIFT_BIT_END :              60CA C |  _SHIFT_BIT_LOOP :             60C3 C |
+ _STR_PR_EXIT :                610E C |  _STR_PR_LOOP :                6106 C |
+
+     59 symbols
+     31 unused symbols
+
+ AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 7 - 2019/05/01 18時33分53秒
+
+
+  codepages:
+  ----------
+
+STANDARD (0 changed characters)
+
+
+0.03 seconds assembly time
+
+    251 lines source file
+      2 passes
+      0 errors
+      0 warnings

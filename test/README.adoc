@@ -1,5 +1,9 @@
 = サンプルプログラムの説明
 
+* インテルHEX形式のファイルを、機械語モニターのLコマンドでロードして実行してみてください。
+* 本サンブルソースは http://john.ccac.rwth-aachen.de:8000/as/[The Macroassembler AS]でアセンブルしました。
+** アセンブリコマンドは https://github.com/kuninet/Z80mon/blob/master/build.sh[build.sh] を参考にしてください。 
+
 [cols="1,10a"]
 |===
 |名前|説明

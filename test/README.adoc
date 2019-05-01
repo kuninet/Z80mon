@@ -23,8 +23,25 @@ ABCDE
 
 |RTC4543_WR
 |* KZ80-IOB(I/Oボード)の8255(PPI)に http://akizukidenshi.com/catalog/g/gK-10722/[RTC-4543SA DIP化基板]を接続した構成で、日時を設定する
+* 実行例
+
+[source,shell]
+----
+2019/5/1 水曜(=4) 19:59:59へ設定
+>Z 5000 1905014195959
+>
+----
 
 |RTC4543_RD
 |* KZ80-IOB(I/Oボード)の8255(PPI)に、 http://akizukidenshi.com/catalog/g/gK-10722/[RTC-4543SA DIP化基板]を接続した構成で、日時を読み出す
+* 実行例
+
+[source,shell]
+----
+>G 6000
+1905014200101 
+>
+☆2019/05/01 水曜(=4) 20:01:01と表示
+----
 
 |===

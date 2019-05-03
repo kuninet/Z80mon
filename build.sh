@@ -10,6 +10,9 @@ p2hex -r \$-\$ -F Intel test/RTC4543_WR.p
 asl -cpu Z80 -L test/RTC4543_RD.asm
 p2hex -r \$-\$ -F Intel test/RTC4543_RD.p
 
+asl -cpu Z80 -L test/8254PLAY.asm
+p2hex -r \$-\$ -F Intel test/8254PLAY.p
+
 asl -cpu Z80 -L basic.lst -o basic.p opt/basic.asm
 p2hex -r \$-\$ -F Intel opt/basic.p opt/basic.hex 
 

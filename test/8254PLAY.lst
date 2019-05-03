@@ -1,0 +1,387 @@
+ AS V1.42 Beta [Bld 137] - source file 8254PLAY.asm - page 1 - 2019/05/03 21時00分27秒
+
+
+       1/       0 :                     ;
+       2/       0 :                     ; i8254 演奏 Test (チャネル2使用)
+       3/       0 :                     ;
+       4/       0 :                     ;==============================================
+       5/       0 :                     ;使用例)
+       6/       0 :                     ;>Z 7000 CDEFGABO5C
+       7/       0 :                     ;>Z 7000 CDEFEDCR4EFGAGFER4O4CR4CR4CR4CR4L8CCDDEEFFL4EDC
+       8/       0 :                     ;
+       9/       0 :                     
+      10/    7000 :                         org 7000h
+      11/    7000 :                     ;
+      12/    7000 : =1AH                PIT_C2	EQU 1Ah
+      13/    7000 : =1BH                PIT_CWR	EQU 1Bh
+      14/    7000 :                     ;
+      15/    7000 : =B0H                C2_MODE0  EQU 0B0h 
+      16/    7000 : =B6H                C2_MODE3  EQU 0B6h 
+      17/    7000 :                     ;
+      18/    7000 : =EA60H              SOUND_WAIT EQU 60000
+      19/    7000 : =7530H              SOUND_WAIT8 EQU 30000
+      20/    7000 : =64H                NO_SOUND_WAIT EQU 100
+      21/    7000 : =40A6H              PARAM2 EQU 40A6h
+      22/    7000 :                     ;
+      23/    7000 :                     ;------------------------------------
+      24/    7000 :                     ; 処理メイン
+      25/    7000 :                     ;------------------------------------
+      26/    7000 :                     MAIN:
+      27/    7000 :                     ;
+      28/    7000 : 21 FD 70                LD HL,START_MSG
+      29/    7003 : CD E9 70                CALL STR_PR
+      30/    7006 :                     ;
+      31/    7006 : 3E 04                   LD A,4
+      32/    7008 : CD 80 70                CALL OCT_TBL_SET
+      33/    700B : 21 60 EA                LD HL,SOUND_WAIT
+      34/    700E : 7D                      LD A,L
+      35/    700F : 32 64 71                LD (SOUND_WAIT_TIME),A
+      36/    7012 : 7C                      LD A,H
+      37/    7013 : 32 65 71                LD (SOUND_WAIT_TIME+1),A
+      38/    7016 :                     ;
+      39/    7016 : 2A A6 40                LD HL,(PARAM2)
+      40/    7019 :                     ;
+      41/    7019 :                     _MAIN_LOOP:
+      42/    7019 : 11 2F 70                LD DE,_MAIN_LOOP_NEXT
+      43/    701C : D5                      PUSH DE
+      44/    701D :                     ;
+      45/    701D : 7E                      LD A,(HL)
+      46/    701E : B7                      OR A
+      47/    701F : 28 11                   JR Z,_MAIN_LOOP_EXIT
+      48/    7021 :                     ;
+      49/    7021 : FE 4F                   CP 'O'
+      50/    7023 : 28 53                   JR Z,OCT_CHG
+      51/    7025 :                     ;
+      52/    7025 : FE 52                   CP 'R'
+      53/    7027 : 28 38                   JR Z,REST
+      54/    7029 :                     ;
+      55/    7029 : FE 4C                   CP 'L'
+      56/    702B : 28 0D                   JR Z,LEN_SET
+      57/    702D :                     ;
+      58/    702D : 18 6D                   JR SRCH_OUT
+      59/    702F :                     _MAIN_LOOP_NEXT:
+      60/    702F : 23                      INC HL
+ AS V1.42 Beta [Bld 137] - source file 8254PLAY.asm - page 2 - 2019/05/03 21時00分27秒
+
+
+      61/    7030 : 18 E7                   JR _MAIN_LOOP
+      62/    7032 :                     ;
+      63/    7032 :                     _MAIN_LOOP_EXIT:
+      64/    7032 : D1                      POP DE
+      65/    7033 : 21 15 71                LD HL,END_MSG
+      66/    7036 : CD E9 70                CALL STR_PR
+      67/    7039 : C9                      RET
+      68/    703A :                     ;
+      69/    703A :                     ;------------------------------------
+      70/    703A :                     ; 音の長さセット
+      71/    703A :                     ;------------------------------------
+      72/    703A :                     LEN_SET:
+      73/    703A : 23                      INC HL
+      74/    703B : 7E                      LD A,(HL)
+      75/    703C : E5                      PUSH HL
+      76/    703D : FE 34                   CP '4'
+      77/    703F : 28 06                   JR Z,_LEN_4
+      78/    7041 : FE 38                   CP '8'
+      79/    7043 : 28 0F                   JR Z,_LEN_8
+      80/    7045 : 18 18                   JR _LEN_SET_END
+      81/    7047 :                     ;
+      82/    7047 :                     _LEN_4:
+      83/    7047 : 21 60 EA                LD HL,SOUND_WAIT
+      84/    704A : 7D                      LD A,L
+      85/    704B : 32 64 71                LD (SOUND_WAIT_TIME),A
+      86/    704E : 7C                      LD A,H
+      87/    704F : 32 65 71                LD (SOUND_WAIT_TIME+1),A
+      88/    7052 : 18 0B                   JR _LEN_SET_END
+      89/    7054 :                     ;
+      90/    7054 :                     _LEN_8
+      91/    7054 : 21 30 75                LD HL,SOUND_WAIT8
+      92/    7057 : 7D                      LD A,L
+      93/    7058 : 32 64 71                LD (SOUND_WAIT_TIME),A
+      94/    705B : 7C                      LD A,H
+      95/    705C : 32 65 71                LD (SOUND_WAIT_TIME+1),A
+      96/    705F :                     ;
+      97/    705F :                     _LEN_SET_END:
+      98/    705F : E1                      POP HL
+      99/    7060 : C9                      RET
+     100/    7061 :                     ;
+     101/    7061 :                     ;------------------------------------
+     102/    7061 :                     ; 休符
+     103/    7061 :                     ;------------------------------------
+     104/    7061 :                     REST:
+     105/    7061 : 23                      INC HL
+     106/    7062 : 7E                      LD A,(HL)
+     107/    7063 : FE 34                   CP '4'
+     108/    7065 : 28 05                   JR Z,_WAIT_4
+     109/    7067 : FE 38                   CP '8'
+     110/    7069 : 28 07                   JR Z,_WAIT_8
+     111/    706B : C9                      RET
+     112/    706C :                     ;
+     113/    706C :                     _WAIT_4:
+     114/    706C : 01 60 EA                LD BC,SOUND_WAIT
+     115/    706F : C3 E2 70                JP WAIT
+     116/    7072 :                     _WAIT_8
+     117/    7072 : 01 30 75                LD BC,SOUND_WAIT8
+     118/    7075 : C3 E2 70                JP WAIT
+     119/    7078 :                     
+     120/    7078 :                     ;------------------------------------
+ AS V1.42 Beta [Bld 137] - source file 8254PLAY.asm - page 3 - 2019/05/03 21時00分27秒
+
+
+     121/    7078 :                     ; オクターブ変更
+     122/    7078 :                     ;------------------------------------
+     123/    7078 :                     OCT_CHG:
+     124/    7078 : 23                      INC HL
+     125/    7079 : 7E                      LD A,(HL)
+     126/    707A : D6 30                   SUB 30h
+     127/    707C : CD 80 70                CALL OCT_TBL_SET
+     128/    707F : C9                      RET
+     129/    7080 :                     ;
+     130/    7080 :                     ;------------------------------------
+     131/    7080 :                     ; オクターブテーブルセット
+     132/    7080 :                     ;------------------------------------
+     133/    7080 :                     OCT_TBL_SET:
+     134/    7080 : C5                      PUSH BC
+     135/    7081 : 47                      LD B,A
+     136/    7082 : FD 21 2B 71             LD IY,OCT_TBL
+     137/    7086 :                     _OCT_SET_LOOP:
+     138/    7086 : 05                      DEC B
+     139/    7087 : 28 11                   JR Z,_OCT_SET_EXIT
+     140/    7089 : FD 23                   INC IY
+     141/    708B : FD 23                   INC IY
+     142/    708D : FD 7E 00                LD A,(IY+0)
+     143/    7090 : FE FF                   CP 0FFh
+     144/    7092 : 28 02                   JR Z,_OCT_SET_ERR
+     145/    7094 : 18 F0                   JR _OCT_SET_LOOP
+     146/    7096 :                     ;
+     147/    7096 :                     _OCT_SET_ERR:
+     148/    7096 : FD 21 37 71             LD IY,OCT4
+     149/    709A :                     _OCT_SET_EXIT:
+     150/    709A : C1                      POP BC
+     151/    709B : C9                      RET
+     152/    709C :                     
+     153/    709C :                     ;------------------------------------
+     154/    709C :                     ; 音検索検索&発声
+     155/    709C :                     ;------------------------------------
+     156/    709C :                     SRCH_OUT:
+     157/    709C : FD 5E 00                LD E,(IY+0)
+     158/    709F : FD 56 01                LD D,(IY+1)
+     159/    70A2 : D5                      PUSH DE
+     160/    70A3 : DD E1                   POP IX
+     161/    70A5 : 16 07                   LD D,7
+     162/    70A7 :                     _SRCH_LOOP:
+     163/    70A7 : DD 7E 00                LD A,(IX+0)
+     164/    70AA : BE                      CP (HL)
+     165/    70AB : 28 0A                   JR Z,_SOUND_OUT
+     166/    70AD : DD 23                   INC IX
+     167/    70AF : DD 23                   INC IX
+     168/    70B1 : DD 23                   INC IX
+     169/    70B3 : 15                      DEC D
+     170/    70B4 : 20 F1                   JR NZ,_SRCH_LOOP
+     171/    70B6 : C9                      RET
+     172/    70B7 :                     ;
+     173/    70B7 :                     _SOUND_OUT:
+     174/    70B7 : DD 7E 00                LD A,(IX+0)
+     175/    70BA : CF                      RST 08h
+     176/    70BB : CD F4 70                CALL CRLF_PR
+     177/    70BE : CD C2 70                CALL OUT_PIT
+     178/    70C1 : C9                      RET
+     179/    70C2 :                     ;------------------------------------
+     180/    70C2 :                     ; 1音発声
+ AS V1.42 Beta [Bld 137] - source file 8254PLAY.asm - page 4 - 2019/05/03 21時00分27秒
+
+
+     181/    70C2 :                     ;------------------------------------
+     182/    70C2 :                     OUT_PIT:
+     183/    70C2 : 3E B6                   LD A,C2_MODE3
+     184/    70C4 : D3 1B                   OUT (PIT_CWR),A 
+     185/    70C6 : DD 7E 01                LD A,(IX+1)
+     186/    70C9 : D3 1A                   OUT (PIT_C2),A
+     187/    70CB : DD 7E 02                LD A,(IX+2)
+     188/    70CE : D3 1A                   OUT (PIT_C2),A
+     189/    70D0 : ED 4B 64 71             LD BC,(SOUND_WAIT_TIME)
+     190/    70D4 : CD E2 70                CALL WAIT
+     191/    70D7 :                     ;
+     192/    70D7 : 3E B0                   LD A,C2_MODE0
+     193/    70D9 : D3 1B                   OUT (PIT_CWR),A
+     194/    70DB : 01 64 00                LD BC,NO_SOUND_WAIT
+     195/    70DE : CD E2 70                CALL WAIT
+     196/    70E1 :                     ;
+     197/    70E1 : C9                      RET
+     198/    70E2 :                     ;
+     199/    70E2 :                     ;------------------------------------
+     200/    70E2 :                     ; WAIT
+     201/    70E2 :                     ;------------------------------------
+     202/    70E2 :                     WAIT:
+     203/    70E2 : 7F                      LD A,A     ; DUMMY
+     204/    70E3 : 0B                      DEC BC
+     205/    70E4 : 79                      LD A,C
+     206/    70E5 : B0                      OR B
+     207/    70E6 : C8                      RET Z
+     208/    70E7 : 18 F9                   JR WAIT
+     209/    70E9 :                     ;
+     210/    70E9 :                     ;------------------------------------
+     211/    70E9 :                     ; 文字列 コンソール出力
+     212/    70E9 :                     ;------------------------------------
+     213/    70E9 :                     STR_PR:
+     214/    70E9 : E5                      PUSH HL
+     215/    70EA :                     _STR_PR_LOOP:
+     216/    70EA : 7E                      LD A,(HL)
+     217/    70EB : B7                      OR A
+     218/    70EC : 28 04                   JR Z,_STR_PR_EXIT
+     219/    70EE : CF                      RST 08h
+     220/    70EF : 23                      INC HL
+     221/    70F0 : 18 F8                   JR _STR_PR_LOOP
+     222/    70F2 :                     ;
+     223/    70F2 :                     _STR_PR_EXIT:
+     224/    70F2 : E1                      POP HL
+     225/    70F3 : C9                      RET
+     226/    70F4 :                     ;
+     227/    70F4 :                     ;------------------------------------
+     228/    70F4 :                     ; CRLF コンソール出力
+     229/    70F4 :                     ;------------------------------------
+     230/    70F4 :                     CRLF_PR:
+     231/    70F4 : F5                      PUSH AF
+     232/    70F5 : 3E 0D                   LD A,0Dh
+     233/    70F7 : CF                      RST 08h
+     234/    70F8 : 3E 0A                   LD A,0Ah
+     235/    70FA : CF                      RST 08h
+     236/    70FB : F1                      POP AF
+     237/    70FC : C9                      RET
+     238/    70FD :                     ;
+     239/    70FD : 2B 2B 20 38 32 35   START_MSG DB "++ 8254 PLAY START ++",13,10,0
+                    34 20 50 4C 41 59 
+ AS V1.42 Beta [Bld 137] - source file 8254PLAY.asm - page 5 - 2019/05/03 21時00分27秒
+
+
+                    20 53 54 41 52 54 
+                    20 2B 2B 0D 0A 00 
+     240/    7115 : 2D 2D 20 38 32 35   END_MSG DB "-- 8254 PLAY END --",13,10,0
+                    34 20 50 4C 41 59 
+                    20 45 4E 44 20 2D 
+                    2D 0D 0A 00 
+     241/    712B :                     ;
+     242/    712B :                     OCT_TBL:
+     243/    712B : 00 00                   DW 0000h
+     244/    712D : 00 00                   DW 0000h
+     245/    712F : 00 00                   DW 0000h
+     246/    7131 : 37 71                   DW OCT4
+     247/    7133 : 4C 71                   DW OCT5
+     248/    7135 : FF FF                   DW 0FFFFh
+     249/    7137 :                     ;
+     250/    7137 :                     ;-----
+     251/    7137 :                     ; 音程データ
+     252/    7137 :                     ;-----
+     253/    7137 :                     SOUND_DATA:
+     254/    7137 :                     OCT4:
+     255/    7137 :                     ; ド
+     256/    7137 : 43                      DB "C"
+     257/    7138 : 58 12                   DW 1258h
+     258/    713A :                     ; レ
+     259/    713A : 44                      DB "D"
+     260/    713B : 58 10                   DW 1058h
+     261/    713D :                     ; ミ
+     262/    713D : 45                      DB "E"
+     263/    713E : 8F 0E                   DW 0E8Fh
+     264/    7140 :                     ; ファ
+     265/    7140 : 46                      DB "F"
+     266/    7141 : BE 0D                   DW 0DBEh
+     267/    7143 :                     ; ソ
+     268/    7143 : 47                      DB "G"
+     269/    7144 : 3E 0C                   DW 0C3Eh
+     270/    7146 :                     ; ラ
+     271/    7146 : 41                      DB "A"
+     272/    7147 : E8 0A                   DW 0AE8h
+     273/    7149 :                     ; シ
+     274/    7149 : 42                      DB "B"
+     275/    714A : B8 09                   DW 9B8h
+     276/    714C :                     OCT5:
+     277/    714C :                     ; ド
+     278/    714C : 43                      DB "C"
+     279/    714D : 2C 09                   DW 92Ch
+     280/    714F :                     ; レ
+     281/    714F : 44                      DB "D"
+     282/    7150 : 2C 08                   DW 82Ch
+     283/    7152 :                     ; ミ
+     284/    7152 : 45                      DB "E"
+     285/    7153 : 47 07                   DW 747h
+     286/    7155 :                     ; ファ
+     287/    7155 : 46                      DB "F"
+     288/    7156 : DF 06                   DW 6Dfh
+     289/    7158 :                     ; ソ
+     290/    7158 : 47                      DB "G"
+     291/    7159 : 1F 06                   DW 61Fh
+     292/    715B :                     ; ラ
+     293/    715B : 41                      DB "A"
+     294/    715C : 74 05                   DW 574h
+ AS V1.42 Beta [Bld 137] - source file 8254PLAY.asm - page 6 - 2019/05/03 21時00分27秒
+
+
+     295/    715E :                     ; シ
+     296/    715E : 42                      DB "B"
+     297/    715F : DC 04                   DW 4DCh
+     298/    7161 :                     ;END
+     299/    7161 : 00                      DB 00h
+     300/    7162 : 00 00                   DW 0000h
+     301/    7164 :                     ; 変数
+     302/    7164 :                     SOUND_WAIT_TIME DS 2
+     303/    7166 :                         END
+ AS V1.42 Beta [Bld 137] - source file 8254PLAY.asm - page 7 - 2019/05/03 21時00分27秒
+
+
+  symbol table (* = unused):
+  ------------------------
+
+*ARCHITECTURE :    x86_64-apple-osx - | *BIGENDIAN :                      0 - |
+*BRANCHEXT :                      0 - |  C2_MODE0 :                      B0 - |
+ C2_MODE3 :                      B6 - | *CASESENSITIVE :                  0 - |
+*CONSTPI :        3.141592653589793 - |  CRLF_PR :                     70F4 C |
+*DATE :                  2019/05/03 - |  END_MSG :                     7115 C |
+*FALSE :                          0 - | *FULLPMMU :                       1 - |
+*HAS64 :                          1 - | *HASDSP :                         0 - |
+*HASFPU :                         0 - | *HASPMMU :                        0 - |
+*INEXTMODE :                      0 - | *INLWORDMODE :                    0 - |
+*INMAXMODE :                      0 - | *INSRCMODE :                      0 - |
+*INSUPMODE :                      0 - |  LEN_SET :                     703A C |
+*LISTON :                         1 - | *MACEXP :                         7 - |
+*MAIN :                        7000 C | *MOMCPU :                        80 - |
+*MOMCPUNAME :                   Z80 - | *NESTMAX :                      100 - |
+ NO_SOUND_WAIT :                 64 - |  OCT4 :                        7137 C |
+ OCT5 :                        714C C |  OCT_CHG :                     7078 C |
+ OCT_TBL :                     712B C |  OCT_TBL_SET :                 7080 C |
+ OUT_PIT :                     70C2 C | *PACKING :                        0 - |
+*PADDING :                        1 - |  PARAM2 :                      40A6 - |
+ PIT_C2 :                        1A - |  PIT_CWR :                       1B - |
+*RELAXED :                        0 - |  REST :                        7061 C |
+*SOUND_DATA :                  7137 C |  SOUND_WAIT :                  EA60 - |
+ SOUND_WAIT8 :                 7530 - |  SOUND_WAIT_TIME :             7164 C |
+ SRCH_OUT :                    709C C |  START_MSG :                   70FD C |
+ STR_PR :                      70E9 C |
+*TIME :                          21\-26\-10\-1200\-27\-12\-1227\-25\-89\-11 - |
+*TRUE :                           1 - | *VERSION :                     142F - |
+ WAIT :                        70E2 C |  _LEN_4 :                      7047 C |
+ _LEN_8 :                      7054 C |  _LEN_SET_END :                705F C |
+ _MAIN_LOOP :                  7019 C |  _MAIN_LOOP_EXIT :             7032 C |
+ _MAIN_LOOP_NEXT :             702F C |  _OCT_SET_ERR :                7096 C |
+ _OCT_SET_EXIT :               709A C |  _OCT_SET_LOOP :               7086 C |
+ _SOUND_OUT :                  70B7 C |  _SRCH_LOOP :                  70A7 C |
+ _STR_PR_EXIT :                70F2 C |  _STR_PR_LOOP :                70EA C |
+ _WAIT_4 :                     706C C |  _WAIT_8 :                     7072 C |
+
+     68 symbols
+     30 unused symbols
+
+ AS V1.42 Beta [Bld 137] - source file 8254PLAY.asm - page 8 - 2019/05/03 21時00分27秒
+
+
+  codepages:
+  ----------
+
+STANDARD (0 changed characters)
+
+
+0.00 seconds assembly time
+
+    303 lines source file
+      2 passes
+      0 errors
+      0 warnings

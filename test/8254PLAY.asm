@@ -3,8 +3,8 @@
 ;
 ;==============================================
 ;使用例)
-;>Z 7000 CDEFGABO5C
-;>Z 7000 CDEFEDCR4EFGAGFER4O4CR4CR4CR4CR4L8CCDDEEFFL4EDC
+;>G 7000 CDEFGABO5C
+;>G 7000 CDEFEDCR4EFGAGFER4O4CR4CR4CR4CR4L8CCDDEEFFL4EDC
 ;
 
     org 7000h
@@ -18,7 +18,6 @@ C2_MODE3  EQU 0B6h
 SOUND_WAIT EQU 60000
 SOUND_WAIT8 EQU 30000
 NO_SOUND_WAIT EQU 100
-PARAM2 EQU 40A6h
 ;
 ;------------------------------------
 ; 処理メイン
@@ -36,7 +35,13 @@ MAIN:
     LD A,H
     LD (SOUND_WAIT_TIME+1),A
 ;
-    LD HL,(PARAM2)
+    INC DE
+    INC DE
+    LD A,(DE)
+    LD L,A
+    INC DE
+    LD A,(DE)
+    LD H,A
 ;
 _MAIN_LOOP:
     LD DE,_MAIN_LOOP_NEXT

@@ -13,9 +13,6 @@ p2hex -r \$-\$ -F Intel test/RTC4543_RD.p
 asl -cpu Z80 -L test/8254PLAY.asm
 p2hex -r \$-\$ -F Intel test/8254PLAY.p
 
-asl -cpu Z80 -L basic.lst -o basic.p opt/basic.asm
-p2hex -r \$-\$ -F Intel opt/basic.p opt/basic.hex 
-
 asl -cpu Z80 -L -D KZ80 -OLIST lst/Z80mon_KZ80.lst -o p/Z80mon_KZ80.p Z80mon.asm
 p2hex -r \$-\$ -F Intel p/Z80mon_KZ80.p obj/Z80mon_KZ80.hex 
 p2bin -r 0000h-7fffh p/Z80mon_KZ80.p obj/Z80mon_KZ80.bin

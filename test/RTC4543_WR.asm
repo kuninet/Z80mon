@@ -3,12 +3,18 @@
 ;
     org 5000h
 ;
-PARAM2 EQU 4084h
+; usage : >G 5000 yymmddWhhmmss (W:1 - Sun,2 - Mon...)
+;
+
+; 入力パラメーター
+;   B   : パラメーター数
+;   DE  : 入力パラメーターテーブルへのポインタ
+
 NULL    EQU 00h
 ;
-PPI_CTL EQU 0C3h
-PPI_A EQU 0C0h
-PPI_C EQU 0C2h
+PPI_CTL EQU 0Bh
+PPI_A EQU 08h
+PPI_C EQU 0Ah
 ;
 CE_ON   EQU 09h
 CE_OFF  EQU 08h
@@ -18,7 +24,15 @@ CLK_ON  EQU 0dh
 CLK_OFF EQU 0ch
 ;
 START:
-    LD HL,(PARAM2)
+    INC DE
+    INC DE
+    LD A,(DE)
+    LD (DATE_STR_PTR),A
+    INC DE
+    LD A,(DE)
+    LD (DATE_STR_PTR+1),A
+;
+    LD HL,(DATE_STR_PTR)
     CALL STRLEN
     CP 13
     JP NZ,PARAM_ERR_OUT
@@ -36,7 +50,7 @@ MAIN:
     CALL WR_ON_SET
     CALL CE_ON_SET
 ;
-    LD HL,(PARAM2)
+    LD HL,(DATE_STR_PTR)
     LD B,13
     LD DE,12
     ADD HL,DE      ; 指定文字列の最後をポイント
@@ -205,3 +219,6 @@ PARAM_ERR_OUT:
     RET
 ;
 PARAM_ERR_MSG DB "*** PARAMATER ERROR",13,10,0
+;
+; RAM
+DATE_STR_PTR    DS 2

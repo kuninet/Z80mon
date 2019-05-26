@@ -3,22 +3,26 @@
 ;
     org 5000h
 ;
-PARAM1 EQU 4082h
-PARAM2 EQU 4084h
-PARAM3 EQU 4086h
+; 入力パラメーター
+; --------------
+;   B  : 引数の個数
+;   DE : 引数ポインタテーブルのTOP
+;
 
 START:
-    LD HL,(PARAM1)
-    CALL STR_PR
-    CALL CRLF_PR
+
+_LOOP:
+    LD A,(DE)
+    LD L,A
+    INC DE
+    LD A,(DE)
+    LD H,A
 ;
-    LD HL,(PARAM2)
     CALL STR_PR
     CALL CRLF_PR
+    INC DE
+    DJNZ _LOOP
 ;
-    LD HL,(PARAM3)
-    CALL STR_PR
-    CALL CRLF_PR
     RET
 ;
 STR_PR:

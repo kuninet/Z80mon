@@ -1,4 +1,4 @@
- AS V1.42 Beta [Bld 137] - source file test_param.asm - page 1 - 2019/05/01 13時24分00秒
+ AS V1.42 Beta [Bld 137] - source file test_param.asm - page 1 - 2019/05/26 15時07分08秒
 
 
        1/       0 :                     ;
@@ -6,40 +6,44 @@
        3/       0 :                     ;
        4/    5000 :                         org 5000h
        5/    5000 :                     ;
-       6/    5000 : =4082H              PARAM1 EQU 4082h
-       7/    5000 : =4084H              PARAM2 EQU 4084h
-       8/    5000 : =4086H              PARAM3 EQU 4086h
-       9/    5000 :                     
-      10/    5000 :                     START:
-      11/    5000 : 2A 82 40                LD HL,(PARAM1)
-      12/    5003 : CD 1C 50                CALL STR_PR
-      13/    5006 : CD 23 50                CALL CRLF_PR
-      14/    5009 :                     ;
-      15/    5009 : 2A 84 40                LD HL,(PARAM2)
-      16/    500C : CD 1C 50                CALL STR_PR
-      17/    500F : CD 23 50                CALL CRLF_PR
-      18/    5012 :                     ;
-      19/    5012 : 2A 86 40                LD HL,(PARAM3)
-      20/    5015 : CD 1C 50                CALL STR_PR
-      21/    5018 : CD 23 50                CALL CRLF_PR
-      22/    501B : C9                      RET
-      23/    501C :                     ;
-      24/    501C :                     STR_PR:
-      25/    501C : 7E                      LD A,(HL)
-      26/    501D : B7                      OR A
-      27/    501E : C8                      RET Z
-      28/    501F : CF                      RST 08h
-      29/    5020 : 23                      INC HL
-      30/    5021 : 18 F9                   JR STR_PR
-      31/    5023 :                     ;
-      32/    5023 :                     CRLF_PR:
-      33/    5023 : 3E 0D                   LD A,0Dh
-      34/    5025 : CF                      RST 08h
-      35/    5026 : 3E 0A                   LD A,0Ah
-      36/    5028 : CF                      RST 08h
-      37/    5029 : C9                      RET
-      38/    502A :                     ;
- AS V1.42 Beta [Bld 137] - source file test_param.asm - page 2 - 2019/05/01 13時24分00秒
+       6/    5000 :                     ; 入力パラメーター
+       7/    5000 :                     ; --------------
+       8/    5000 :                     ;   B  : 引数の個数
+       9/    5000 :                     ;   DE : 引数ポインタテーブルのTOP
+      10/    5000 :                     ;
+      11/    5000 :                     
+      12/    5000 :                     START:
+      13/    5000 :                     
+      14/    5000 :                     _LOOP:
+      15/    5000 : 1A                      LD A,(DE)
+      16/    5001 : 6F                      LD L,A
+      17/    5002 : 13                      INC DE
+      18/    5003 : 1A                      LD A,(DE)
+      19/    5004 : 67                      LD H,A
+      20/    5005 :                     ;
+      21/    5005 : CD 0F 50                CALL STR_PR
+      22/    5008 : CD 16 50                CALL CRLF_PR
+      23/    500B : 13                      INC DE
+      24/    500C : 10 F2                   DJNZ _LOOP
+      25/    500E :                     ;
+      26/    500E : C9                      RET
+      27/    500F :                     ;
+      28/    500F :                     STR_PR:
+      29/    500F : 7E                      LD A,(HL)
+      30/    5010 : B7                      OR A
+      31/    5011 : C8                      RET Z
+      32/    5012 : CF                      RST 08h
+      33/    5013 : 23                      INC HL
+      34/    5014 : 18 F9                   JR STR_PR
+      35/    5016 :                     ;
+      36/    5016 :                     CRLF_PR:
+      37/    5016 : 3E 0D                   LD A,0Dh
+      38/    5018 : CF                      RST 08h
+      39/    5019 : 3E 0A                   LD A,0Ah
+      40/    501B : CF                      RST 08h
+      41/    501C : C9                      RET
+      42/    501D :                     ;
+ AS V1.42 Beta [Bld 137] - source file test_param.asm - page 2 - 2019/05/26 15時07分08秒
 
 
   symbol table (* = unused):
@@ -47,8 +51,8 @@
 
 *ARCHITECTURE :    x86_64-apple-osx - | *BIGENDIAN :                      0 - |
 *BRANCHEXT :                      0 - | *CASESENSITIVE :                  0 - |
-*CONSTPI :        3.141592653589793 - |  CRLF_PR :                     5023 C |
-*DATE :                  2019/05/01 - | *FALSE :                          0 - |
+*CONSTPI :        3.141592653589793 - |  CRLF_PR :                     5016 C |
+*DATE :                  2019/05/26 - | *FALSE :                          0 - |
 *FULLPMMU :                       1 - | *HAS64 :                          1 - |
 *HASDSP :                         0 - | *HASFPU :                         0 - |
 *HASPMMU :                        0 - | *INEXTMODE :                      0 - |
@@ -57,17 +61,16 @@
 *LISTON :                         1 - | *MACEXP :                         7 - |
 *MOMCPU :                        80 - | *MOMCPUNAME :                   Z80 - |
 *NESTMAX :                      100 - | *PACKING :                        0 - |
-*PADDING :                        1 - |  PARAM1 :                      4082 - |
- PARAM2 :                      4084 - |  PARAM3 :                      4086 - |
-*RELAXED :                        0 - | *START :                       5000 C |
- STR_PR :                      501C C |
-*TIME :                          13\-26\-10\-1224\-27\-12\-1200\-25\-89\-11 - |
+*PADDING :                        1 - | *RELAXED :                        0 - |
+*START :                       5000 C |  STR_PR :                      500F C |
+*TIME :                          15\-26\-10\-1207\-27\-12\-1208\-25\-89\-11 - |
 *TRUE :                           1 - | *VERSION :                     142F - |
+ _LOOP :                       5000 C |
 
-     34 symbols
+     32 symbols
      29 unused symbols
 
- AS V1.42 Beta [Bld 137] - source file test_param.asm - page 3 - 2019/05/01 13時24分00秒
+ AS V1.42 Beta [Bld 137] - source file test_param.asm - page 3 - 2019/05/26 15時07分08秒
 
 
   codepages:
@@ -78,7 +81,7 @@ STANDARD (0 changed characters)
 
 0.00 seconds assembly time
 
-     38 lines source file
+     42 lines source file
       2 passes
       0 errors
       0 warnings

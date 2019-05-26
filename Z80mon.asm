@@ -579,6 +579,7 @@ MEM_CHANGE:
 ;
     CALL STRIN
 	CALL PARSER
+	JR C,_PARAM_ERR
 ;
 ; 入力パラメータ数チェック
 	LD A,(ARGC)
@@ -649,11 +650,7 @@ PGM_GO:
 ;
     CALL STRIN
 	CALL PARSER
-;
-; 入力パラメータ数チェック
-	LD A,(ARGC)
-	CP 1
-	JP NZ,_PARAM_ERR
+	JP C,_PARAM_ERR
 ;
 _PGM_EXEC:
 ;
@@ -667,25 +664,11 @@ _PGM_EXEC:
 	LD HL,(ARGV_1)
 	CALL HEX4BIN
 	JP C,_PARAM_ERR
-	JP (HL)
 ;
-
-;
-;================================================================================
-; プログラム実行(Z)コマンド
-;================================================================================
-;
-PGM_GO_PARAM:
-    CALL SPC_PRINT
-;
-    CALL STRIN
-	CALL PARSER
-;
-; 入力パラメータ数チェック
 	LD A,(ARGC)
-	CP 4
-	JP P,_PARAM_ERR
-	JP _PGM_EXEC
+	LD B,A			; ARGC
+	LD DE,ARGV_1		; ARGV
+	JP (HL)
 ;
 ;================================================================================
 ; I/O入力コマンド
@@ -695,6 +678,7 @@ IO_IN:
 ;
     CALL STRIN
 	CALL PARSER
+	JP C,_PARAM_ERR
 ;
 ; 入力パラメータ数チェック
 	LD A,(ARGC)
@@ -725,6 +709,7 @@ IO_OUT:
 ;
     CALL STRIN
 	CALL PARSER
+	JP C,_PARAM_ERR
 ;
 ; 入力パラメータ数チェック
 	LD A,(ARGC)
@@ -836,25 +821,19 @@ CMD_TBL:
     DW MEM_CHANGE
     DB 'G'
     DW PGM_GO
-    DB 'Z'
-    DW PGM_GO_PARAM
     DB 'I'
     DW IO_IN
     DB 'O'
     DW IO_OUT
     DB 'L'
     DW LOAD
-  IFDEF KZ80
-    DB 'X'
-    DW CPMLOAD
-  ENDIF
 ; TABLE END
     DB 00h
 ;
 ;--------------------------------------------------------------------------------
 ; メッセージなど
 ;--------------------------------------------------------------------------------
-VERNAME EQU "KUNI-NET Z80 MONITOR v0.6"
+VERNAME EQU "KUNI-NET Z80 MONITOR v0.7"
 VERMSG  DB VERNAME,CR,0
 OPENMSG DB CR,CR,"** ",VERNAME," **",CR,0
 BSTXT	DB BS,SPC,BS,0
@@ -862,7 +841,7 @@ HELP_MSG DB "- - - COMMAND HELP - - -",CR
          DB "M XXXX ",TAB,TAB,"MEMORY EDIT",CR
          DB "D XXXX XXXX ",TAB,"MEMORY DUMP",CR
          DB "G XXXX",TAB,TAB,"PROGRAM EXECUTE",CR
-         DB "Z XXXX PARAM1 PARAM2",TAB,"PROGRAM EXECUTE w/PARAM",CR
+         DB "G XXXX PARAM1 PARAM2",TAB,"PROGRAM EXECUTE w/PARAM",CR
          DB "I XX",TAB,TAB,"I/O INPUT",CR
          DB "O XX XX",TAB,TAB,"I/O OUTPUT",CR
          DB "L ",TAB,TAB,"INTEL HEX LOAD",CR

@@ -5,9 +5,9 @@
 ;
 NULL    EQU 00h
 ;
-PPI_CTL EQU 0C3h
-PPI_A EQU 0C0h
-PPI_C EQU 0C2h
+PPI_CTL EQU 0Bh
+PPI_A EQU 08h
+PPI_C EQU 0Ah
 ;
 CE_ON   EQU 09h
 CE_OFF  EQU 08h
@@ -97,8 +97,52 @@ MAIN:
     LD C,4
     CALL GET_DATA
     CALL SET_RESULT
-;
+; 日時文字列出力
     LD HL,OUT_MSG
+    LD DE,EDIT_MSG+2
+    LD BC,2
+    LDIR
+;
+    INC DE
+    LD BC,2
+    LDIR
+;
+    INC DE
+    LD BC,2
+    LDIR
+;
+    LD A,(HL)
+    PUSH HL
+    LD HL,DAY_OF_WEEK
+    SUB A,'1'
+    OR A
+    JR Z,_DOW_PUT
+    LD B,A
+_DOW_LOOP:
+    INC HL
+    INC HL
+    INC HL
+    DJNZ _DOW_LOOP
+_DOW_PUT:
+    INC DE
+    LD BC,3
+    LDIR
+    POP HL
+    INC HL
+;
+    INC DE
+    LD BC,2
+    LDIR
+;
+    INC DE
+    LD BC,2
+    LDIR
+;
+    INC DE
+    LD BC,2
+    LDIR
+;
+    LD HL,EDIT_MSG
     CALL STR_PR
     CALL CRLF_PR
 ;
@@ -249,3 +293,15 @@ CRLF_PR:
 OUT_MSG DS 13
 OUT_END DS 1
 OUT_LEN EQU $-OUT_MSG
+;
+EDIT_MSG DB "20xx-xx-xx xxx xx:xx:xx",0
+DAY_OF_WEEK: 
+    DB "SUN"
+    DB "MON"
+    DB "TUE"
+    DB "WED"
+    DB "THU"
+    DB "FRI"
+    DB "SAT"
+
+    END

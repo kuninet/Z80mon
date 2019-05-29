@@ -48,6 +48,9 @@ RST18		JP	CKINCHAR
 	ORG	0038H
 RST38:	JP	SERINT 
 ;
+		ORG	0060h
+		DW	SERINT
+
 ;
    ENDIF
 
@@ -871,6 +874,10 @@ HATENA_MSG DB CR,"?",CR,0
 
 	IFDEF i8259_8254
 	  include "device/KZ80_8259_8254.asm"
+	ENDIF
+
+	IFDEF SIO
+	  include "device/KZ80_SIO.asm"
 	ENDIF
 
 

@@ -1,4 +1,4 @@
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 1 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 1 - 2019/05/29 20時26分56秒
 
 
        1/       0 :                     ;-----------------------------------------------------------------------
@@ -25,25 +25,25 @@
       22/       0 :                     ; RST00 リセット
       23/       0 :                     ;------------------------------------------------------------------------------
       24/       0 : F3                  RST00		DI		
-      25/       1 : C3 94 06            		JP	INIT	
+      25/       1 : C3 A3 06            		JP	INIT	
       26/       4 :                     
       27/       4 :                     ;------------------------------------------------------------------------------
       28/       4 :                     ; RST08 1文字送信
       29/       4 :                     ;------------------------------------------------------------------------------
       30/       8 :                     	ORG	0008H
-      31/       8 : C3 82 06            RST08		JP	COUT
+      31/       8 : C3 8E 06            RST08		JP	COUT
       32/       B :                     
       33/       B :                     ;------------------------------------------------------------------------------
       34/       B :                     ; RST10 1文字受信
       35/       B :                     ;------------------------------------------------------------------------------
       36/      10 :                     	ORG	0010H
-      37/      10 : C3 54 06            RST10		JP	CIN
+      37/      10 : C3 5C 06            RST10		JP	CIN
       38/      13 :                     
       39/      13 :                     ;------------------------------------------------------------------------------
       40/      13 :                     ; RST18 入力バッファチェック
       41/      13 :                     ;------------------------------------------------------------------------------
       42/      18 :                     	ORG	0018H
-      43/      18 : C3 8E 06            RST18		JP	CKINCHAR
+      43/      18 : C3 9D 06            RST18		JP	CKINCHAR
       44/      1B :                     
       45/      1B :                     ;------------------------------------------------------------------------------
       46/      1B :                     ; RST38 シリアル割り込みルーチン
@@ -61,7 +61,7 @@
       58/      62 :                     		ORG	0000h
       59/      62 :                     ;------------------------------------------------------------------------------
       60/      62 :                     ; RST00 リセット
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 2 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 2 - 2019/05/29 20時26分56秒
 
 
       61/      62 :                     ;------------------------------------------------------------------------------
@@ -124,7 +124,7 @@
      118/     10A : 3E 3E                   LD A,'>'
      119/     10C : CF                      RST 08h
      120/     10D : DD 21 87 04             LD IX,CMD_TBL
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 3 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 3 - 2019/05/29 20時26分56秒
 
 
      121/     111 : CD 3E 01            	CALL GETC
@@ -187,7 +187,7 @@
      178/     15B :                     _STRIN_LOOP:
      179/     15B : CD 3E 01                CALL GETC
      180/     15E : FE 0D                   CP 0Dh
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 4 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 4 - 2019/05/29 20時26分56秒
 
 
      181/     160 : 28 3F                   JR Z,_STRIN_END
@@ -250,7 +250,7 @@
      238/     1A5 :                     ;------------------------------------------------------------------------------
      239/     1A5 :                     STRPR:
      240/     1A5 : 7E                      LD A,(HL)
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 5 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 5 - 2019/05/29 20時26分56秒
 
 
      241/     1A6 : B7                      OR A
@@ -313,7 +313,7 @@
      298/     1DA : CF                  	RST 08h
      299/     1DB : C9                  	RET
      300/     1DC :                     
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 6 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 6 - 2019/05/29 20時26分56秒
 
 
      301/     1DC :                     ;================================================================================
@@ -376,7 +376,7 @@
      358/     218 : 28 F7               	JR Z,_PARSE_LOOP
      359/     21A : 0C                      INC C
      360/     21B : 79                  	LD A,C
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 7 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 7 - 2019/05/29 20時26分56秒
 
 
      361/     21C : FE 04               	CP ARG_MAX+1
@@ -439,7 +439,7 @@
      418/     269 : C9                  	RET
      419/     26A :                     ;
      420/     26A :                     
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 8 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 8 - 2019/05/29 20時26分56秒
 
 
      421/     26A :                     ;--------------------------------------------------------------------------------
@@ -502,7 +502,7 @@
      478/     2B6 : BC                  	CP H
      479/     2B7 : F8                  	RET M   ; メインループへ
      480/     2B8 : 7B                  	LD A,E
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 9 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 9 - 2019/05/29 20時26分56秒
 
 
      481/     2B9 : BD                  	CP L
@@ -565,7 +565,7 @@
      538/     2FB : CD EE 02            	CALL ADDR_OUT
      539/     2FE : 0E 10               	LD C,10h
      540/     300 :                     _DUMP16_LOOP:
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 10 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 10 - 2019/05/29 20時26分56秒
 
 
      541/     300 : CD 0B 03            	CALL DUMP_AT
@@ -628,7 +628,7 @@
      598/     33E :                     ;
      599/     33E : CD B4 01            	CALL CRLF_PRINT
      600/     341 :                     _MEM_CHANGE_LOOP:
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 11 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 11 - 2019/05/29 20時26分56秒
 
 
      601/     341 : DD E5               	PUSH IX
@@ -691,7 +691,7 @@
      658/     3A5 :                     _PGM_EXEC:
      659/     3A5 :                     ;
      660/     3A5 :                     ; 実行アドレス取得
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 12 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 12 - 2019/05/29 20時26分56秒
 
 
      661/     3A5 :                     ;
@@ -754,7 +754,7 @@
      718/     3FF : 3A 81 40            	LD A,(ARGC)
      719/     402 : FE 02               	CP 2
      720/     404 : C2 C4 02            	JP NZ,_PARAM_ERR
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 13 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 13 - 2019/05/29 20時26分56秒
 
 
      721/     407 :                     ;
@@ -817,7 +817,7 @@
      778/     45C : 47                  	LD B,A
      779/     45D :                     ;
      780/     45D :                     ; GET RECORD TYPE
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 14 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 14 - 2019/05/29 20時26分56秒
 
 
      781/     45D : 21 4A 40            	LD HL,INBUF+6
@@ -880,7 +880,7 @@
      838/     4A3 :                     ;--------------------------------------------------------------------------------
      839/     4A3 : =KUNI-NET Z8..      VERNAME EQU "KUNI-NET Z80 MONITOR v0.7"
      840/     4A3 : 4B 55 4E 49 2D 4E   VERMSG  DB VERNAME,CR,0
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 15 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 15 - 2019/05/29 20時26分56秒
 
 
                     45 54 20 5A 38 30 
@@ -943,7 +943,7 @@
                     52 20 45 52 52 0D 
                     00 
      854/     5E4 : 07 2A 2A 20 4D 45   ABORT_MSG DB BEEP,"** MEM DUMP ABORTED END",CR,0
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 16 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 16 - 2019/05/29 20時26分56秒
 
 
                     4D 20 44 55 4D 50 
@@ -969,159 +969,181 @@
      868/     616 :                     	  include "device/SBC8080SUB.asm" 
      869/     616 : [867]               	ENDIF
      870/     616 :                     
-     871/     616 : =>DEFINED           	IFDEF KZ80
+     871/     616 : =>UNDEFINED         	IFDEF KZ80
      872/     616 :                     	  include "device/KZ80_8251.asm"
+     873/     616 : [871]               	ENDIF
+     874/     616 :                     
+     875/     616 : =>UNDEFINED         	IFDEF i8259_8254
+     876/     616 :                     	  include "device/KZ80_8259_8254.asm"
+     877/     616 : [875]               	ENDIF
+     878/     616 :                     
+     879/     616 : =>DEFINED           	IFDEF SIO
+     880/     616 :                     	  include "device/KZ80_SIO.asm"
 (1)    1/     616 :                     ;
 (1)    2/     616 :                     ; KZ80_1MSRAM/IOB用モジュール
-(1)    3/     616 :                     ;    シリアル　8251x1
-(1)    4/     616 :                     ;    パラレル  8255x1
-(1)    5/     616 :                     ;--------------------------------------------------------
-(1)    6/     616 :                     ; 以下のルーチンはSBC8080データパックのASMソースを参考にさせていただきました。
-(1)    7/     616 :                     ;  SERINT 	8251シリアル割り込みルーチン
-(1)    8/     616 :                     ;  CIN		シリアル1文字入力ルーチン
-(1)    9/     616 :                     ;  COUT		シリアル1文字出力ルーチン
-(1)   10/     616 :                     ;  CKINCHAR	シリアルバッファチェックルーチン
-(1)   11/     616 :                     
-(1)   12/     616 : =0H                 UARTRD	EQU	00H
-(1)   13/     616 : =1H                 UARTRC	EQU	01H
+(1)    3/     616 :                     ;    シリアル　SIO
+(1)    4/     616 :                     ;--------------------------------------------------------
+(1)    5/     616 :                     
+(1)    6/     616 : =0H                 SIOA_D		EQU	00h
+(1)    7/     616 : =2H                 SIOA_C		EQU	02h
+(1)    8/     616 : =1H                 SIOB_D		EQU	01h
+(1)    9/     616 : =3H                 SIOB_C		EQU	03h
+(1)   10/     616 :                     ;
+(1)   11/     616 : =3FH                BUFSIZ	EQU	3FH
+(1)   12/     616 : =30H                BUFFUL	EQU	30H
+(1)   13/     616 : =5H                 BUFEMP	EQU	5
 (1)   14/     616 :                     ;
-(1)   15/     616 : =3FH                BUFSIZ	EQU	3FH
-(1)   16/     616 : =30H                BUFFUL	EQU	30H
-(1)   17/     616 : =5H                 BUFEMP	EQU	5
-(1)   18/     616 :                     ;
-(1)   19/     616 : =17H                RTSHIG	EQU	00010111B
-(1)   20/     616 : =37H                RTSLOW	EQU	00110111B
-(1)   21/     616 :                     
-(1)   22/     616 :                     ;------------------------------------------------------------------------------
-(1)   23/     616 :                     ; 8251割り込みルーチン
-(1)   24/     616 :                     ;------------------------------------------------------------------------------
-(1)   25/     616 : F5                  SERINT:	PUSH	AF
-(1)   26/     617 : E5                  	PUSH	HL
-(1)   27/     618 : DB 01               	IN	A,(UARTRC)
-(1)   28/     61A : E6 02               	AND	00000010B
-(1)   29/     61C : CA 50 06            	JP	Z,RTS0
-(1)   30/     61F : DB 00               	IN	A,(UARTRD)
-(1)   31/     621 : F5                  	PUSH	AF
-(1)   32/     622 : 3A 43 40            	LD	A,(SERCNT)
-(1)   33/     625 : FE 3F               	CP	BUFSIZ
-(1)   34/     627 : C2 2E 06            	JP	NZ,NOTFUL
-(1)   35/     62A : F1                  	POP	AF
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm(KZ80_8251.asm) - page 17 - 2019/05/29 20時26分55秒
+(1)   15/     616 : =E8H                RTSHIG	EQU	0E8H
+(1)   16/     616 : =EAH                RTSLOW	EQU	0EAH
+(1)   17/     616 :                     
+(1)   18/     616 :                     ;------------------------------------------------------------------------------
+(1)   19/     616 :                     ; SIO割り込みルーチン
+(1)   20/     616 :                     ;------------------------------------------------------------------------------
+(1)   21/     616 :                     SERINT: 
+(1)   22/     616 : F5                  	PUSH	AF
+(1)   23/     617 : E5                  	PUSH	HL
+(1)   24/     618 : 97                  	SUB	A
+(1)   25/     619 : D3 02               	OUT (SIOA_C),A
+(1)   26/     61B : DB 02               	IN	A,(SIOA_C)
+(1)   27/     61D : E6 01               	AND	00000001B
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm(KZ80_SIO.asm) - page 17 - 2019/05/29 20時26分56秒
 
 
-(1)   36/     62B : C3 50 06            	JP	RTS0
-(1)   37/     62E : 2A 3F 40            NOTFUL:	LD	HL,(SERINP)
-(1)   38/     631 : 23                  	INC	HL
-(1)   39/     632 : 7D                  	LD	A,L
-(1)   40/     633 : FE 3F               	CP	SERINP & 0FFH
-(1)   41/     635 : C2 3B 06            	JP	NZ,NOTWRP
-(1)   42/     638 : 21 00 40            	LD	HL,SERBUF
-(1)   43/     63B : 22 3F 40            NOTWRP:	LD	(SERINP),HL
-(1)   44/     63E : F1                  	POP	AF
-(1)   45/     63F : 77                  	LD	(HL),A
-(1)   46/     640 : 3A 43 40            	LD	A,(SERCNT)
-(1)   47/     643 : 3C                  	INC	A
-(1)   48/     644 : 32 43 40            	LD	(SERCNT),A
-(1)   49/     647 : FE 30               	CP	BUFFUL
-(1)   50/     649 : DA 50 06            	JP	C,RTS0
-(1)   51/     64C : 3E 17               	LD	A,RTSHIG
-(1)   52/     64E : D3 01               	OUT	(UARTRC),A
-(1)   53/     650 : E1                  RTS0:	POP	HL
-(1)   54/     651 : F1                  	POP	AF
-(1)   55/     652 : FB                  	EI
-(1)   56/     653 : C9                  	RET
-(1)   57/     654 :                     
-(1)   58/     654 :                     ;------------------------------------------------------------------------------
-(1)   59/     654 :                     ; 1文字入力(バッファから)
-(1)   60/     654 :                     ;------------------------------------------------------------------------------
-(1)   61/     654 :                     CIN:
-(1)   62/     654 : 3A 43 40            	LD	A,(SERCNT)
-(1)   63/     657 : FE 00               	CP	00H
-(1)   64/     659 : CA 54 06            	JP	Z,CIN
-(1)   65/     65C : E5                  	PUSH	HL
-(1)   66/     65D : 2A 41 40            	LD	HL,(SERRDP)
-(1)   67/     660 : 23                  	INC	HL
-(1)   68/     661 : 7D                  	LD	A,L
-(1)   69/     662 : FE 3F               	CP	SERINP & 0FFH
-(1)   70/     664 : C2 6A 06            	JP	NZ,NRWRAP
-(1)   71/     667 : 21 00 40            	LD	HL,SERBUF
-(1)   72/     66A : F3                  NRWRAP:	DI
-(1)   73/     66B : 22 41 40            	LD	(SERRDP),HL
-(1)   74/     66E : 3A 43 40            	LD	A,(SERCNT)
-(1)   75/     671 : 3D                  	DEC	A
-(1)   76/     672 : 32 43 40            	LD	(SERCNT),A
-(1)   77/     675 : FE 05               	CP	BUFEMP
-(1)   78/     677 : D2 7E 06            	JP	NC,RTS1
-(1)   79/     67A : 3E 37               	LD	A,RTSLOW
-(1)   80/     67C : D3 01               	OUT	(UARTRC),A
-(1)   81/     67E : 7E                  RTS1:	LD	A,(HL)
-(1)   82/     67F : FB                  	EI
-(1)   83/     680 : E1                  	POP	HL
-(1)   84/     681 : C9                  	RET	
-(1)   85/     682 :                     
-(1)   86/     682 :                     ;------------------------------------------------------------------------------
-(1)   87/     682 :                     ; 1文字出力
-(1)   88/     682 :                     ;------------------------------------------------------------------------------
-(1)   89/     682 : F5                  COUT:		PUSH	AF
-(1)   90/     683 : DB 01               COUT1:	IN	A,(UARTRC)
-(1)   91/     685 : E6 01               	AND	01H     
-(1)   92/     687 : CA 83 06            	JP	Z,COUT1
-(1)   93/     68A : F1                  	POP	AF
-(1)   94/     68B : D3 00               	OUT	(UARTRD),A
-(1)   95/     68D : C9                  	RET
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm(KZ80_8251.asm) - page 18 - 2019/05/29 20時26分55秒
+(1)   28/     61F : CA 57 06            	JP	Z,RTS0
+(1)   29/     622 : DB 00               	IN	A,(SIOA_D)
+(1)   30/     624 : F5                  	PUSH	AF
+(1)   31/     625 : 3A 43 40            	LD	A,(SERCNT)
+(1)   32/     628 : FE 3F               	CP	BUFSIZ
+(1)   33/     62A : C2 31 06            	JP	NZ,NOTFUL
+(1)   34/     62D : F1                  	POP	AF
+(1)   35/     62E : C3 57 06            	JP	RTS0
+(1)   36/     631 : 2A 3F 40            NOTFUL:	LD	HL,(SERINP)
+(1)   37/     634 : 23                  	INC	HL
+(1)   38/     635 : 7D                  	LD	A,L
+(1)   39/     636 : FE 3F               	CP	SERINP & 0FFH
+(1)   40/     638 : C2 3E 06            	JP	NZ,NOTWRP
+(1)   41/     63B : 21 00 40            	LD	HL,SERBUF
+(1)   42/     63E : 22 3F 40            NOTWRP:	LD	(SERINP),HL
+(1)   43/     641 : F1                  	POP	AF
+(1)   44/     642 : 77                  	LD	(HL),A
+(1)   45/     643 : 3A 43 40            	LD	A,(SERCNT)
+(1)   46/     646 : 3C                  	INC	A
+(1)   47/     647 : 32 43 40            	LD	(SERCNT),A
+(1)   48/     64A : FE 30               	CP	BUFFUL
+(1)   49/     64C : DA 57 06            	JP	C,RTS0
+(1)   50/     64F : 3E 05               	LD   A,5
+(1)   51/     651 : D3 02               	OUT  (SIOA_C),A
+(1)   52/     653 : 3E E8               	LD	A,RTSHIG
+(1)   53/     655 : D3 02               	OUT	(SIOA_C),A
+(1)   54/     657 : E1                  RTS0:	POP	HL
+(1)   55/     658 : F1                  	POP	AF
+(1)   56/     659 : FB                  	EI
+(1)   57/     65A : ED 4D               	RETI
+(1)   58/     65C :                     
+(1)   59/     65C :                     ;------------------------------------------------------------------------------
+(1)   60/     65C :                     ; 1文字入力(バッファから)
+(1)   61/     65C :                     ;------------------------------------------------------------------------------
+(1)   62/     65C :                     CIN:
+(1)   63/     65C : 3A 43 40            	LD	A,(SERCNT)
+(1)   64/     65F : FE 00               	CP	00H
+(1)   65/     661 : CA 5C 06            	JP	Z,CIN
+(1)   66/     664 : E5                  	PUSH	HL
+(1)   67/     665 : 2A 41 40            	LD	HL,(SERRDP)
+(1)   68/     668 : 23                  	INC	HL
+(1)   69/     669 : 7D                  	LD	A,L
+(1)   70/     66A : FE 3F               	CP	SERINP & 0FFH
+(1)   71/     66C : C2 72 06            	JP	NZ,NRWRAP
+(1)   72/     66F : 21 00 40            	LD	HL,SERBUF
+(1)   73/     672 : F3                  NRWRAP:	DI
+(1)   74/     673 : 22 41 40            	LD	(SERRDP),HL
+(1)   75/     676 : 3A 43 40            	LD	A,(SERCNT)
+(1)   76/     679 : 3D                  	DEC	A
+(1)   77/     67A : 32 43 40            	LD	(SERCNT),A
+(1)   78/     67D : FE 05               	CP	BUFEMP
+(1)   79/     67F : D2 8A 06            	JP	NC,RTS1
+(1)   80/     682 : 3E 05               	LD   A,5
+(1)   81/     684 : D3 02               	OUT  (SIOA_C),A
+(1)   82/     686 : 3E EA               	LD	A,RTSLOW
+(1)   83/     688 : D3 02               	OUT	(SIOA_C),A
+(1)   84/     68A : 7E                  RTS1:	LD	A,(HL)
+(1)   85/     68B : FB                  	EI
+(1)   86/     68C : E1                  	POP	HL
+(1)   87/     68D : C9                  	RET	
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm(KZ80_SIO.asm) - page 18 - 2019/05/29 20時26分56秒
 
 
-(1)   96/     68E :                     
-(1)   97/     68E :                     ;------------------------------------------------------------------------------
-(1)   98/     68E :                     ; 入力バッファチェック
-(1)   99/     68E :                     ;------------------------------------------------------------------------------
-(1)  100/     68E : 3A 43 40            CKINCHAR	LD	A,(SERCNT)
-(1)  101/     691 : FE 00               	CP	00H
-(1)  102/     693 : C9                  	RET
-(1)  103/     694 :                     
-(1)  104/     694 :                     ;------------------------------------------------------------------------------
-(1)  105/     694 :                     ; 初期化
-(1)  106/     694 :                     ;------------------------------------------------------------------------------
-(1)  107/     694 :                     INIT:		
-(1)  108/     694 : 31 A8 40                LD  SP,STACK
-(1)  109/     697 : 21 00 40            	LD	HL,SERBUF
-(1)  110/     69A : 22 3F 40            	LD	(SERINP),HL
-(1)  111/     69D : 22 41 40            	LD	(SERRDP),HL
-(1)  112/     6A0 : AF                  	XOR	A
-(1)  113/     6A1 : 32 43 40            	LD	(SERCNT),A
-(1)  114/     6A4 : D3 01               	OUT	(UARTRC),A
-(1)  115/     6A6 : D3 01               	OUT	(UARTRC),A
-(1)  116/     6A8 : D3 01               	OUT	(UARTRC),A
-(1)  117/     6AA : 3E 40               	LD	A,01000000B
-(1)  118/     6AC : D3 01               	OUT	(UARTRC),A
-(1)  119/     6AE : 3E 4E               	LD	A,01001110B
-(1)  120/     6B0 : D3 01               	OUT	(UARTRC),A
-(1)  121/     6B2 : 3E 37               	LD	A,RTSLOW
-(1)  122/     6B4 : D3 01               	OUT	(UARTRC),A
-(1)  123/     6B6 : FB                  	EI
-(1)  124/     6B7 :                     ;
-(1)  125/     6B7 : C3 00 01                JP MAIN
-(1)  126/     6BA :                     ;
-(1)  127/     6BA :                     ; KZ80-1MSRAM用 RAM 4000h〜
-(1)  128/     6BA :                     ;
-(1)  129/    4000 :                         ORG 4000h
-(1)  130/    4000 :                     ;
-(1)  131/    4000 :                     SERBUF	DS	BUFSIZ
-(1)  132/    403F :                     SERINP	DS	2
-(1)  133/    4041 :                     SERRDP	DS	2
-(1)  134/    4043 :                     SERCNT	DS	1
-(1)  135/    4044 :                     ;
-(1)  136/    4044 : =4044H              DEVICE_RAM_END EQU $
-(1)  137/    4044 :                     
-     873/    4044 : [871]               	ENDIF
-     874/    4044 :                     
-     875/    4044 : =>UNDEFINED         	IFDEF i8259_8254
-     876/    4044 :                     	  include "device/KZ80_8259_8254.asm"
-     877/    4044 : [875]               	ENDIF
-     878/    4044 :                     
-     879/    4044 : =>UNDEFINED         	IFDEF SIO
-     880/    4044 :                     	  include "device/KZ80_SIO.asm"
+(1)   88/     68E :                     
+(1)   89/     68E :                     ;------------------------------------------------------------------------------
+(1)   90/     68E :                     ; 1文字出力
+(1)   91/     68E :                     ;------------------------------------------------------------------------------
+(1)   92/     68E : F5                  COUT:		PUSH	AF
+(1)   93/     68F :                     COUT1:
+(1)   94/     68F : 97                  	SUB	A
+(1)   95/     690 : D3 02               	OUT 	(SIOA_C),A
+(1)   96/     692 : DB 02               	IN	A,(SIOA_C)
+(1)   97/     694 : E6 04               	AND	04H     
+(1)   98/     696 : CA 8F 06            	JP	Z,COUT1
+(1)   99/     699 : F1                  	POP	AF
+(1)  100/     69A : D3 00               	OUT	(SIOA_D),A
+(1)  101/     69C : C9                  	RET
+(1)  102/     69D :                     
+(1)  103/     69D :                     ;------------------------------------------------------------------------------
+(1)  104/     69D :                     ; 入力バッファチェック
+(1)  105/     69D :                     ;------------------------------------------------------------------------------
+(1)  106/     69D : 3A 43 40            CKINCHAR	LD	A,(SERCNT)
+(1)  107/     6A0 : FE 00               	CP	00H
+(1)  108/     6A2 : C9                  	RET
+(1)  109/     6A3 :                     
+(1)  110/     6A3 :                     ;------------------------------------------------------------------------------
+(1)  111/     6A3 :                     ; 初期化
+(1)  112/     6A3 :                     ;------------------------------------------------------------------------------
+(1)  113/     6A3 :                     INIT:		
+(1)  114/     6A3 : 31 A8 40                LD  SP,STACK
+(1)  115/     6A6 : 21 00 40            	LD	HL,SERBUF
+(1)  116/     6A9 : 22 3F 40            	LD	(SERINP),HL
+(1)  117/     6AC : 22 41 40            	LD	(SERRDP),HL
+(1)  118/     6AF : AF                  	XOR	A
+(1)  119/     6B0 : 32 43 40            	LD	(SERCNT),A
+(1)  120/     6B3 :                     ;
+(1)  121/     6B3 : 3E 00               	LD	A,00h
+(1)  122/     6B5 : ED 47               	LD	I,A
+(1)  123/     6B7 : ED 5E               	IM	2
+(1)  124/     6B9 :                     
+(1)  125/     6B9 :                     ;
+(1)  126/     6B9 : 06 0A               	LD B,SIOA_INIT_CNT
+(1)  127/     6BB : 21 CF 06            	LD HL,SIOA_INIT
+(1)  128/     6BE : 0E 02               	LD C,SIOA_C
+(1)  129/     6C0 : ED B3               	OTIR
+(1)  130/     6C2 :                     ;
+(1)  131/     6C2 : 06 02               	LD B,SIOB_INIT_CNT
+(1)  132/     6C4 : 21 D9 06            	LD HL,SIOB_INIT
+(1)  133/     6C7 : 0E 03               	LD C,SIOB_C
+(1)  134/     6C9 : ED B3               	OTIR
+(1)  135/     6CB : FB                  	EI
+(1)  136/     6CC :                     ;
+(1)  137/     6CC : C3 00 01                JP MAIN
+(1)  138/     6CF :                     ;
+(1)  139/     6CF : 00 18 04 44 01 18   SIOA_INIT	DB 00h,18h,04h,44h,01h,18h,03h,0c1h,05h,RTSLOW
+                    03 C1 05 EA 
+(1)  140/     6D9 : =AH                 SIOA_INIT_CNT EQU $-SIOA_INIT
+(1)  141/     6D9 :                     ;
+(1)  142/     6D9 : 02 60               SIOB_INIT	DB 02h,60h
+(1)  143/     6DB : =2H                 SIOB_INIT_CNT EQU $-SIOB_INIT
+(1)  144/     6DB :                     ;
+(1)  145/     6DB :                     ; KZ80-1MSRAM用 RAM 4000h〜
+(1)  146/     6DB :                     ;
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm(KZ80_SIO.asm) - page 19 - 2019/05/29 20時26分56秒
+
+
+(1)  147/    4000 :                         ORG 4000h
+(1)  148/    4000 :                     ;
+(1)  149/    4000 :                     SERBUF	DS	BUFSIZ
+(1)  150/    403F :                     SERINP	DS	2
+(1)  151/    4041 :                     SERRDP	DS	2
+(1)  152/    4043 :                     SERCNT	DS	1
+(1)  153/    4044 :                     ;
+(1)  154/    4044 : =4044H              DEVICE_RAM_END EQU $
+(1)  155/    4044 :                     
      881/    4044 : [879]               	ENDIF
      882/    4044 :                     
      883/    4044 :                     
@@ -1132,9 +1154,6 @@
      888/    4044 :                     	ORG DEVICE_RAM_END
      889/    4044 :                     ;
      890/    4044 :                     INBUF   DS  60
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 19 - 2019/05/29 20時26分55秒
-
-
      891/    4080 : =3CH                INMAX   EQU  $-INBUF
      892/    4080 :                     INEND   DS  1
      893/    4081 :                     ;
@@ -1148,7 +1167,7 @@
      901/    4088 :                         	DS	32
      902/    40A8 : =40A8H              STACK   EQU $
      903/    40A8 :                     
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 20 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 20 - 2019/05/29 20時26分56秒
 
 
   symbol table (* = unused):
@@ -1164,10 +1183,10 @@
  BSTXT :                        4E1 C |  BUFEMP :                         5 - |
  BUFFUL :                        30 - |  BUFSIZ :                        3F - |
 *CASESENSITIVE :                  0 - |  CHECKSUM_ERRMSG :              5FE C |
- CIN :                          654 C |  CKINCHAR :                     68E C |
+ CIN :                          65C C |  CKINCHAR :                     69D C |
 *CLS :                            C - |  CMD_TBL :                      487 C |
-*CONSTPI :        3.141592653589793 - |  COUT :                         682 C |
- COUT1 :                        683 C |  CPRINT :                       1AE C |
+*CONSTPI :        3.141592653589793 - |  COUT :                         68E C |
+ COUT1 :                        68F C |  CPRINT :                       1AE C |
  CR :                             D - |  CRLF_PRINT :                   1B4 C |
 *CTRLC :                          3 - | *DATE :                  2019/05/29 - |
  DEL :                           7F - |  DEVICE_RAM_END :              4044 - |
@@ -1181,39 +1200,42 @@
  HEX2OUT :                      1BF C |  HEX4BIN :                      26A C |
  HEX4OUT :                      1F0 C |  INBUF :                       4044 C |
  INEND :                       4080 C | *INEXTMODE :                      0 - |
- INIT :                         694 C | *INLWORDMODE :                    0 - |
+ INIT :                         6A3 C | *INLWORDMODE :                    0 - |
  INMAX :                         3C - | *INMAXMODE :                      0 - |
 *INSRCMODE :                      0 - | *INSUPMODE :                      0 - |
  IO_IN :                        3C1 C |  IO_OUT :                       3F3 C |
-*KZ80 :                           1 - | *LF :                             A - |
-*LISTON :                         1 - |  LOAD :                         436 C |
-*MACEXP :                         7 - |  MAIN :                         100 C |
- MEM_CHANGE :                   321 C |  MEM_DUMP :                     278 C |
-*MOMCPU :                        80 - | *MOMCPUNAME :                   Z80 - |
-*NESTMAX :                      100 - |  NOTFUL :                       62E C |
- NOTWRP :                       63B C |  NRWRAP :                       66A C |
- NULL :                           0 - |  OPENMSG :                      4BE C |
-*PACKING :                        0 - | *PADDING :                        1 - |
- PARAM_ERRMSG :                 5D1 C |  PARSER :                       1FB C |
- PGM_GO :                       399 C | *RELAXED :                        0 - |
-*RST00 :                          0 C | *RST08 :                          8 C |
-*RST10 :                         10 C | *RST18 :                         18 C |
-*RST38 :                         38 C |  RTS0 :                         650 C |
- RTS1 :                         67E C |  RTSHIG :                        17 - |
- RTSLOW :                        37 - |  SERBUF :                      4000 C |
- SERCNT :                      4043 C |  SERINP :                      403F C |
- SERINT :                       616 C |  SERRDP :                      4041 C |
+*LF :                             A - | *LISTON :                         1 - |
+ LOAD :                         436 C | *MACEXP :                         7 - |
+ MAIN :                         100 C |  MEM_CHANGE :                   321 C |
+ MEM_DUMP :                     278 C | *MOMCPU :                        80 - |
+*MOMCPUNAME :                   Z80 - | *NESTMAX :                      100 - |
+ NOTFUL :                       631 C |  NOTWRP :                       63E C |
+ NRWRAP :                       672 C |  NULL :                           0 - |
+ OPENMSG :                      4BE C | *PACKING :                        0 - |
+*PADDING :                        1 - |  PARAM_ERRMSG :                 5D1 C |
+ PARSER :                       1FB C |  PGM_GO :                       399 C |
+*RELAXED :                        0 - | *RST00 :                          0 C |
+*RST08 :                          8 C | *RST10 :                         10 C |
+*RST18 :                         18 C | *RST38 :                         38 C |
+ RTS0 :                         657 C |  RTS1 :                         68A C |
+ RTSHIG :                        E8 - |  RTSLOW :                        EA - |
+ SERBUF :                      4000 C |  SERCNT :                      4043 C |
+ SERINP :                      403F C |  SERINT :                       616 C |
+ SERRDP :                      4041 C | *SIO :                            1 - |
+ SIOA_C :                         2 - |  SIOA_D :                         0 - |
+ SIOA_INIT :                    6CF C |  SIOA_INIT_CNT :                  A - |
+ SIOB_C :                         3 - | *SIOB_D :                         1 - |
+ SIOB_INIT :                    6D9 C |  SIOB_INIT_CNT :                  2 - |
  SPC :                           20 - |  SPC_PRINT :                    1BB C |
  STACK :                       40A8 - |  STRIN :                        148 C |
  STRPR :                        1A5 C |  STR_LEN :                      310 C |
  TAB :                            9 - |
-*TIME :                          20\-26\-10\-1226\-27\-12\-1255\-25\-89\-11 - |
-*TRUE :                           1 - |  UARTRC :                         1 - |
- UARTRD :                         0 - |  VERMSG :                       4A3 C |
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 21 - 2019/05/29 20時26分56秒
+
+
+*TIME :                          20\-26\-10\-1226\-27\-12\-1256\-25\-89\-11 - |
+*TRUE :                           1 - |  VERMSG :                       4A3 C |
  VERNAME :                                        KUNI-NET Z80 MONITOR v0.7 - |
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 21 - 2019/05/29 20時26分55秒
-
-
 *VERSION :                     142F - |  VERSION_OUT :                  1E1 C |
  _ABORT_DUMP :                  2CA C |  _ASC16_DOT :                   2E6 C |
  _ASC16_LOOP :                  2DB C |  _ASC16_PRINT :                 2E8 C |
@@ -1236,10 +1258,10 @@
  _STRIN_LOOP :                  15B C |  _STR_LEN_EXIT :                31D C |
  _STR_LEN_LOOP :                314 C |  _WARN_BEEP :                   182 C |
 
-    153 symbols
-     40 unused symbols
+    159 symbols
+     41 unused symbols
 
- AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 22 - 2019/05/29 20時26分55秒
+ AS V1.42 Beta [Bld 137] - source file Z80mon.asm - page 22 - 2019/05/29 20時26分56秒
 
 
   codepages:
@@ -1250,7 +1272,7 @@ STANDARD (0 changed characters)
 
 0.02 seconds assembly time
 
-   1040 lines source file
+   1058 lines source file
       2 passes
       0 errors
       0 warnings

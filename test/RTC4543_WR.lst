@@ -1,4 +1,4 @@
- AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 1 - 2019/05/26 15時07分08秒
+ AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 1 - 2019/05/29 20時26分55秒
 
 
        1/       0 :                     ;
@@ -61,7 +61,7 @@
       58/    502C :                     _MAIN_LOOP:
       59/    502C : 7E                      LD A,(HL)
       60/    502D : D6 30                   SUB A,30h       ; 数字の文字コードをBCDへ
- AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 2 - 2019/05/26 15時07分08秒
+ AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 2 - 2019/05/29 20時26分55秒
 
 
       61/    502F :                     ;
@@ -124,7 +124,7 @@
      118/    5069 :                     ; CEピン ON
      119/    5069 :                     ;------------------------------------
      120/    5069 :                     CE_ON_SET:
- AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 3 - 2019/05/26 15時07分08秒
+ AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 3 - 2019/05/29 20時26分55秒
 
 
      121/    5069 : 3E 09                   LD A,CE_ON
@@ -187,7 +187,7 @@
      178/    509F :                     ;
      179/    509F :                     _STR_LEN_EXIT:
      180/    509F : 79                  	LD A,C
- AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 4 - 2019/05/26 15時07分08秒
+ AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 4 - 2019/05/29 20時26分55秒
 
 
      181/    50A0 : C1                  	POP BC
@@ -238,7 +238,7 @@
      223/    50D4 :                     ; RAM
      224/    50D4 :                     DATE_STR_PTR    DS 2
      225/    50D6 :                     
- AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 5 - 2019/05/26 15時07分08秒
+ AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 5 - 2019/05/29 20時26分55秒
 
 
   symbol table (* = unused):
@@ -250,7 +250,7 @@
  CE_ON :                          9 - |  CE_ON_SET :                   5069 C |
  CLK1 :                        5052 C |  CLK_OFF :                        C - |
  CLK_ON :                         D - | *CONSTPI :        3.141592653589793 - |
-*CRLF_PR :                     50AE C | *DATE :                  2019/05/26 - |
+*CRLF_PR :                     50AE C | *DATE :                  2019/05/29 - |
  DATE_STR_PTR :                50D4 C | *FALSE :                          0 - |
 *FULLPMMU :                       1 - | *HAS64 :                          1 - |
 *HASDSP :                         0 - | *HASFPU :                         0 - |
@@ -267,7 +267,7 @@
  PPI_CTL :                        B - | *RELAXED :                        0 - |
 *START :                       5000 C | *STRCHK :                      507E C |
  STRLEN :                      5092 C |  STR_PR :                      50A3 C |
-*TIME :                          15\-26\-10\-1207\-27\-12\-1208\-25\-89\-11 - |
+*TIME :                          20\-26\-10\-1226\-27\-12\-1255\-25\-89\-11 - |
 *TRUE :                           1 - | *VERSION :                     142F - |
  WR_OFF :                         A - |  WR_OFF_SET :                  5064 C |
  WR_ON :                          B - |  WR_ON_SET :                   505F C |
@@ -280,7 +280,7 @@
      62 symbols
      31 unused symbols
 
- AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 6 - 2019/05/26 15時07分08秒
+ AS V1.42 Beta [Bld 137] - source file RTC4543_WR.asm - page 6 - 2019/05/29 20時26分55秒
 
 
   codepages:
@@ -289,7 +289,7 @@
 STANDARD (0 changed characters)
 
 
-0.01 seconds assembly time
+0.00 seconds assembly time
 
     225 lines source file
       2 passes

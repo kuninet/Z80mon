@@ -28,3 +28,7 @@ p2bin -r 0000h-7fffh p/Z80mon_6850.p obj/Z80mon_6850.bin
 asl -cpu Z80 -L -D i8259_8254 -OLIST lst/Z80mon_8259_8254.lst -o p/Z80mon_8259_8254.p Z80mon.asm
 p2hex -r \$-\$ -F Intel p/Z80mon_8259_8254.p obj/Z80mon_8259_8254.hex 
 p2bin -r 0000h-7fffh p/Z80mon_8259_8254.p obj/Z80mon_8259_8254.bin
+
+asl -cpu Z80 -L -D SIO -OLIST lst/Z80mon_SIO.lst -o p/Z80mon_SIO.p Z80mon.asm
+p2hex -r \$-\$ -F Intel p/Z80mon_SIO.p obj/Z80mon_SIO.hex 
+p2bin -r 0000h-7fffh p/Z80mon_SIO.p obj/Z80mon_SIO.bin

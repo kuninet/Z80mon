@@ -1,4 +1,4 @@
- AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 1 - 2019/05/26 15時07分08秒
+ AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 1 - 2019/05/29 20時26分55秒
 
 
        1/       0 :                     ;
@@ -61,7 +61,7 @@
       58/    6045 : CD EA 60                CALL GET_DATA
       59/    6048 : CD E5 60                CALL SET_RESULT
       60/    604B :                     ; -- ユーザービット受け捨て
- AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 2 - 2019/05/26 15時07分08秒
+ AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 2 - 2019/05/29 20時26分55秒
 
 
       61/    604B : 0E 02                   LD C,2
@@ -124,7 +124,7 @@
      118/    60B5 : B7                      OR A
      119/    60B6 : 28 06                   JR Z,_DOW_PUT
      120/    60B8 : 47                      LD B,A
- AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 3 - 2019/05/26 15時07分08秒
+ AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 3 - 2019/05/29 20時26分55秒
 
 
      121/    60B9 :                     _DOW_LOOP:
@@ -187,7 +187,7 @@
      178/    60FA : 0D                      DEC C
      179/    60FB : C8                      RET Z
      180/    60FC : 18 F0                   JR _GET_DATA_LOOP
- AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 4 - 2019/05/26 15時07分08秒
+ AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 4 - 2019/05/29 20時26分55秒
 
 
      181/    60FE :                     
@@ -250,7 +250,7 @@
      238/    6133 :                     
      239/    6133 :                     ;------------------------------------
      240/    6133 :                     ; CEピン ON
- AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 5 - 2019/05/26 15時07分08秒
+ AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 5 - 2019/05/29 20時26分55秒
 
 
      241/    6133 :                     ;------------------------------------
@@ -313,7 +313,7 @@
                     78 2D 78 78 20 78 
                     78 78 20 78 78 3A 
                     78 78 3A 78 78 00 
- AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 6 - 2019/05/26 15時07分08秒
+ AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 6 - 2019/05/29 20時26分55秒
 
 
      298/    6180 :                     DAY_OF_WEEK: 
@@ -326,7 +326,7 @@
      305/    6192 : 53 41 54                DB "SAT"
      306/    6195 :                     
      307/    6195 :                         END
- AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 7 - 2019/05/26 15時07分08秒
+ AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 7 - 2019/05/29 20時26分55秒
 
 
   symbol table (* = unused):
@@ -338,7 +338,7 @@
  CE_ON :                          9 - |  CE_ON_SET :                   6133 C |
  CLK1 :                        611C C |  CLK_OFF :                        C - |
  CLK_ON :                         D - | *CONSTPI :        3.141592653589793 - |
- CRLF_PR :                     6151 C | *DATE :                  2019/05/26 - |
+ CRLF_PR :                     6151 C | *DATE :                  2019/05/29 - |
  DAY_OF_WEEK :                 6180 C |  EDIT_MSG :                    6168 C |
 *FALSE :                          0 - | *FULLPMMU :                       1 - |
  GET_DATA :                    60EA C | *HAS64 :                          1 - |
@@ -356,7 +356,7 @@
  PPI_A :                          8 - |  PPI_C :                          A - |
  PPI_CTL :                        B - | *RELAXED :                        0 - |
  SET_RESULT :                  60E5 C |  STR_PR :                      6146 C |
-*TIME :                          15\-26\-10\-1207\-27\-12\-1208\-25\-89\-11 - |
+*TIME :                          20\-26\-10\-1226\-27\-12\-1255\-25\-89\-11 - |
 *TRUE :                           1 - | *VERSION :                     142F - |
  WR_OFF :                         A - |  WR_OFF_SET :                  612E C |
  WR_ON :                          B - | *WR_ON_SET :                   6129 C |
@@ -368,7 +368,7 @@
      63 symbols
      31 unused symbols
 
- AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 8 - 2019/05/26 15時07分08秒
+ AS V1.42 Beta [Bld 137] - source file RTC4543_RD.asm - page 8 - 2019/05/29 20時26分55秒
 
 
   codepages:
@@ -377,7 +377,7 @@
 STANDARD (0 changed characters)
 
 
-0.00 seconds assembly time
+0.01 seconds assembly time
 
     307 lines source file
       2 passes

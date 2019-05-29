@@ -1,4 +1,4 @@
- AS V1.42 Beta [Bld 137] - source file test_param.asm - page 1 - 2019/05/26 15時07分08秒
+ AS V1.42 Beta [Bld 137] - source file test_param.asm - page 1 - 2019/05/29 20時26分55秒
 
 
        1/       0 :                     ;
@@ -43,7 +43,7 @@
       40/    501B : CF                      RST 08h
       41/    501C : C9                      RET
       42/    501D :                     ;
- AS V1.42 Beta [Bld 137] - source file test_param.asm - page 2 - 2019/05/26 15時07分08秒
+ AS V1.42 Beta [Bld 137] - source file test_param.asm - page 2 - 2019/05/29 20時26分55秒
 
 
   symbol table (* = unused):
@@ -52,7 +52,7 @@
 *ARCHITECTURE :    x86_64-apple-osx - | *BIGENDIAN :                      0 - |
 *BRANCHEXT :                      0 - | *CASESENSITIVE :                  0 - |
 *CONSTPI :        3.141592653589793 - |  CRLF_PR :                     5016 C |
-*DATE :                  2019/05/26 - | *FALSE :                          0 - |
+*DATE :                  2019/05/29 - | *FALSE :                          0 - |
 *FULLPMMU :                       1 - | *HAS64 :                          1 - |
 *HASDSP :                         0 - | *HASFPU :                         0 - |
 *HASPMMU :                        0 - | *INEXTMODE :                      0 - |
@@ -63,14 +63,14 @@
 *NESTMAX :                      100 - | *PACKING :                        0 - |
 *PADDING :                        1 - | *RELAXED :                        0 - |
 *START :                       5000 C |  STR_PR :                      500F C |
-*TIME :                          15\-26\-10\-1207\-27\-12\-1208\-25\-89\-11 - |
+*TIME :                          20\-26\-10\-1226\-27\-12\-1255\-25\-89\-11 - |
 *TRUE :                           1 - | *VERSION :                     142F - |
  _LOOP :                       5000 C |
 
      32 symbols
      29 unused symbols
 
- AS V1.42 Beta [Bld 137] - source file test_param.asm - page 3 - 2019/05/26 15時07分08秒
+ AS V1.42 Beta [Bld 137] - source file test_param.asm - page 3 - 2019/05/29 20時26分55秒
 
 
   codepages:
